@@ -1,0 +1,10 @@
+
+AjLanguage To do list
+
+- IExpression
+- BinaryExpression
+- BindingEnvironment
+- ICommand
+- SetVariableCommand
+
+- 1000 things... :-)

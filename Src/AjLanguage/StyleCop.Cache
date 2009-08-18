@@ -1,0 +1,33 @@
+<stylecopresultscache>
+  <version>10</version>
+  <project key="-738601673">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="ICommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:28:40</timestamp>
+    <milliseconds>911</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:14:41</timestamp>
+    <milliseconds>947</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:08:41</timestamp>
+    <milliseconds>597</milliseconds>
+    <violations />
+  </sourcecode>
+</stylecopresultscache>
