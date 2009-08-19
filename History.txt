@@ -8,3 +8,10 @@ CompositeCommand
 IExpression
 ConstantExpression, VariableExpression
 
+2009-08-18
+Predicates.IsFalse, .IsTrue w/tests
+
+2009-08-19
+IfCommand
+BinaryExpression, ArithmeticBinaryExpression
+UnaryExpression, ArithmeticUnaryExpression

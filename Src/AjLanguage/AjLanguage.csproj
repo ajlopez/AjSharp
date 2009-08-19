@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -48,14 +49,18 @@
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\IfCommand.cs" />
     <Compile Include="Commands\SetVariableCommand.cs" />
+    <Compile Include="Expressions\ArithmeticBinaryExpression.cs" />
+    <Compile Include="Expressions\ArithmeticUnaryExpression.cs" />
+    <Compile Include="Expressions\BinaryExpression.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\IExpression.cs" />
+    <Compile Include="Expressions\UnaryExpression.cs" />
     <Compile Include="Expressions\VariableExpression.cs" />
+    <Compile Include="Language\ArithmeticOperator.cs" />
+    <Compile Include="Predicates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Language\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

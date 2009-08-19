@@ -43,6 +43,7 @@
     <Compile Include="BindingEnvironmentTest.cs" />
     <Compile Include="CommandsTests.cs" />
     <Compile Include="ExpressionsTests.cs" />
+    <Compile Include="PredicatesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
