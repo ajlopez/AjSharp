@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="msmdvbanet, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -48,6 +49,8 @@
   <ItemGroup>
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\ForEachCommand.cs" />
+    <Compile Include="Commands\WhileCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\IfCommand.cs" />
     <Compile Include="Commands\SetVariableCommand.cs" />
