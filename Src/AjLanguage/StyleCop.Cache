@@ -1,26 +1,5 @@
 <stylecopresultscache>
   <version>10</version>
-  <project key="-738601673">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="ICommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>08/17/2009 16:29:06</timestamp>
-      <milliseconds>637</milliseconds>
-    </settings>
-    <timestamp>08/17/2009 16:28:40</timestamp>
-    <milliseconds>911</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>08/17/2009 16:29:06</timestamp>
-      <milliseconds>637</milliseconds>
-    </settings>
-    <timestamp>08/17/2009 16:14:41</timestamp>
-    <milliseconds>947</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="AssemblyInfo.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>08/17/2009 16:29:06</timestamp>
@@ -28,6 +7,162 @@
     </settings>
     <timestamp>08/17/2009 16:08:41</timestamp>
     <milliseconds>597</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ForCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/23/2009 08:36:53</timestamp>
+    <milliseconds>340</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-738601673">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="CompositeCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:55:10</timestamp>
+    <milliseconds>761</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ForEachCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/20/2009 09:04:33</timestamp>
+    <milliseconds>732</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ICommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:31:12</timestamp>
+    <milliseconds>626</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/20/2009 09:17:49</timestamp>
+    <milliseconds>382</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IfCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 08:36:28</timestamp>
+    <milliseconds>162</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="SetVariableCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:41:11</timestamp>
+    <milliseconds>133</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="WhileCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/20/2009 08:42:52</timestamp>
+    <milliseconds>894</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ArithmeticBinaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 10:32:30</timestamp>
+    <milliseconds>432</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ArithmeticUnaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 10:32:30</timestamp>
+    <milliseconds>276</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ConstantExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:35:42</timestamp>
+    <milliseconds>416</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="IExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:32:05</timestamp>
+    <milliseconds>565</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="UnaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 10:32:30</timestamp>
+    <milliseconds>333</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BinaryExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 10:32:30</timestamp>
+    <milliseconds>389</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="VariableExpression.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/17/2009 16:43:59</timestamp>
+    <milliseconds>164</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Predicates.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 08:32:15</timestamp>
+    <milliseconds>734</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="ArithmeticOperator.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>08/17/2009 16:29:06</timestamp>
+      <milliseconds>637</milliseconds>
+    </settings>
+    <timestamp>08/18/2009 10:33:45</timestamp>
+    <milliseconds>865</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

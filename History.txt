@@ -20,3 +20,9 @@ UnaryExpression, ArithmeticUnaryExpression
 WhileCommand
 ForEachCommand
 BindingEnvironment with parent
+
+2009-08-23
+CompareExpression
+AndExpression, OrExpression, NotExpression
+ComparisonOperator
+ForCommand

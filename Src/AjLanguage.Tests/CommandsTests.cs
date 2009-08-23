@@ -135,5 +135,31 @@
 
             Assert.AreEqual(6, environment.GetValue("x"));
         }
+
+        [TestMethod]
+        public void ExecuteForCommand()
+        {
+            ICommand setX = new SetVariableCommand("x", new ConstantExpression(0));
+            ICommand setY = new SetVariableCommand("y", new ConstantExpression(0));
+            List<ICommand> commands = new List<ICommand>();
+            commands.Add(setX);
+            commands.Add(setY);
+            ICommand initialCommand = new CompositeCommand(commands);
+
+            IExpression condition = new CompareExpression(ComparisonOperator.Less, new VariableExpression("x"), new ConstantExpression(6));
+
+            IExpression addXtoY = new ArithmeticBinaryExpression(ArithmeticOperator.Add, new VariableExpression("y"), new VariableExpression("x"));
+            ICommand addToY = new SetVariableCommand("y", addXtoY);
+
+            ICommand endCommand = new SetVariableCommand("x", new ArithmeticBinaryExpression(ArithmeticOperator.Add, new VariableExpression("x"), new ConstantExpression(1)));
+
+            ForCommand forcmd = new ForCommand(initialCommand, condition, endCommand, addToY);
+
+            BindingEnvironment environment = new BindingEnvironment();
+
+            forcmd.Execute(environment);
+
+            Assert.AreEqual(15, environment.GetValue("y"));
+        }
     }
 }
