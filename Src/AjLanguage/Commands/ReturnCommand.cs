@@ -1,0 +1,32 @@
+﻿namespace AjLanguage.Commands
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using AjLanguage.Expressions;
+
+    public class ReturnCommand : ICommand
+    {
+        private IExpression expression;
+
+        public ReturnCommand()
+            : this(null)
+        {
+        }
+
+        public ReturnCommand(IExpression expression)
+        {
+            this.expression = expression;
+        }
+
+        public void Execute(BindingEnvironment environment)
+        {
+            if (this.expression != null)
+                Machine.CurrentFunctionStatus.ReturnValue = this.expression.Evaluate(environment);
+
+            Machine.CurrentFunctionStatus.Returned = true;
+        }
+    }
+}

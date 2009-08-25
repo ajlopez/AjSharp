@@ -51,6 +51,10 @@
     <Compile Include="Commands\CompositeCommand.cs" />
     <Compile Include="Commands\ForCommand.cs" />
     <Compile Include="Commands\ForEachCommand.cs" />
+    <Compile Include="Commands\Function.cs" />
+    <Compile Include="Commands\FunctionStatus.cs" />
+    <Compile Include="Commands\ICallable.cs" />
+    <Compile Include="Commands\ReturnCommand.cs" />
     <Compile Include="Commands\WhileCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\IfCommand.cs" />
@@ -61,6 +65,7 @@
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\AndExpression.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
+    <Compile Include="Expressions\InvokeExpression.cs" />
     <Compile Include="Expressions\OrExpression.cs" />
     <Compile Include="Expressions\NotExpression.cs" />
     <Compile Include="Expressions\IExpression.cs" />
@@ -68,6 +73,7 @@
     <Compile Include="Expressions\VariableExpression.cs" />
     <Compile Include="Language\ArithmeticOperator.cs" />
     <Compile Include="Language\ComparisonOperator.cs" />
+    <Compile Include="Machine.cs" />
     <Compile Include="Predicates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

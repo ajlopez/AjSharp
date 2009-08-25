@@ -17,7 +17,12 @@
         public void Execute(BindingEnvironment environment)
         {
             foreach (ICommand command in this.commands)
+            {
+                if (Machine.CurrentFunctionStatus.Returned)
+                    return;
+
                 command.Execute(environment);
+            }
         }
     }
 }

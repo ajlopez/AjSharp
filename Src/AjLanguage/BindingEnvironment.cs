@@ -44,6 +44,11 @@
             this.values[name] = value;
         }
 
+        public void SetLocalValue(string name, object value)
+        {
+            this.values[name] = value;
+        }
+
         private bool IsDefined(string name)
         {
             if (this.values.ContainsKey(name))

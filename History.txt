@@ -26,3 +26,14 @@ CompareExpression
 AndExpression, OrExpression, NotExpression
 ComparisonOperator
 ForCommand
+
+2009-08-24
+Function
+ICallable
+BindingEnvironment.SetLocalValue
+
+2009-08-25
+FunctionStatus, Machine.CurrentFunctionStatus
+ReturnCommand
+Function first test
+InvokeExpression wo/test
