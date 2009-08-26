@@ -37,3 +37,7 @@ FunctionStatus, Machine.CurrentFunctionStatus
 ReturnCommand
 Function first test
 InvokeExpression wo/test
+
+2009-08-26
+ICallable, Function tests
+InvokeExpression tests

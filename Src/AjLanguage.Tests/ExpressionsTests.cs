@@ -259,6 +259,23 @@
             Assert.IsFalse(EvaluateComparisonOperator(ComparisonOperator.GreaterEqual, "bar", "foo"));
             Assert.IsFalse(EvaluateComparisonOperator(ComparisonOperator.GreaterEqual, 2, "3"));
         }
+        
+        [TestMethod]
+        public void EvaluateInvokeExpression()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("x"));
+            Function function = new Function(new string[] { "x" }, body);
+
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("foo", function);
+
+            IExpression expression = new InvokeExpression("foo", new IExpression[] { new ConstantExpression(1) });
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result);
+        }
 
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)
         {
@@ -300,6 +317,21 @@
             IExpression expression = new CompareExpression(operation, new ConstantExpression(left), new ConstantExpression(right));
 
             return (bool) expression.Evaluate(null);
+        }
+
+        private static ICallable BuildFactorialFunction()
+        {
+            IExpression condition = new CompareExpression(ComparisonOperator.LessEqual, new VariableExpression("n"), new ConstantExpression(1));
+
+            ICommand return1 = new ReturnCommand(new ConstantExpression(1));
+            ICommand return2 = new ReturnCommand(new ArithmeticBinaryExpression(ArithmeticOperator.Multiply, 
+                new VariableExpression("n"),
+                new InvokeExpression("factorial", new IExpression[] { new ArithmeticBinaryExpression(ArithmeticOperator.Subtract, new VariableExpression("n"), new ConstantExpression(1)) })));
+
+            ICommand ifcmd = new IfCommand(condition, return1, return2);
+            ICallable factorial = new Function(new string[] { "n" }, ifcmd);
+
+            return factorial;
         }
     }
 }
