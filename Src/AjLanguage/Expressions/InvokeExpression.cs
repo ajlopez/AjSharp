@@ -18,6 +18,10 @@
             this.arguments = arguments;
         }
 
+        public string Name { get { return this.name; } }
+
+        public ICollection<IExpression> Arguments { get { return this.arguments; } }
+
         public object Evaluate(BindingEnvironment environment)
         {
             ICallable callable = (ICallable) environment.GetValue(this.name);

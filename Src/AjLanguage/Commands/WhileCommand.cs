@@ -18,6 +18,10 @@
             this.command = command;
         }
 
+        public IExpression Condition { get { return this.condition; } }
+
+        public ICommand Command { get { return this.command; } } 
+
         public void Execute(BindingEnvironment environment)
         {
             while (Predicates.IsTrue(this.condition.Evaluate(environment)))

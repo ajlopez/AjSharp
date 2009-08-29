@@ -49,3 +49,11 @@ AjSharp.Tests
 
 2009-08-29
 if, if/else, return command in Parser w/Tests
+foreach, while commands in Parser w/Tests
+{ } Composite command in Parser w/Tests
+function parsing
+InvokeCommand
+DefineFunctionCommand
+PrintSubroutine
+PrintLineSubroutine
+AjSharp.Console

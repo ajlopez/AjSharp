@@ -45,11 +45,26 @@
                 if (token.Value == "if")
                     return ParseIfCommand();
 
+                if (token.Value == "while")
+                    return ParseWhileCommand();
+
+                if (token.Value == "foreach")
+                    return ParseForEachCommand();
+
                 if (token.Value == "return")
                     return ParseReturnCommand();
 
+                if (token.Value == "function")
+                    return ParseFunctionCommand();
+
+                if (this.TryParse(TokenType.Separator, "("))
+                    return ParseInvokeCommand(token.Value);
+
                 return ParseSetCommand(token.Value);
             }
+
+            if (token.TokenType == TokenType.Separator && token.Value == "{")
+                return ParseCompositeCommand();
 
             throw new UnexpectedTokenException(token);
         }
@@ -213,11 +228,30 @@
                 case TokenType.String:
                     return new ConstantExpression(token.Value);
                 case TokenType.Name:
+                    if (TryParse(TokenType.Separator, "("))
+                    {
+                        List<IExpression> arguments = this.ParseArgumentList();
+                        return new InvokeExpression(token.Value, arguments);
+                    }
+
                     return new VariableExpression(token.Value);
+
                     break;
             }
 
             throw new UnexpectedTokenException(token);
+        }
+
+        private ICommand ParseCompositeCommand()
+        {
+            IList<ICommand> commands = new List<ICommand>();
+
+            while (!this.TryParse(TokenType.Separator, "}"))
+                commands.Add(this.ParseCommand());
+
+            this.lexer.NextToken();
+
+            return new CompositeCommand(commands);
         }
 
         private ICommand ParseSetCommand(string variableName)
@@ -227,6 +261,17 @@
             IExpression expression = this.ParseExpression();
 
             ICommand command = new SetVariableCommand(variableName, expression);
+
+            this.Parse(TokenType.Separator, ";");
+
+            return command;
+        }
+
+        private ICommand ParseInvokeCommand(string name)
+        {
+            IList<IExpression> arguments = this.ParseArgumentList();
+
+            ICommand command = new InvokeCommand(new InvokeExpression(name, arguments));
 
             this.Parse(TokenType.Separator, ";");
 
@@ -263,6 +308,56 @@
             ICommand elsecmd = this.ParseCommand();
 
             return new IfCommand(condition, thencmd, elsecmd);
+        }
+
+        private ICommand ParseWhileCommand()
+        {
+            this.Parse(TokenType.Separator, "(");
+            IExpression condition = this.ParseExpression();
+            this.Parse(TokenType.Separator, ")");
+            ICommand command = this.ParseCommand();
+
+            return new WhileCommand(condition, command);
+        }
+
+        private ICommand ParseForEachCommand()
+        {
+            this.Parse(TokenType.Separator, "(");
+            string name = this.ParseName();
+            this.Parse(TokenType.Name, "in");
+            IExpression values = this.ParseExpression();
+            this.Parse(TokenType.Separator, ")");
+            ICommand command = this.ParseCommand();
+
+            return new ForEachCommand(name, values, command);
+        }
+
+        private ICommand ParseFunctionCommand()
+        {
+            string name = this.ParseName();
+            string[] parameterNames = this.ParseParameters();
+            ICommand body = this.ParseCommand();
+
+            return new DefineFunctionCommand(name, parameterNames, body);
+        }
+
+        private string[] ParseParameters()
+        {
+            List<string> names = new List<string>();
+
+            this.Parse(TokenType.Separator, "(");
+
+            while (!this.TryParse(TokenType.Separator, ")"))
+            {
+                if (names.Count > 0)
+                    this.Parse(TokenType.Separator, ",");
+
+                names.Add(this.ParseName());
+            }
+
+            this.lexer.NextToken();
+
+            return names.ToArray();
         }
 
         private bool TryPeekName()

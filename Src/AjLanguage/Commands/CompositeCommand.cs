@@ -14,6 +14,10 @@
             this.commands = commands;
         }
 
+        public int CommandCount { get { return this.commands.Count; } }
+
+        public ICollection<ICommand> Commands { get { return this.commands; } }
+
         public void Execute(BindingEnvironment environment)
         {
             foreach (ICommand command in this.commands)

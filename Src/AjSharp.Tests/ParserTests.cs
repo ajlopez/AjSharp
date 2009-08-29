@@ -225,6 +225,100 @@
             Assert.IsNotNull(ifcmd.ElseCommand);
         }
 
+        [TestMethod]
+        public void ParseSimpleWhile()
+        {
+            ICommand command = ParseCommand("while (x<10) x=x+1;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(WhileCommand));
+
+            WhileCommand whilecmd = (WhileCommand)command;
+
+            Assert.IsNotNull(whilecmd.Condition);
+            Assert.IsNotNull(whilecmd.Command);
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(SetVariableCommand));
+        }
+
+        [TestMethod]
+        public void ParseSimpleForEach()
+        {
+            ICommand command = ParseCommand("foreach (x in xs) y=y+x;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ForEachCommand));
+
+            ForEachCommand foreachcmd = (ForEachCommand) command;
+
+            Assert.AreEqual("x", foreachcmd.Name);
+            Assert.IsNotNull(foreachcmd.Expression);
+            Assert.IsInstanceOfType(foreachcmd.Expression, typeof(VariableExpression));
+            Assert.IsNotNull(foreachcmd.Command);
+            Assert.IsInstanceOfType(foreachcmd.Command, typeof(SetVariableCommand));
+        }
+
+        [TestMethod]
+        public void ParseCompositeCommand()
+        {
+            ICommand command = ParseCommand("{ x=1; y=2; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(CompositeCommand));
+
+            CompositeCommand compcmd = (CompositeCommand)command;
+
+            Assert.AreEqual(2, compcmd.CommandCount);
+            Assert.IsNotNull(compcmd.Commands);
+            Assert.AreEqual(2, compcmd.Commands.Count);
+
+            foreach (ICommand cmd in compcmd.Commands)
+            {
+                Assert.IsNotNull(cmd);
+                Assert.IsInstanceOfType(cmd, typeof(SetVariableCommand));
+            }
+        }
+
+        [TestMethod]
+        public void ParseFunctionDefinition()
+        {
+            ICommand command = ParseCommand("function Abs(x) { if (x<0) return -x; else return x * factorial(x-1); }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineFunctionCommand));
+
+            DefineFunctionCommand defcmd = (DefineFunctionCommand) command;
+
+            Assert.AreEqual("Abs", defcmd.FunctionName);
+            Assert.AreEqual(1, defcmd.ParameterNames.Length);
+            Assert.AreEqual("x", defcmd.ParameterNames[0]);
+            Assert.IsNotNull(defcmd.Body);
+            Assert.IsInstanceOfType(defcmd.Body, typeof(CompositeCommand));
+        }
+
+        [TestMethod]
+        public void ParseInvokeExpression()
+        {
+            IExpression expression = ParseExpression("Factorial(3)");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(InvokeExpression));
+
+            InvokeExpression invexp = (InvokeExpression)expression;
+
+            Assert.AreEqual("Factorial", invexp.Name);
+            Assert.AreEqual(1, invexp.Arguments.Count);
+            Assert.IsInstanceOfType(invexp.Arguments.First(), typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void ParsePrintCommand()
+        {
+            ICommand command = ParseCommand("Print(1);");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(InvokeCommand));
+        }
+
         //[TestMethod]
         //public void ParseSimpleDotExpression()
         //{

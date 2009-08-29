@@ -20,6 +20,12 @@
             this.command = command;
         }
 
+        public string Name { get { return this.name; } }
+
+        public IExpression Expression { get { return this.expression; } }
+
+        public ICommand Command { get { return this.command; } }
+
         public void Execute(BindingEnvironment environment)
         {
             BindingEnvironment newenv = new BindingEnvironment(environment);
