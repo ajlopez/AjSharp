@@ -21,6 +21,8 @@
             this.expression = expression;
         }
 
+        public IExpression Expression { get { return this.expression; } }
+
         public void Execute(BindingEnvironment environment)
         {
             if (this.expression != null)

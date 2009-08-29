@@ -25,6 +25,12 @@
             this.elseCommand = elseCommand;
         }
 
+        public IExpression Condition { get { return this.condition; } }
+
+        public ICommand ThenCommand { get { return this.thenCommand; } }
+
+        public ICommand ElseCommand { get { return this.elseCommand; } }
+
         public void Execute(BindingEnvironment environment)
         {
             object result = this.condition.Evaluate(environment);

@@ -18,6 +18,10 @@
             this.expression = expression;
         }
 
+        public string VariableName { get { return this.name; } }
+
+        public IExpression Expression { get { return this.expression; } }
+
         public void Execute(BindingEnvironment environment)
         {
             environment.SetValue(this.name, this.expression.Evaluate(environment));

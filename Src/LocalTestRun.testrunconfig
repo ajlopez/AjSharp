@@ -4,6 +4,7 @@
   <CodeCoverage enabled="true">
     <Regular>
       <CodeCoverageItem binaryFile="AjLanguage\bin\Debug\AjLanguage.dll" pdbFile="AjLanguage\bin\Debug\AjLanguage.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="AjSharp\bin\Debug\AjSharp.dll" pdbFile="AjSharp\bin\Debug\AjSharp.pdb" instrumentInPlace="true" />
     </Regular>
   </CodeCoverage>
   <TestTypeSpecific>
