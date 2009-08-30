@@ -8,6 +8,7 @@
     public class FunctionStatus
     {
         public bool Returned { get; set; }
+
         public object ReturnValue { get; set; }
     }
 }

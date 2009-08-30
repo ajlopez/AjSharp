@@ -9,8 +9,8 @@
 
     using AjLanguage;
     using AjLanguage.Commands;
-    using AjLanguage.Language;
     using AjLanguage.Expressions;
+    using AjLanguage.Language;
 
     using AjSharp;
 
@@ -35,7 +35,7 @@
 
         public ICommand ParseCommand()
         {
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null)
                 return null;
@@ -43,35 +43,64 @@
             if (token.TokenType == TokenType.Name)
             {
                 if (token.Value == "if")
-                    return ParseIfCommand();
+                    return this.ParseIfCommand();
 
                 if (token.Value == "while")
-                    return ParseWhileCommand();
+                    return this.ParseWhileCommand();
 
                 if (token.Value == "foreach")
-                    return ParseForEachCommand();
+                    return this.ParseForEachCommand();
 
                 if (token.Value == "return")
-                    return ParseReturnCommand();
+                    return this.ParseReturnCommand();
 
                 if (token.Value == "function")
-                    return ParseFunctionCommand();
+                    return this.ParseFunctionCommand();
 
                 if (this.TryParse(TokenType.Separator, "("))
-                    return ParseInvokeCommand(token.Value);
+                    return this.ParseInvokeCommand(token.Value);
 
-                return ParseSetCommand(token.Value);
+                return this.ParseSetCommand(token.Value);
             }
 
             if (token.TokenType == TokenType.Separator && token.Value == "{")
-                return ParseCompositeCommand();
+                return this.ParseCompositeCommand();
 
             throw new UnexpectedTokenException(token);
         }
 
         public IExpression ParseExpression()
         {
-            return ParseBinaryExpressionZerothLevel();
+            return this.ParseBinaryExpressionZerothLevel();
+        }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (this.lexer != null)
+                this.lexer.Dispose();
+        }
+
+        #endregion
+
+        private static bool IsName(Token token, string value)
+        {
+            return IsToken(token, value, TokenType.Name);
+        }
+
+        private static bool IsToken(Token token, string value, TokenType type)
+        {
+            if (token == null)
+                return false;
+
+            if (token.TokenType != type)
+                return false;
+
+            if (type == TokenType.Name)
+                return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+
+            return token.Value.Equals(value);
         }
 
         private IExpression ParseBinaryExpressionZerothLevel()
@@ -118,7 +147,7 @@
             {
                 Token oper = this.lexer.NextToken();
                 IExpression right = this.ParseBinaryExpressionSecondLevel();
-                ArithmeticOperator op = (oper.Value == "+" ? ArithmeticOperator.Add : ArithmeticOperator.Subtract);
+                ArithmeticOperator op = oper.Value == "+" ? ArithmeticOperator.Add : ArithmeticOperator.Subtract;
 
                 expression = new ArithmeticBinaryExpression(op, expression, right);
             }
@@ -137,7 +166,7 @@
             {
                 Token oper = this.lexer.NextToken();
                 IExpression right = this.ParseUnaryExpression();
-                ArithmeticOperator op = (oper.Value == "*" ? ArithmeticOperator.Multiply : (oper.Value == "/" ? ArithmeticOperator.Divide : ArithmeticOperator.IntegerDivide));
+                ArithmeticOperator op = oper.Value == "*" ? ArithmeticOperator.Multiply : (oper.Value == "/" ? ArithmeticOperator.Divide : ArithmeticOperator.IntegerDivide);
 
                 expression = new ArithmeticBinaryExpression(op, expression, right);
             }
@@ -153,7 +182,7 @@
 
                 IExpression unaryExpression = this.ParseUnaryExpression();
 
-                ArithmeticOperator op = (oper.Value == "+" ? ArithmeticOperator.Plus : ArithmeticOperator.Minus);
+                ArithmeticOperator op = oper.Value == "+" ? ArithmeticOperator.Plus : ArithmeticOperator.Minus;
 
                 return new ArithmeticUnaryExpression(op, unaryExpression);
             }
@@ -165,17 +194,17 @@
         {
             IExpression expression = this.ParseSimpleTermExpression();
 
-            //while (TryParse(TokenType.Operator, "."))
-            //{
-            //    this.lexer.NextToken();
-            //    string name = this.ParseName();
-            //    List<IExpression> arguments = null;
+            while (this.TryParse(TokenType.Operator, "."))
+            {
+                this.lexer.NextToken();
+                string name = this.ParseName();
+                List<IExpression> arguments = null;
 
-            //    if (TryParse(TokenType.Separator, "("))
-            //        arguments = this.ParseArgumentList();
+                if (this.TryParse(TokenType.Separator, "("))
+                    arguments = this.ParseArgumentList();
 
-            //    expression = new DotExpression(expression, name, arguments);
-            //}
+                expression = new DotExpression(expression, name, arguments);
+            }
 
             return expression;
         }
@@ -201,7 +230,7 @@
 
         private IExpression ParseSimpleTermExpression()
         {
-            Token token = lexer.NextToken();
+            Token token = this.lexer.NextToken();
 
             if (token == null)
                 return null;
@@ -215,6 +244,7 @@
                         this.Parse(TokenType.Separator, ")");
                         return expr;
                     }
+
                     break;
                 case TokenType.Boolean:
                     bool booleanValue = Convert.ToBoolean(token.Value);
@@ -228,7 +258,7 @@
                 case TokenType.String:
                     return new ConstantExpression(token.Value);
                 case TokenType.Name:
-                    if (TryParse(TokenType.Separator, "("))
+                    if (this.TryParse(TokenType.Separator, "("))
                     {
                         List<IExpression> arguments = this.ParseArgumentList();
                         return new InvokeExpression(token.Value, arguments);
@@ -441,34 +471,5 @@
 
             throw new UnexpectedTokenException(token);
         }
-
-        private static bool IsName(Token token, string value)
-        {
-            return IsToken(token, value, TokenType.Name);
-        }
-
-        private static bool IsToken(Token token, string value, TokenType type)
-        {
-            if (token == null)
-                return false;
-
-            if (token.TokenType != type)
-                return false;
-
-            if (type == TokenType.Name)
-                return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
-
-            return token.Value.Equals(value);
-        }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {
-            if (this.lexer != null)
-                this.lexer.Dispose();
-        }
-
-        #endregion
     }
 }

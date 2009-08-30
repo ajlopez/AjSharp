@@ -67,9 +67,11 @@
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\AndExpression.cs" />
     <Compile Include="Expressions\CompareExpression.cs" />
+    <Compile Include="Expressions\DotExpression.cs" />
     <Compile Include="Expressions\InvokeExpression.cs" />
+    <Compile Include="Expressions\NewExpression.cs" />
     <Compile Include="Expressions\OrExpression.cs" />
-    <Compile Include="Expressions\NotExpression.cs" />
+    <Compile Include="Language\NotExpression.cs" />
     <Compile Include="Expressions\IExpression.cs" />
     <Compile Include="Expressions\UnaryExpression.cs" />
     <Compile Include="Expressions\VariableExpression.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Primitives\PrintLineSubroutine.cs" />
     <Compile Include="Primitives\PrintSubroutine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeUtilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

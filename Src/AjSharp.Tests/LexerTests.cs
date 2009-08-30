@@ -68,16 +68,18 @@
 
         private static void ParseToken(string text, TokenType type, string value)
         {
-            Lexer lexer = new Lexer(text);
+            using (Lexer lexer = new Lexer(text))
+            {
 
-            Token token = lexer.NextToken();
+                Token token = lexer.NextToken();
 
-            Assert.IsNotNull(token);
+                Assert.IsNotNull(token);
 
-            Assert.AreEqual(type, token.TokenType);
-            Assert.AreEqual(value, token.Value);
+                Assert.AreEqual(type, token.TokenType);
+                Assert.AreEqual(value, token.Value);
 
-            Assert.IsNull(lexer.NextToken());
+                Assert.IsNull(lexer.NextToken());
+            }
         }
 
         private static void ParseTokens(string text, TokenType type)

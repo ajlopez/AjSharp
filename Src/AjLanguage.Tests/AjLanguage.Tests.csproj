@@ -44,8 +44,10 @@
     <Compile Include="CommandsTests.cs" />
     <Compile Include="ExpressionsTests.cs" />
     <Compile Include="FunctionTests.cs" />
+    <Compile Include="MachineTests.cs" />
     <Compile Include="PredicatesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeUtilitiesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AjLanguage\AjLanguage.csproj">

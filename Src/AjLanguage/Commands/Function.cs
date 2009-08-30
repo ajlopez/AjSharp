@@ -7,9 +7,9 @@
 
     public class Function : ICallable
     {
-        string[] parameterNames;
-        ICommand body;
-        int arity;
+        private string[] parameterNames;
+        private ICommand body;
+        private int arity;
 
         public Function(string[] parameterNames, ICommand body)
         {
@@ -36,7 +36,7 @@
 
             if (argcount > 0)
                 for (int k = 0; k < argcount; k++)
-                    newenv.SetValue(parameterNames[k], arguments[k]);
+                    newenv.SetValue(this.parameterNames[k], arguments[k]);
 
             FunctionStatus fstatus = Machine.CurrentFunctionStatus;
 

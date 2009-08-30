@@ -57,3 +57,9 @@ DefineFunctionCommand
 PrintSubroutine
 PrintLineSubroutine
 AjSharp.Console
+
+2009-08-30
+DotExpression, NewExpression w/tests
+TypeUtilities w/tests
+dot expression support in Parser
+Machine.Environment, Machine.Current w/tests

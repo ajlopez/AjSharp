@@ -277,6 +277,33 @@
             Assert.AreEqual(1, result);
         }
 
+        [TestMethod]
+        public void EvaluateDotExpressionOnInteger()
+        {
+            IExpression expression = new DotExpression(new ConstantExpression(1), "ToString", new List<IExpression>());
+
+            Assert.AreEqual("1", expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void EvaluateDotExpressionOnString()
+        {
+            IExpression expression = new DotExpression(new ConstantExpression("foo"), "Length");
+
+            Assert.AreEqual(3, expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void EvaluateSimpleNewExpression()
+        {
+            IExpression expression = new NewExpression("System.Data.DataSet", null);
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(System.Data.DataSet));
+        }
+
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)
         {
             IExpression expression = new ArithmeticBinaryExpression(operation, new ConstantExpression(left), new ConstantExpression(right));

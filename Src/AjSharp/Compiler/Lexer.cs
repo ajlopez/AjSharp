@@ -20,6 +20,7 @@
         private Token lastToken;
         private char lastChar;
         private bool hasChar;
+        private bool isConsole;
 
         public Lexer(string text)
         {
@@ -29,6 +30,7 @@
             }
 
             this.reader = new StringReader(text);
+            this.isConsole = false;
         }
 
         public Lexer(TextReader reader)
@@ -39,6 +41,7 @@
             }
 
             this.reader = reader;
+            this.isConsole = reader.Equals(Console.In);
         }
 
         public Token PeekToken()
@@ -431,7 +434,7 @@
 
             int ch;
 
-            if (this.reader.Equals(System.Console.In) && this.reader.Peek() < 0)
+            if (this.isConsole && this.reader.Peek() < 0)
             {
                 Console.Out.Write("> ");
                 Console.Out.Flush();

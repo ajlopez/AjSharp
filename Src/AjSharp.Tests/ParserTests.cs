@@ -108,6 +108,8 @@
             Assert.AreEqual(ArithmeticOperator.Add, operation.Operation);
             Assert.IsNotNull(operation.LeftExpression);
             Assert.IsInstanceOfType(operation.LeftExpression, typeof(VariableExpression));
+            VariableExpression varexpr = (VariableExpression)operation.LeftExpression;
+            Assert.AreEqual("a", varexpr.VariableName);
             Assert.IsNotNull(operation.RightExpression);
             Assert.IsInstanceOfType(operation.RightExpression, typeof(ConstantExpression));
         }
@@ -319,23 +321,30 @@
             Assert.IsInstanceOfType(command, typeof(InvokeCommand));
         }
 
-        //[TestMethod]
-        //public void ParseSimpleDotExpression()
-        //{
-        //    IExpression expression = ParseExpression("a.class");
+        [TestMethod]
+        public void ParseSimpleDotExpression()
+        {
+            IExpression expression = ParseExpression("a.Length");
 
-        //    Assert.IsNotNull(expression);
-        //    Assert.IsInstanceOfType(expression, typeof(DotExpression));
-        //}
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DotExpression));            
+        }
 
-        //[TestMethod]
-        //public void ParseSimpleDotExpressionWithArguments()
-        //{
-        //    IExpression expression = ParseExpression("foo.bar(1,2)");
+        [TestMethod]
+        public void ParseSimpleDotExpressionWithArguments()
+        {
+            IExpression expression = ParseExpression("foo.Bar(1,2)");
 
-        //    Assert.IsNotNull(expression);
-        //    Assert.IsInstanceOfType(expression, typeof(DotExpression));
-        //}
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DotExpression));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnexpectedTokenException))]
+        public void RaiseIfUnexpectedTokenDot()
+        {
+            ParseExpression(".");
+        }
 
         private static IExpression ParseExpression(string text)
         {
