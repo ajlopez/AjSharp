@@ -7,15 +7,17 @@
 
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
+    using AjLanguage.Language;
 
     public class PrintLineSubroutine : ICallable
     {
         public object Invoke(BindingEnvironment environemnt, object[] arguments)
         {
+            Machine machine = Machine.Current;
             foreach (object argument in arguments)
-                Console.Write(argument.ToString());
+                machine.Out.Write(argument.ToString());
 
-            Console.WriteLine();
+            machine.Out.WriteLine();
 
             return null;
         }

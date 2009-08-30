@@ -63,3 +63,7 @@ DotExpression, NewExpression w/tests
 TypeUtilities w/tests
 dot expression support in Parser
 Machine.Environment, Machine.Current w/tests
+IObject, DynamicObject first version w/tests
+PrimitiveTests
+Move ICallable from AjLanguage.Commands to AjLanguage.Language
+new support in Parser w/tests

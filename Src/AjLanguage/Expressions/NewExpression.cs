@@ -16,6 +16,10 @@
             this.arguments = arguments;
         }
 
+        public string TypeName { get { return this.name; } }
+
+        public ICollection<IExpression> Arguments { get { return this.arguments; } }
+
         public object Evaluate(BindingEnvironment environment)
         {
             Type type = TypeUtilities.GetType(environment, this.name);

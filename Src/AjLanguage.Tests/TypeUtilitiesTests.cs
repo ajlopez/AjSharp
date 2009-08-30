@@ -42,5 +42,12 @@
             Assert.IsNotNull(type);
             Assert.AreEqual(type, typeof(System.Data.DataSet));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Unknown Type 'Foo.Bar'")]
+        public void RaiseIfUnknownType()
+        {
+            TypeUtilities.GetType(new BindingEnvironment(), "Foo.Bar");
+        }
     }
 }

@@ -346,6 +346,34 @@
             ParseExpression(".");
         }
 
+        [TestMethod]
+        public void ParseNewExpressionWithSimpleName()
+        {
+            IExpression expression = ParseExpression("new DynamicObject()");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NewExpression));
+
+            NewExpression newexp = (NewExpression)expression;
+
+            Assert.AreEqual("DynamicObject", newexp.TypeName);
+        }
+
+        [TestMethod]
+        public void ParseNewExpressionWithQualifiedName()
+        {
+            IExpression expression = ParseExpression("new System.IO.FileInfo(\".\")");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NewExpression));
+
+            NewExpression newexp = (NewExpression)expression;
+
+            Assert.AreEqual("System.IO.FileInfo", newexp.TypeName);
+            Assert.AreEqual(1, newexp.Arguments.Count);
+            Assert.IsInstanceOfType(newexp.Arguments.First(), typeof(ConstantExpression));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

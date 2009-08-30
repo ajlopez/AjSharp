@@ -1,6 +1,7 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
+    using System.IO;
     using System.Text;
     using System.Collections.Generic;
     using System.Linq;
@@ -302,6 +303,23 @@
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(System.Data.DataSet));
+        }
+
+        [TestMethod]
+        public void EvaluateNewExpressionWithArguments()
+        {
+            IExpression expression = new NewExpression("System.IO.DirectoryInfo", new IExpression[] { new ConstantExpression(".") });
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(System.IO.DirectoryInfo));
+
+            DirectoryInfo di = (DirectoryInfo)result;
+
+            DirectoryInfo current = new DirectoryInfo(".");
+
+            Assert.AreEqual(current.FullName, di.FullName);
         }
 
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)

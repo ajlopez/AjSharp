@@ -15,11 +15,11 @@
     {
         static void Main(string[] args)
         {
-            Parser parser = new Parser(Console.In);
+            Machine machine = new Machine();
+            Parser parser = new Parser(machine.In);
 
-            BindingEnvironment environment = new BindingEnvironment();
-            environment.SetValue("Print", new PrintSubroutine());
-            environment.SetValue("PrintLine", new PrintLineSubroutine());
+            machine.Environment.SetValue("Print", new PrintSubroutine());
+            machine.Environment.SetValue("PrintLine", new PrintLineSubroutine());
 
             ICommand command;
 
@@ -27,7 +27,7 @@
 
             while (command != null)
             {
-                command.Execute(environment);
+                command.Execute(machine.Environment);
                 command = parser.ParseCommand();
             }
         }

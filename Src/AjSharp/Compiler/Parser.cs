@@ -71,6 +71,9 @@
 
         public IExpression ParseExpression()
         {
+            if (this.TryParse(TokenType.Name, "new"))
+                return ParseNewExpression();
+
             return this.ParseBinaryExpressionZerothLevel();
         }
 
@@ -101,6 +104,15 @@
                 return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
 
             return token.Value.Equals(value);
+        }
+
+        private IExpression ParseNewExpression()
+        {
+            this.lexer.NextToken();
+            string typename = this.ParseQualifiedName();
+            ICollection<IExpression> arguments = this.ParseArgumentList();
+
+            return new NewExpression(typename, arguments);
         }
 
         private IExpression ParseBinaryExpressionZerothLevel()
@@ -470,6 +482,19 @@
                 return token.Value;
 
             throw new UnexpectedTokenException(token);
+        }
+
+        private string ParseQualifiedName()
+        {
+            string name = this.ParseName();
+
+            while (this.TryParse(TokenType.Operator, "."))
+            {
+                this.lexer.NextToken();
+                name += "." + this.ParseName();
+            }
+
+            return name;
         }
     }
 }

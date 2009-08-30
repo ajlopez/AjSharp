@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
 
+    using AjLanguage.Language;
+
     public class Function : ICallable
     {
         private string[] parameterNames;

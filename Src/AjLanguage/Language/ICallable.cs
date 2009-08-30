@@ -1,4 +1,4 @@
-﻿namespace AjLanguage.Commands
+﻿namespace AjLanguage.Language
 {
     using System;
     using System.Collections.Generic;
