@@ -28,12 +28,10 @@
 
         public void Execute(BindingEnvironment environment)
         {
-            BindingEnvironment newenv = new BindingEnvironment(environment);
-
             foreach (object result in (IEnumerable) this.expression.Evaluate(environment))
             {
-                newenv.SetValue(this.name, result);
-                this.command.Execute(newenv);
+                environment.SetValue(this.name, result);
+                this.command.Execute(environment);
             }
         }
     }

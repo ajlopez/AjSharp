@@ -10,16 +10,18 @@
     using AjLanguage.Primitives;
 
     using AjSharp.Compiler;
+    using AjSharp.Primitives;
 
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Machine machine = new Machine();
             Parser parser = new Parser(machine.In);
 
             machine.Environment.SetValue("Print", new PrintSubroutine());
             machine.Environment.SetValue("PrintLine", new PrintLineSubroutine());
+            machine.Environment.SetValue("Include", new IncludeSubroutine());
 
             ICommand command;
 

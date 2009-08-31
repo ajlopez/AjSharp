@@ -67,3 +67,14 @@ IObject, DynamicObject first version w/tests
 PrimitiveTests
 Move ICallable from AjLanguage.Commands to AjLanguage.Language
 new support in Parser w/tests
+
+ObjectUtilities w/tests
+TypeUtilities.GetValue w/tests
+FunctionExpression
+SetCommand, ExpressionCommand
+function expression in Parser
+AjSharp.Primitives.IncludeSubroutine w/tests
+EvaluationTests
+Examples/SetNumbers.ajs
+Examples/Factorial.ajs
+Examples/Apply.ajs

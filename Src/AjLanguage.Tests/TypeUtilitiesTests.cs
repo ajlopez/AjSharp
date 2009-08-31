@@ -49,5 +49,30 @@
         {
             TypeUtilities.GetType(new BindingEnvironment(), "Foo.Bar");
         }
+
+        [TestMethod]
+        public void AsType()
+        {
+            Assert.IsNotNull(TypeUtilities.AsType("System.IO.File"));
+            Assert.IsNull(TypeUtilities.AsType("Foo.Bar"));
+        }
+
+        [TestMethod]
+        public void IsNamespace()
+        {
+            Assert.IsTrue(TypeUtilities.IsNamespace("System"));
+            Assert.IsTrue(TypeUtilities.IsNamespace("AjLanguage"));
+            Assert.IsTrue(TypeUtilities.IsNamespace("AjLanguage.Language"));
+            Assert.IsTrue(TypeUtilities.IsNamespace("System.IO"));
+            Assert.IsTrue(TypeUtilities.IsNamespace("System.Data"));
+
+            Assert.IsFalse(TypeUtilities.IsNamespace("Foo.Bar"));
+        }
+
+        [TestMethod]
+        public void GetValueFromType()
+        {
+            Assert.IsFalse((bool)TypeUtilities.InvokeTypeMember(typeof(System.IO.File), "Exists", new object[] { "unknown.txt" }));
+        }
     }
 }

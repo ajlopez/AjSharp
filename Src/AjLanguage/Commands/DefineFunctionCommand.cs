@@ -28,7 +28,7 @@
 
         public void Execute(BindingEnvironment environment)
         {
-            environment.SetValue(this.name, new Function(this.parameterNames, this.body));
+            Machine.Current.Environment.SetValue(this.name, new Function(this.parameterNames, this.body));
         }
     }
 }

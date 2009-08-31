@@ -54,17 +54,39 @@
                 if (token.Value == "return")
                     return this.ParseReturnCommand();
 
-                if (token.Value == "function")
+                if (token.Value == "function" || token.Value == "sub")
                     return this.ParseFunctionCommand();
 
-                if (this.TryParse(TokenType.Separator, "("))
-                    return this.ParseInvokeCommand(token.Value);
+                //if (this.TryParse(TokenType.Separator, "("))
+                //    return this.ParseInvokeCommand(token.Value);
 
-                return this.ParseSetCommand(token.Value);
+                //return this.ParseSetCommand(token.Value);
             }
 
             if (token.TokenType == TokenType.Separator && token.Value == "{")
                 return this.ParseCompositeCommand();
+
+            this.lexer.PushToken(token);
+
+            IExpression expr = this.ParseExpression();
+
+            if (this.TryParse(TokenType.Separator, ";")) 
+            {
+                this.lexer.NextToken();
+
+                return new ExpressionCommand(expr);
+            }
+
+            if (this.TryParse(TokenType.Operator, "=")) 
+            {
+                this.lexer.NextToken();
+
+                ICommand command = new SetCommand(expr, this.ParseExpression());
+
+                this.Parse(TokenType.Separator, ";");
+
+                return command;
+            }
 
             throw new UnexpectedTokenException(token);
         }
@@ -72,7 +94,10 @@
         public IExpression ParseExpression()
         {
             if (this.TryParse(TokenType.Name, "new"))
-                return ParseNewExpression();
+                return this.ParseNewExpression();
+
+            if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
+                return this.ParseFunctionExpression();
 
             return this.ParseBinaryExpressionZerothLevel();
         }
@@ -104,6 +129,15 @@
                 return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
 
             return token.Value.Equals(value);
+        }
+
+        private IExpression ParseFunctionExpression()
+        {
+            this.lexer.NextToken();
+            string[] parameterNames = this.ParseParameters();
+            ICommand body = this.ParseCommand();
+
+            return new FunctionExpression(parameterNames, body);
         }
 
         private IExpression ParseNewExpression()
@@ -294,30 +328,6 @@
             this.lexer.NextToken();
 
             return new CompositeCommand(commands);
-        }
-
-        private ICommand ParseSetCommand(string variableName)
-        {
-            this.Parse(TokenType.Operator, "=");
-
-            IExpression expression = this.ParseExpression();
-
-            ICommand command = new SetVariableCommand(variableName, expression);
-
-            this.Parse(TokenType.Separator, ";");
-
-            return command;
-        }
-
-        private ICommand ParseInvokeCommand(string name)
-        {
-            IList<IExpression> arguments = this.ParseArgumentList();
-
-            ICommand command = new InvokeCommand(new InvokeExpression(name, arguments));
-
-            this.Parse(TokenType.Separator, ";");
-
-            return command;
         }
 
         private ICommand ParseReturnCommand()

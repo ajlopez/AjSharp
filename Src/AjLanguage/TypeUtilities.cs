@@ -3,11 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Reflection;
+    using System.Text;
 
     public class TypeUtilities
     {
+        private static bool referencedAssembliesLoaded = false;
+
         public static Type GetType(BindingEnvironment environment, string name)
         {
             object obj = environment.GetValue(name);
@@ -18,7 +20,7 @@
             return GetType(name);
         }
 
-        public static Type GetType(string name)
+        public static Type AsType(string name)
         {
             Type type = Type.GetType(name);
 
@@ -42,7 +44,41 @@
             if (type != null)
                 return type;
 
+            return null;
+        }
+
+        public static Type GetType(string name)
+        {
+            Type type = AsType(name);
+
+            if (type != null)
+                return type;
+
             throw new InvalidOperationException(string.Format("Unknown type '{0}'", name));
+        }
+
+        public static bool IsNamespace(string name)
+        {
+            return GetNamespaces().Contains(name);
+        }
+
+        public static object InvokeTypeMember(Type type, string name, object[] parameters)
+        {
+            return type.InvokeMember(name, System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static, null, null, parameters);
+        }
+
+        private static ICollection<string> GetNamespaces()
+        {
+            List<string> namespaces = new List<string>();
+
+            LoadReferencedAssemblies();
+
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                foreach (Type type in assembly.GetTypes())
+                    if (!namespaces.Contains(type.Namespace))
+                        namespaces.Add(type.Namespace);
+
+            return namespaces;
         }
 
         private static Type GetTypeFromPartialNamedAssembly(string name)
@@ -81,6 +117,9 @@
 
         private static void LoadReferencedAssemblies()
         {
+            if (referencedAssembliesLoaded)
+                return;
+
             List<string> loaded = new List<string>();
 
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -88,6 +127,8 @@
 
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
                 LoadReferencedAssemblies(assembly, loaded);
+
+            referencedAssembliesLoaded = true;
         }
 
         private static void LoadReferencedAssemblies(Assembly assembly, List<string> loaded)

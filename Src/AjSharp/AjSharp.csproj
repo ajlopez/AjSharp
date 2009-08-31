@@ -57,6 +57,7 @@
     <Compile Include="Compiler\TokenType.cs" />
     <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />
     <Compile Include="Compiler\UnexpectedTokenException.cs" />
+    <Compile Include="Primitives\IncludeSubroutine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

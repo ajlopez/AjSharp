@@ -10,6 +10,7 @@
         private IExpression expression;
         private string name;
         private ICollection<IExpression> arguments;
+        private Type type;
 
         public DotExpression(IExpression expression, string name)
             : this(expression, name, null)
@@ -21,11 +22,24 @@
             this.expression = expression;
             this.name = name;
             this.arguments = arguments;
+            this.type = AsType(this.expression);
         }
+
+        public string Name { get { return this.name; } }
+
+        public IExpression Expression { get { return this.expression; } }
+
+        public Type Type { get { return this.type; } }
+
+        public ICollection<IExpression> Arguments { get { return this.arguments; } }
 
         public object Evaluate(BindingEnvironment environment)
         {
-            object obj = this.expression.Evaluate(environment);
+            object obj = null;
+            
+            if (this.type == null)
+                obj = this.expression.Evaluate(environment);
+
             object[] parameters = null;
 
             if (this.arguments != null && this.arguments.Count > 0)
@@ -38,13 +52,39 @@
                 parameters = values.ToArray();
             }
 
+            if (this.type != null)
+                return TypeUtilities.InvokeTypeMember(this.type, this.name, parameters);
+
             // TODO if undefined, do nothing
             if (obj == null)
                 return null;
 
-            Type type = obj.GetType();
+            return ObjectUtilities.GetValue(obj, this.name, parameters);
+        }
 
-            return type.InvokeMember(this.name, System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Instance, null, obj, parameters);
+        private static Type AsType(IExpression expression)
+        {
+            string name = AsName(expression);
+
+            if (name == null)
+                return null;
+
+            return TypeUtilities.AsType(name);
+        }
+
+        private static string AsName(IExpression expression)
+        {
+            if (expression is VariableExpression)
+                return ((VariableExpression)expression).VariableName;
+
+            if (expression is DotExpression)
+            {
+                DotExpression dot = (DotExpression)expression;
+
+                return AsName(dot.Expression) + "." + dot.Name;
+            }
+
+            return null;
         }
     }
 }

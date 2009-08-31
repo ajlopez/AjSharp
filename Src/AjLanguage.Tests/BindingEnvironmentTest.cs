@@ -54,7 +54,7 @@
             environment.SetValue("foo", "newbar");
 
             Assert.AreEqual("newbar", environment.GetValue("foo"));
-            Assert.AreEqual("newbar", parent.GetValue("foo"));
+            Assert.AreEqual("bar", parent.GetValue("foo"));
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@
             BindingEnvironment parent = new BindingEnvironment();
             parent.SetValue("foo", "bar");
             BindingEnvironment environment = new BindingEnvironment(parent);
-            environment.SetLocalValue("foo", "newbar");
+            environment.SetValue("foo", "newbar");
 
             Assert.AreEqual("newbar", environment.GetValue("foo"));
             Assert.AreEqual("bar", parent.GetValue("foo"));

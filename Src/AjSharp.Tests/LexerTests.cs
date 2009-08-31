@@ -49,9 +49,21 @@
         }
 
         [TestMethod]
-        public void ParseStringWithEscapeChar()
+        public void ParseQuotedString()
+        {
+            ParseToken("'foo\\bar'", TokenType.String, "foo\\bar");
+        }
+
+        [TestMethod]
+        public void ParseStringWithEscapedChar()
         {
             ParseToken("\"foo\\\"bar\"", TokenType.String, "foo\"bar");
+        }
+
+        [TestMethod]
+        public void ParseStringWithEscapedChars()
+        {
+            ParseToken("\"foo\\\"\\r\\n\\t\\f\\b\\a\\vbar\"", TokenType.String, "foo\"\r\n\t\f\b\a\vbar");
         }
 
         [TestMethod]

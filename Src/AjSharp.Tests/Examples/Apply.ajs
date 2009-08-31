@@ -1,0 +1,19 @@
+﻿function Apply(func,values)
+{
+	list = new System.Collections.ArrayList();
+	
+	foreach (value in values)
+		list.Add(func(value));
+		
+	return list;
+}
+
+numbers = new System.Collections.ArrayList();
+numbers.Add(1);
+numbers.Add(2);
+numbers.Add(3);
+
+function Square(n) { return n*n; }
+
+squared = Apply(Square, numbers);
+squared2 = Apply(function (n) { return n*n; }, numbers);

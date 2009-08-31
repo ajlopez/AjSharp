@@ -11,13 +11,13 @@
 
         public virtual void SetValue(string name, object value)
         {
-            values[name] = value;
+            this.values[name] = value;
         }
 
         public virtual object GetValue(string name)
         {
-            if (values.ContainsKey(name))
-                return values[name];
+            if (this.values.ContainsKey(name))
+                return this.values[name];
 
             return null;
         }

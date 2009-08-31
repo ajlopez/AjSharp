@@ -207,10 +207,6 @@
                 {
                     switch (ch)
                     {
-                        case '\'':
-                            sb.Length--;
-                            sb.Append(ch);
-                            break;
                         case 't':
                             sb.Length--;
                             sb.Append('\t');
@@ -225,7 +221,7 @@
                             break;
                         case 'e':
                             sb.Length--;
-                            sb.Append((char) 27);
+                            sb.Append((char)27);
                             break;
                         case 'f':
                             sb.Length--;
@@ -238,10 +234,6 @@
                         case 'r':
                             sb.Length--;
                             sb.Append('\r');
-                            break;
-                        case 's':
-                            sb.Length--;
-                            sb.Append(' ');
                             break;
                         case 'v':
                             sb.Length--;
@@ -281,25 +273,10 @@
 
             ch = this.NextChar();
 
-            while (ch != QuotedStringChar || lastChar == '\\')
+            while (ch != QuotedStringChar)
             {
-                if (lastChar == '\\')
-                {
-                    if (ch == '\'')
-                    {
-                        sb.Length--;
-                        sb.Append(ch);
-                    }
-                    else if (ch != '\\')
-                        sb.Append(ch);
-
-                    lastChar = (char)0;
-                }
-                else
-                {
-                    sb.Append(ch);
-                    lastChar = ch;
-                }
+                sb.Append(ch);
+                lastChar = ch;
 
                 ch = this.NextChar();
             }

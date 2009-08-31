@@ -34,30 +34,7 @@
 
         public void SetValue(string name, object value)
         {
-            // TODO improve, it could be too many calls to .IsDefined
-            if (!this.values.ContainsKey(name) && this.parent != null && this.parent.IsDefined(name))
-            {
-                this.parent.SetValue(name, value);
-                return;
-            }
-
             this.values[name] = value;
-        }
-
-        public void SetLocalValue(string name, object value)
-        {
-            this.values[name] = value;
-        }
-
-        private bool IsDefined(string name)
-        {
-            if (this.values.ContainsKey(name))
-                return true;
-
-            if (this.parent != null)
-                return this.parent.IsDefined(name);
-
-            return false;
         }
     }
 }

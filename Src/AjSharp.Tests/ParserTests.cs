@@ -160,11 +160,12 @@
             ICommand command = ParseCommand("a = 1;");
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(SetVariableCommand));
+            Assert.IsInstanceOfType(command, typeof(SetCommand));
 
-            SetVariableCommand setcmd = (SetVariableCommand)command;
+            SetCommand setcmd = (SetCommand)command;
 
-            Assert.AreEqual("a", setcmd.VariableName);
+            Assert.IsInstanceOfType(setcmd.LeftValue, typeof(VariableExpression));
+            Assert.AreEqual("a", ((VariableExpression)setcmd.LeftValue).VariableName);
             Assert.IsNotNull(setcmd.Expression);
             Assert.IsInstanceOfType(setcmd.Expression, typeof(ConstantExpression));
             Assert.AreEqual(1, setcmd.Expression.Evaluate(null));
@@ -239,7 +240,7 @@
 
             Assert.IsNotNull(whilecmd.Condition);
             Assert.IsNotNull(whilecmd.Command);
-            Assert.IsInstanceOfType(whilecmd.Command, typeof(SetVariableCommand));
+            Assert.IsInstanceOfType(whilecmd.Command, typeof(SetCommand));
         }
 
         [TestMethod]
@@ -256,7 +257,7 @@
             Assert.IsNotNull(foreachcmd.Expression);
             Assert.IsInstanceOfType(foreachcmd.Expression, typeof(VariableExpression));
             Assert.IsNotNull(foreachcmd.Command);
-            Assert.IsInstanceOfType(foreachcmd.Command, typeof(SetVariableCommand));
+            Assert.IsInstanceOfType(foreachcmd.Command, typeof(SetCommand));
         }
 
         [TestMethod]
@@ -276,7 +277,7 @@
             foreach (ICommand cmd in compcmd.Commands)
             {
                 Assert.IsNotNull(cmd);
-                Assert.IsInstanceOfType(cmd, typeof(SetVariableCommand));
+                Assert.IsInstanceOfType(cmd, typeof(SetCommand));
             }
         }
 
@@ -318,7 +319,7 @@
             ICommand command = ParseCommand("Print(1);");
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(InvokeCommand));
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
         }
 
         [TestMethod]
@@ -372,6 +373,30 @@
             Assert.AreEqual("System.IO.FileInfo", newexp.TypeName);
             Assert.AreEqual(1, newexp.Arguments.Count);
             Assert.IsInstanceOfType(newexp.Arguments.First(), typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void ParseSetPropertyCommand()
+        {
+            ICommand command = ParseCommand("x.FirstName = \"Adam\";");
+
+            Assert.IsNotNull(command);            
+        }
+
+        [TestMethod]
+        public void ParseFunctionExpression()
+        {
+            IExpression expression = ParseExpression("function (x) return x;");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(FunctionExpression));
+
+            FunctionExpression funcexp = (FunctionExpression)expression;
+
+            Assert.AreEqual(1, funcexp.ParameterNames.Length);
+            Assert.AreEqual("x", funcexp.ParameterNames[0]);
+            Assert.IsNotNull(funcexp.Body);
+            Assert.IsInstanceOfType(funcexp.Body, typeof(ReturnCommand));
         }
 
         private static IExpression ParseExpression(string text)

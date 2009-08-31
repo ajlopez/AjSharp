@@ -295,6 +295,14 @@
         }
 
         [TestMethod]
+        public void EvaluateDotExpressionAsTypeInvocation()
+        {
+            DotExpression dot = new DotExpression(new DotExpression(new DotExpression(new VariableExpression("System"), "IO"), "File"), "Exists", new IExpression[] { new ConstantExpression("unknown.txt") });
+
+            Assert.IsFalse((bool) dot.Evaluate(new BindingEnvironment()));
+        }
+
+        [TestMethod]
         public void EvaluateSimpleNewExpression()
         {
             IExpression expression = new NewExpression("System.Data.DataSet", null);
@@ -320,6 +328,24 @@
             DirectoryInfo current = new DirectoryInfo(".");
 
             Assert.AreEqual(current.FullName, di.FullName);
+        }
+
+        [TestMethod]
+        public void EvaluateFunctionExpression()
+        {
+            IExpression expression = new FunctionExpression(new string[] { "x" }, new ReturnCommand(new VariableExpression("x")));
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Function));
+
+            Function function = (Function)result;
+
+            Assert.AreEqual(1, function.ParameterNames.Length);
+            Assert.AreEqual("x", function.ParameterNames[0]);
+            Assert.IsNotNull(function.Body);
+            Assert.IsInstanceOfType(function.Body, typeof(ReturnCommand));
         }
 
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)

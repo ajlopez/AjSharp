@@ -1,6 +1,7 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
+    using System.IO;
     using System.Text;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,7 +16,7 @@
     public class CommandsTests
     {
         [TestMethod]
-        public void ExecuteSetCommand()
+        public void ExecuteSetVariableCommand()
         {
             BindingEnvironment environment = new BindingEnvironment();
             SetVariableCommand command = new SetVariableCommand("foo", new ConstantExpression("bar"));
@@ -160,6 +161,79 @@
             forcmd.Execute(environment);
 
             Assert.AreEqual(15, environment.GetValue("y"));
+        }
+
+        [TestMethod]
+        public void ExecuteSetCommandWithVariable()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            SetCommand command = new SetCommand(new VariableExpression("foo"), new ConstantExpression("bar"));
+
+            command.Execute(environment);
+
+            Assert.AreEqual("bar", environment.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void ExecuteSetCommandWithDotExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            DotExpression dotexpr = new DotExpression(new VariableExpression("foo"), "FirstName");
+            SetCommand command = new SetCommand(dotexpr, new ConstantExpression("bar"));
+
+            command.Execute(environment);
+
+            object obj = environment.GetValue("foo");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)obj;
+
+            Assert.AreEqual("bar", dynobj.GetValue("FirstName"));
+        }
+
+        [TestMethod]
+        public void ExecuteSetCommandWithComplexDotExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            DotExpression dot = new DotExpression(new VariableExpression("foo"), "Address");
+            DotExpression dotexpr = new DotExpression(dot, "Street");
+            SetCommand command = new SetCommand(dotexpr, new ConstantExpression("bar"));
+
+            command.Execute(environment);
+
+            object obj = environment.GetValue("foo");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)obj;
+
+            object obj2 = dynobj.GetValue("Address");
+
+            Assert.IsNotNull(obj2);
+            Assert.IsInstanceOfType(obj2, typeof(DynamicObject));
+
+            DynamicObject dynobj2 = (DynamicObject)obj2;
+
+            Assert.AreEqual("bar", dynobj2.GetValue("Street"));
+        }
+
+        [TestMethod]
+        public void ExecuteSetCommandWithObjectProperty()
+        {
+            Machine machine = new Machine();
+            TextWriter outwriter = new StringWriter();
+            machine.Environment.SetValue("machine", machine);
+            machine.Environment.SetValue("out", outwriter);
+
+            DotExpression dotexpr = new DotExpression(new VariableExpression("machine"), "Out");
+            SetCommand command = new SetCommand(dotexpr, new VariableExpression("out"));
+
+            command.Execute(machine.Environment);
+
+            Assert.AreEqual(machine.Out, outwriter);
         }
     }
 }
