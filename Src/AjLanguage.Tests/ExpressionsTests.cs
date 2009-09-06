@@ -348,6 +348,22 @@
             Assert.IsInstanceOfType(function.Body, typeof(ReturnCommand));
         }
 
+        [TestMethod]
+        public void EvaluateMultipleSetExpressionUsingDynamicObject()
+        {
+            DynamicObject dynobj = new DynamicObject();
+
+            MultipleSetExpression expression = new MultipleSetExpression(new ConstantExpression(dynobj), new string[] { "FirstName", "LastName" }, new IExpression[] { new ConstantExpression("John"), new ConstantExpression("Doe") });
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result == dynobj);
+
+            Assert.AreEqual("John", dynobj.GetValue("FirstName"));
+            Assert.AreEqual("Doe", dynobj.GetValue("LastName"));
+        }
+
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)
         {
             IExpression expression = new ArithmeticBinaryExpression(operation, new ConstantExpression(left), new ConstantExpression(right));
