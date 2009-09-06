@@ -77,3 +77,6 @@ EvaluationTests
 Examples/SetNumbers.ajs
 Examples/Factorial.ajs
 Examples/Apply.ajs
+
+2009-09-06
+MultipleSetExpression w/test
