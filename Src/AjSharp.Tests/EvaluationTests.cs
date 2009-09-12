@@ -284,6 +284,22 @@
             Assert.AreEqual(800, dynobj.GetValue("Age"));
         }
 
+        [TestMethod]
+        public void EvaluateConcatExpressionWithTwoStrings()
+        {
+            object result = this.EvaluateExpression("\"foo\" + \"bar\"");
+
+            Assert.AreEqual("foobar", result);
+        }
+
+        [TestMethod]
+        public void EvaluateConcatExpressionWithStringAndInteger()
+        {
+            object result = this.EvaluateExpression("\"foo\" + 4");
+
+            Assert.AreEqual("foo4", result);
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

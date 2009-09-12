@@ -58,6 +58,8 @@
     <Compile Include="Expressions\FunctionExpression.cs" />
     <Compile Include="Expressions\MultipleSetExpression.cs" />
     <Compile Include="IBindingEnvironment.cs" />
+    <Compile Include="Language\DynamicClass.cs" />
+    <Compile Include="Language\DynamicClassicObject.cs" />
     <Compile Include="Language\ICallable.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
     <Compile Include="Commands\ReturnCommand.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="Language\ArithmeticOperator.cs" />
     <Compile Include="Language\DynamicObject.cs" />
     <Compile Include="Language\ComparisonOperator.cs" />
+    <Compile Include="Language\IClass.cs" />
+    <Compile Include="Language\IClassicObject.cs" />
     <Compile Include="Language\IObject.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="ObjectEnvironment.cs" />

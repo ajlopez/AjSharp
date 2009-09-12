@@ -47,5 +47,16 @@
 
             return type.InvokeMember(name, System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Instance, null, obj, parameters);
         }
+
+        public static bool IsNumber(object obj)
+        {
+            return obj is System.Int32 ||
+                obj is System.Int16 ||
+                obj is System.Int64 ||
+                obj is System.Decimal ||
+                obj is System.Double ||
+                obj is System.Single ||
+                obj is System.Byte;
+        }
     }
 }

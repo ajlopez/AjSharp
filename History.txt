@@ -87,3 +87,10 @@ Support for new { prop = expr, ... } as a DynamicObject
 Invoke in IObject, DynamicObject
 Refactoring BindingEnvironment to IBindingEnvironment
 ObjectEnvironment w/tests
+
+ObjectUtilites.IsNumber
+concatenate using +
+IClass
+IClassicObject
+DynamicClass w/tests
+DynamicClassicObject

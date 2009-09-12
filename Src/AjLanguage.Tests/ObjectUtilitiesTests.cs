@@ -33,5 +33,21 @@
 
             Assert.AreEqual("Adam", ObjectUtilities.GetValue(dynobj, "FirstName"));
         }
+
+        [TestMethod]
+        public void IsNumber()
+        {
+            Assert.IsTrue(ObjectUtilities.IsNumber((byte) 1));
+            Assert.IsTrue(ObjectUtilities.IsNumber((short) 2));
+            Assert.IsTrue(ObjectUtilities.IsNumber((int) 3));
+            Assert.IsTrue(ObjectUtilities.IsNumber((long) 4));
+            Assert.IsTrue(ObjectUtilities.IsNumber((float) 1.2));
+            Assert.IsTrue(ObjectUtilities.IsNumber((double) 2.3));
+
+            Assert.IsFalse(ObjectUtilities.IsNumber(null));
+            Assert.IsFalse(ObjectUtilities.IsNumber("foo"));
+            Assert.IsFalse(ObjectUtilities.IsNumber('a'));
+            Assert.IsFalse(ObjectUtilities.IsNumber(this));
+        }
     }
 }

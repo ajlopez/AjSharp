@@ -22,7 +22,7 @@
             switch (operation)
             {
                 case ArithmeticOperator.Add:
-                    this.function = Operators.AddObject;
+                    this.function = AddOrConcatenateObjects;
                     break;
                 case ArithmeticOperator.Subtract:
                     this.function = Operators.SubtractObject;
@@ -46,6 +46,14 @@
         public override object Apply(object leftValue, object rightValue)
         {
             return this.function(leftValue, rightValue);
+        }
+
+        private static object AddOrConcatenateObjects(object left, object right)
+        {
+            if (ObjectUtilities.IsNumber(left) && ObjectUtilities.IsNumber(right))
+                return Operators.AddObject(left, right);
+
+            return Operators.ConcatenateObject(left, right);
         }
     }
 }
