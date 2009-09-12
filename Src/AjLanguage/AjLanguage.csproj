@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\DefineClassCommand.cs" />
     <Compile Include="Commands\DefineFunctionCommand.cs" />
     <Compile Include="Commands\ForCommand.cs" />
     <Compile Include="Commands\ForEachCommand.cs" />

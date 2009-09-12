@@ -57,6 +57,9 @@
                 if (token.Value == "function" || token.Value == "sub")
                     return this.ParseFunctionCommand();
 
+                if (token.Value == "class")
+                    return this.ParseClassCommand();
+
                 //if (this.TryParse(TokenType.Separator, "("))
                 //    return this.ParseInvokeCommand(token.Value);
 
@@ -140,11 +143,14 @@
             return new FunctionExpression(parameterNames, body);
         }
 
+        // TODO Refactor
         private IExpression ParseNewExpression()
         {
             this.lexer.NextToken();
 
             IExpression expression;
+
+            bool isDynamic = false;
 
             if (this.TryPeekName())
             {
@@ -157,21 +163,44 @@
                     return expression;
             }
             else
+            {
+                isDynamic = true;
                 expression = new NewExpression("AjLanguage.Language.DynamicObject", null);
+            }
 
             this.Parse(TokenType.Separator, "{");
 
             List<string> names = new List<string>();
             List<IExpression> expressions = new List<IExpression>();
 
+            bool wasMember = false;
+
             while (!this.TryParse(TokenType.Separator, "}"))
             {
-                if (names.Count > 0)
+                if (names.Count > 0 && !wasMember)
                     this.Parse(TokenType.Separator, ",");
 
-                names.Add(this.ParseName());
-                this.Parse(TokenType.Operator, "=");
-                expressions.Add(this.ParseExpression());
+                if (isDynamic && this.TryParse(TokenType.Name, "var", "function", "sub"))
+                {
+                    wasMember = true;
+
+                    Token token = this.lexer.NextToken();
+
+                    if (token.Value == "var")
+                        this.ParseMemberVariable(names, expressions);
+                    else if (token.Value == "function" || token.Value == "sub")
+                        this.ParseMemberMethod(names, expressions);
+                    else
+                        throw new UnexpectedTokenException(token);
+                }
+                else
+                {
+                    wasMember = false;
+
+                    names.Add(this.ParseName());
+                    this.Parse(TokenType.Operator, "=");
+                    expressions.Add(this.ParseExpression());
+                }
             }
 
             this.Parse(TokenType.Separator, "}");
@@ -421,6 +450,61 @@
             ICommand body = this.ParseCommand();
 
             return new DefineFunctionCommand(name, parameterNames, body);
+        }
+
+        private ICommand ParseClassCommand()
+        {
+            string name = this.ParseName();
+            List<string> memberNames = new List<string>();
+            List<IExpression> memberExpressions = new List<IExpression>();
+
+            this.Parse(TokenType.Separator, "{");
+
+            while (this.TryParse(TokenType.Name, "var", "function", "sub"))
+            {
+                Token token = this.lexer.NextToken();
+
+                if (token.Value == "var")
+                    this.ParseMemberVariable(memberNames, memberExpressions);
+                else if (token.Value == "function" || token.Value == "sub")
+                    this.ParseMemberMethod(memberNames, memberExpressions);
+                else
+                    throw new UnexpectedTokenException(token);
+            }
+
+            this.Parse(TokenType.Separator, "}");
+
+            DefineClassCommand cmd = new DefineClassCommand(name, memberNames.ToArray(), memberExpressions);
+
+            return cmd;
+        }
+
+        private void ParseMemberVariable(IList<string> memberNames, IList<IExpression> memberExpressions)
+        {
+            string name = this.ParseName();
+            IExpression expression = null;
+
+            if (this.TryParse(TokenType.Operator, "="))
+            {
+                this.lexer.NextToken();
+
+                expression = this.ParseExpression();
+            }
+
+            this.Parse(TokenType.Separator, ";");
+
+            memberNames.Add(name);
+            memberExpressions.Add(expression);
+        }
+
+        private void ParseMemberMethod(IList<string> memberNames, IList<IExpression> memberExpressions)
+        {
+            string name = this.ParseName();
+            string[] parameterNames = this.ParseParameters();
+            ICommand body = this.ParseCommand();
+
+            memberNames.Add(name);
+            memberExpressions.Add(new FunctionExpression(parameterNames, body));
         }
 
         private string[] ParseParameters()

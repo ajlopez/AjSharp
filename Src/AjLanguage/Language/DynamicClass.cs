@@ -37,5 +37,10 @@
 
             return dynobj;
         }
+
+        public virtual ICollection<string> GetMemberNames()
+        {
+            return this.members.Keys;
+        }
     }
 }

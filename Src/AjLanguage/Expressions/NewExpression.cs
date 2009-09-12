@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Text;
 
+    using AjLanguage.Language;
+
     public class NewExpression : IExpression
     {
         private string name;
@@ -22,7 +24,12 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            Type type = TypeUtilities.GetType(environment, this.name);
+            object value = environment.GetValue(this.name);
+
+            Type type = null;
+
+            if (!(value is IClass))
+                type = TypeUtilities.GetType(environment, this.name);
 
             object[] parameters = null;
 
@@ -35,6 +42,9 @@
 
                 parameters = values.ToArray();
             }
+
+            if (value is IClass)
+                return ((IClass)value).NewInstance(parameters);
 
             return Activator.CreateInstance(type, parameters);
         }

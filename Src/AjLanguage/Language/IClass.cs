@@ -12,5 +12,7 @@
         object GetMember(string name);
 
         object NewInstance(object[] parameters);
+
+        ICollection<string> GetMemberNames();
     }
 }

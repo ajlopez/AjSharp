@@ -410,6 +410,59 @@
         }
 
         [TestMethod]
+        public void ParseNewExpressionWithDynamicObjectMemberNotation()
+        {
+            IExpression expression = ParseExpression("new { var Name = \"Adam\"; var Age = 800;}");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(MultipleSetExpression));
+
+            MultipleSetExpression msetexp = (MultipleSetExpression)expression;
+
+            Assert.IsNotNull(msetexp.LeftObject);
+            Assert.IsInstanceOfType(msetexp.LeftObject, typeof(NewExpression));
+            Assert.AreEqual(2, msetexp.PropertyNames.Length);
+            Assert.AreEqual("Name", msetexp.PropertyNames[0]);
+            Assert.AreEqual("Age", msetexp.PropertyNames[1]);
+        }
+
+        [TestMethod]
+        public void ParseEmptyClassDefinition()
+        {
+            ICommand command = ParseCommand("class Foo { }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineClassCommand));
+        }
+
+        [TestMethod]
+        public void ParseClassDefinitionWithMemberVariable()
+        {
+            ICommand command = ParseCommand("class Foo { var Bar; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineClassCommand));
+        }
+
+        [TestMethod]
+        public void ParseClassDefinitionWithInitializedMemberVariables()
+        {
+            ICommand command = ParseCommand("class Person { var Name = \"Adam\"; var Age = 800; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineClassCommand));
+        }
+
+        [TestMethod]
+        public void ParseClassDefinitionWithMemberVariableAndMethod()
+        {
+            ICommand command = ParseCommand("class Foo { var Bar; function GetBar() { return Bar; }}");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineClassCommand));
+        }
+
+        [TestMethod]
         public void ParseSetPropertyCommand()
         {
             ICommand command = ParseCommand("x.FirstName = \"Adam\";");

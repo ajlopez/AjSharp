@@ -94,3 +94,7 @@ IClass
 IClassicObject
 DynamicClass w/tests
 DynamicClassicObject
+DefineClassCommand w/test
+class Foo { ... } in parser and evaluation w/tests
+new Foo() in evaluation w/tests
+new { } in parser and evaluation w/tests

@@ -18,5 +18,27 @@
         {
             return this.objclass;
         }
+
+        public override object Invoke(string name, object[] parameters)
+        {
+            object value = this.objclass.GetMember(name);
+
+            if (value == null)
+                return base.Invoke(name, parameters);
+
+            if (!(value is ICallable))
+            {
+                if (parameters == null)
+                    return value;
+
+                throw new InvalidOperationException(string.Format("'{0}' is not a method", name));
+            }
+
+            ICallable method = (ICallable)value;
+
+            IBindingEnvironment objenv = new ObjectEnvironment(this, Machine.Current == null ? null : Machine.Current.Environment);
+
+            return method.Invoke(objenv, parameters);
+        }
     }
 }

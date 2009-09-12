@@ -285,6 +285,22 @@
         }
 
         [TestMethod]
+        public void EvaluateNewExpressionWithDynamicObjectMemberNotation()
+        {
+            object result = this.EvaluateExpression("new { var Name = \"Adam\"; var Age = 800; function GetName() { return Name; } }");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)result;
+
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+            Assert.AreEqual("Adam", dynobj.Invoke("GetName", new object[] { }));
+            Assert.AreEqual("Adam", dynobj.Invoke("GetName", null));
+        }
+
+        [TestMethod]
         public void EvaluateConcatExpressionWithTwoStrings()
         {
             object result = this.EvaluateExpression("\"foo\" + \"bar\"");
@@ -298,6 +314,61 @@
             object result = this.EvaluateExpression("\"foo\" + 4");
 
             Assert.AreEqual("foo4", result);
+        }
+
+        [TestMethod]
+        public void EvaluateEmptyClassCommand()
+        {
+            this.ExecuteCommand("class Foo { }");
+
+            object result = this.machine.Environment.GetValue("Foo");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IClass));
+            Assert.AreEqual(0, ((IClass)result).GetMemberNames().Count);
+        }
+
+        [TestMethod]
+        public void EvaluateNewEmptyClassInstance()
+        {
+            this.ExecuteCommand("class Foo { }");
+            this.ExecuteCommand("foo = new Foo();");
+
+            object result = this.machine.Environment.GetValue("Foo");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IClass));
+            Assert.AreEqual(0, ((IClass)result).GetMemberNames().Count);
+
+            object instance = this.machine.Environment.GetValue("foo");
+
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IClassicObject));
+        }
+
+        [TestMethod]
+        public void EvaluateNewClassInstance()
+        {
+            this.ExecuteCommand("class Person { var Name = \"Adam\"; var Age = 800; function GetName() { return Name; } }");
+            this.ExecuteCommand("adam = new Person();");
+
+            object result = this.machine.Environment.GetValue("Person");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IClass));
+            Assert.AreEqual(3, ((IClass)result).GetMemberNames().Count);
+
+            object instance = this.machine.Environment.GetValue("adam");
+
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IClassicObject));
+
+            IClassicObject obj = (IClassicObject)instance;
+
+            Assert.AreEqual("Adam", obj.GetValue("Name"));
+            Assert.AreEqual(800, obj.GetValue("Age"));
+            Assert.AreEqual("Adam", obj.Invoke("GetName", new object[] { }));
+            Assert.AreEqual("Adam", obj.Invoke("GetName", null));
         }
 
         private object EvaluateExpression(string text)

@@ -5,6 +5,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
     using AjLanguage.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -62,6 +64,33 @@
 
             Assert.AreEqual("Adam", obj.GetValue("Name"));
             Assert.AreEqual(800, obj.GetValue("Age"));
+        }
+
+        [TestMethod]
+        public void InvokeMethod()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("Name"));
+            Function function = new Function(null, body);
+
+            this.dynclass.SetMember("Name", "Adam");
+            this.dynclass.SetMember("Age", 800);
+            this.dynclass.SetMember("GetName", function);
+
+            Assert.AreEqual(0, function.Arity);
+
+            object instance = this.dynclass.NewInstance(null);
+
+            Assert.IsNotNull(instance);
+
+            Assert.IsInstanceOfType(instance, typeof(IObject));
+
+            IObject dynobj = (IObject)instance;
+
+            object result = dynobj.Invoke("GetName", new object[] { });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string));
+            Assert.AreEqual("Adam", result);
         }
     }
 }
