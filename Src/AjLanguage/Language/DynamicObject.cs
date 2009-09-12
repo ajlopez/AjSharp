@@ -26,5 +26,27 @@
         {
             return this.values.Keys;
         }
+
+        public virtual object Invoke(string name, object[] parameters)
+        {
+            object value = this.GetValue(name);
+
+            if (value == null)
+                throw new InvalidOperationException(string.Format("Unknown member '{0}'", name));
+
+            if (!(value is ICallable))
+            {
+                if (parameters == null)
+                    return value;
+
+                throw new InvalidOperationException(string.Format("'{0}' is not a method", name));
+            }
+
+            ICallable method = (ICallable)value;
+
+            IBindingEnvironment objenv = new ObjectEnvironment(this, Machine.Current.Environment);
+
+            return method.Invoke(objenv, parameters);
+        }
     }
 }

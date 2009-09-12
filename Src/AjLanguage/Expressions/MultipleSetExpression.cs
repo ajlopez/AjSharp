@@ -29,7 +29,7 @@
 
         public ICollection<IExpression> Expressions { get { return this.expressions; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             object obj = this.leftObject.Evaluate(environment);
 

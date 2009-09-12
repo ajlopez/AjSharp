@@ -16,7 +16,7 @@
 
         public string VariableName { get { return this.name; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             return environment.GetValue(this.name);
         }

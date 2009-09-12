@@ -5,21 +5,21 @@
     using System.Linq;
     using System.Text;
 
-    public class BindingEnvironment
+    public class BindingEnvironment : AjLanguage.IBindingEnvironment
     {
-        private BindingEnvironment parent;
+        private IBindingEnvironment parent;
         private Dictionary<string, object> values = new Dictionary<string, object>();
 
         public BindingEnvironment()
         {
         }
 
-        public BindingEnvironment(BindingEnvironment parent)
+        public BindingEnvironment(IBindingEnvironment parent)
         {
             this.parent = parent;
         }
 
-        public object GetValue(string name)
+        public virtual object GetValue(string name)
         {
             if (!this.values.ContainsKey(name))
             {
@@ -32,7 +32,7 @@
             return this.values[name];
         }
 
-        public void SetValue(string name, object value)
+        public virtual void SetValue(string name, object value)
         {
             this.values[name] = value;
         }

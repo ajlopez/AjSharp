@@ -7,6 +7,8 @@
 
     public interface ICallable
     {
-        object Invoke(BindingEnvironment environemnt, object[] arguments);
+        object Invoke(IBindingEnvironment environment, object[] arguments);
+
+        int Arity { get; }
     }
 }

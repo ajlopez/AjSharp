@@ -9,10 +9,12 @@
     using AjLanguage;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
+    using AjLanguage.Language;
 
     using AjSharp;
     using AjSharp.Compiler;
     using AjSharp.Primitives;
+    using AjSharp.Tests.Classes;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -224,6 +226,62 @@
         {
             this.ExecuteCommand("func = function (n) { return n*n; };");
             Assert.AreEqual(4, this.EvaluateExpression("func(2)"));
+        }
+
+        [TestMethod]
+        public void EvaluateNewExpression()
+        {
+            object result = this.EvaluateExpression("new AjSharp.Tests.Classes.Person()");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Person));
+
+            Person person = (Person)result;
+
+            Assert.IsNull(person.Name);
+            Assert.AreEqual(0, person.Age);
+        }
+
+        [TestMethod]
+        public void EvaluateNewExpressionWithArguments()
+        {
+            object result = this.EvaluateExpression("new AjSharp.Tests.Classes.Person(\"Adam\", 800)");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Person));
+
+            Person person = (Person)result;
+
+            Assert.AreEqual("Adam", person.Name);
+            Assert.AreEqual(800, person.Age);
+        }
+
+        [TestMethod]
+        public void EvaluateNewExpressionWithPropertySetting()
+        {
+            object result = this.EvaluateExpression("new AjSharp.Tests.Classes.Person() { Name = \"Adam\", Age = 800 }");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Person));
+
+            Person person = (Person)result;
+
+            Assert.AreEqual("Adam", person.Name);
+            Assert.AreEqual(800, person.Age);
+        }
+
+        [TestMethod]
+        public void EvaluateNewExpressionWithDynamicObject()
+        {
+            object result = this.EvaluateExpression("new { Name = \"Adam\", Age = 800 }");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)result;
+
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
         }
 
         private object EvaluateExpression(string text)

@@ -57,6 +57,7 @@
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Expressions\FunctionExpression.cs" />
     <Compile Include="Expressions\MultipleSetExpression.cs" />
+    <Compile Include="IBindingEnvironment.cs" />
     <Compile Include="Language\ICallable.cs" />
     <Compile Include="Commands\ExpressionCommand.cs" />
     <Compile Include="Commands\ReturnCommand.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Language\ComparisonOperator.cs" />
     <Compile Include="Language\IObject.cs" />
     <Compile Include="Machine.cs" />
+    <Compile Include="ObjectEnvironment.cs" />
     <Compile Include="ObjectUtilities.cs" />
     <Compile Include="Predicates.cs" />
     <Compile Include="Primitives\PrintLineSubroutine.cs" />

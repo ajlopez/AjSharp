@@ -16,7 +16,7 @@
             this.expression = expression;
         }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             this.expression.Evaluate(environment);
         }

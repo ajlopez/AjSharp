@@ -22,7 +22,7 @@
 
         public ICommand Body { get { return this.body; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             return new Function(this.parameterNames, this.body);
         }

@@ -143,10 +143,40 @@
         private IExpression ParseNewExpression()
         {
             this.lexer.NextToken();
-            string typename = this.ParseQualifiedName();
-            ICollection<IExpression> arguments = this.ParseArgumentList();
 
-            return new NewExpression(typename, arguments);
+            IExpression expression;
+
+            if (this.TryPeekName())
+            {
+                string typename = this.ParseQualifiedName();
+                ICollection<IExpression> arguments = this.ParseArgumentList();
+
+                expression = new NewExpression(typename, arguments);
+
+                if (!this.TryParse(TokenType.Separator, "{"))
+                    return expression;
+            }
+            else
+                expression = new NewExpression("AjLanguage.Language.DynamicObject", null);
+
+            this.Parse(TokenType.Separator, "{");
+
+            List<string> names = new List<string>();
+            List<IExpression> expressions = new List<IExpression>();
+
+            while (!this.TryParse(TokenType.Separator, "}"))
+            {
+                if (names.Count > 0)
+                    this.Parse(TokenType.Separator, ",");
+
+                names.Add(this.ParseName());
+                this.Parse(TokenType.Operator, "=");
+                expressions.Add(this.ParseExpression());
+            }
+
+            this.Parse(TokenType.Separator, "}");
+
+            return new MultipleSetExpression(expression, names.ToArray(), expressions);
         }
 
         private IExpression ParseBinaryExpressionZerothLevel()
@@ -418,8 +448,6 @@
 
             if (token == null)
                 return false;
-
-            this.lexer.PushToken(token);
 
             return token.TokenType == TokenType.Name;
         }

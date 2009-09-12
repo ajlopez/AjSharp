@@ -18,7 +18,7 @@
 
         public ICollection<ICommand> Commands { get { return this.commands; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             foreach (ICommand command in this.commands)
             {

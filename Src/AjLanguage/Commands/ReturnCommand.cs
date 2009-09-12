@@ -23,7 +23,7 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             if (this.expression != null)
                 Machine.CurrentFunctionStatus.ReturnValue = this.expression.Evaluate(environment);

@@ -6,6 +6,8 @@
     using System.Linq;
 
     using AjLanguage;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
     using AjLanguage.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,10 +16,12 @@
     public class DynamicObjectTests
     {
         private DynamicObject dynobj;
+        private Machine machine;
 
         [TestInitialize]
         public void SetupDynamicObject()
         {
+            machine = new Machine();
             dynobj = new DynamicObject();
         }
 
@@ -48,6 +52,41 @@
 
             Assert.IsTrue(names.Contains("FirstName"));
             Assert.IsTrue(names.Contains("LastName"));
+        }
+
+        [TestMethod]
+        public void DefineMethod()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("Name"));
+            Function function = new Function(null, body);
+
+            Assert.AreEqual(0, function.Arity);
+
+            dynobj.SetValue("GetName", function);
+
+            object result = dynobj.GetValue("GetName");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ICallable));
+            Assert.IsTrue(result == function);
+        }
+
+        [TestMethod]
+        public void InvokeMethod()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("Name"));
+            Function function = new Function(null, body);
+
+            Assert.AreEqual(0, function.Arity);
+
+            dynobj.SetValue("Name", "Adam");
+            dynobj.SetValue("GetName", function);
+
+            object result = dynobj.Invoke("GetName", new object[] { });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string));
+            Assert.AreEqual("Adam", result);
         }
     }
 }

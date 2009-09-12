@@ -12,5 +12,7 @@
         void SetValue(string name, object value);
 
         ICollection<string> GetNames();
+
+        object Invoke(string name, object[] parameters);
     }
 }

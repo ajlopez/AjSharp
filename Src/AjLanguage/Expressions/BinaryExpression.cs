@@ -24,7 +24,7 @@
 
         #region IExpression Members
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             object leftValue = this.leftExpression.Evaluate(environment);
             object rightValue = this.rigthExpression.Evaluate(environment);

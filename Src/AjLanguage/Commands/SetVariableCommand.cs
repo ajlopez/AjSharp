@@ -22,7 +22,7 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             environment.SetValue(this.name, this.expression.Evaluate(environment));
         }

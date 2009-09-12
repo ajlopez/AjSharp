@@ -7,6 +7,6 @@
 
     public interface IExpression
     {
-        object Evaluate(BindingEnvironment environment);
+        object Evaluate(IBindingEnvironment environment);
     }
 }

@@ -11,7 +11,9 @@
 
     public class PrintLineSubroutine : ICallable
     {
-        public object Invoke(BindingEnvironment environemnt, object[] arguments)
+        public int Arity { get { return -1; } }
+
+        public object Invoke(IBindingEnvironment environemnt, object[] arguments)
         {
             Machine machine = Machine.Current;
             foreach (object argument in arguments)

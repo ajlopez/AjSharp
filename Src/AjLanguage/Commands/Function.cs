@@ -24,11 +24,13 @@
                 this.arity = parameterNames.Length;
         }
 
+        public int Arity { get { return this.parameterNames == null ? 0 : this.parameterNames.Length; } }
+
         public string[] ParameterNames { get { return this.parameterNames; } }
 
         public ICommand Body { get { return this.body; } }
 
-        public object Invoke(BindingEnvironment environment, object[] arguments)
+        public object Invoke(IBindingEnvironment environment, object[] arguments)
         {
             int argcount = 0;
 

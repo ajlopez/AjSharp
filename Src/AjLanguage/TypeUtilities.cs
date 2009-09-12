@@ -10,7 +10,7 @@
     {
         private static bool referencedAssembliesLoaded = false;
 
-        public static Type GetType(BindingEnvironment environment, string name)
+        public static Type GetType(IBindingEnvironment environment, string name)
         {
             object obj = environment.GetValue(name);
 

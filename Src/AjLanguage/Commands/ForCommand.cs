@@ -22,7 +22,7 @@
             this.body = body;
         }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             if (this.initialCommand != null)
                 this.initialCommand.Execute(environment);

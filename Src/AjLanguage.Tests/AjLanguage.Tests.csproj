@@ -46,6 +46,7 @@
     <Compile Include="ExpressionsTests.cs" />
     <Compile Include="FunctionTests.cs" />
     <Compile Include="MachineTests.cs" />
+    <Compile Include="ObjectEnvironmentTests.cs" />
     <Compile Include="ObjectUtilitiesTests.cs" />
     <Compile Include="PredicatesTests.cs" />
     <Compile Include="PrimitivesTests.cs" />

@@ -37,8 +37,10 @@
         {
             if (obj is DynamicObject)
             {
-                if (parameters == null || parameters.Length==0)
+                if (parameters == null)
                     return ((DynamicObject)obj).GetValue(name);
+
+                return ((DynamicObject)obj).Invoke(name, parameters);
             }
 
             Type type = obj.GetType();

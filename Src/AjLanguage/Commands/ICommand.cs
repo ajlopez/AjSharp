@@ -7,6 +7,6 @@
 
     public interface ICommand
     {
-        void Execute(BindingEnvironment environment);
+        void Execute(IBindingEnvironment environment);
     }
 }

@@ -26,7 +26,7 @@
 
         public ICommand Command { get { return this.command; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             foreach (object result in (IEnumerable) this.expression.Evaluate(environment))
             {

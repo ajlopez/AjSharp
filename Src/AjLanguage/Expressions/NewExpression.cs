@@ -20,7 +20,7 @@
 
         public ICollection<IExpression> Arguments { get { return this.arguments; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             Type type = TypeUtilities.GetType(environment, this.name);
 

@@ -80,3 +80,10 @@ Examples/Apply.ajs
 
 2009-09-06
 MultipleSetExpression w/test
+
+2009-09-12
+Support for new ... { prop = expr, ... } in Parser
+Support for new { prop = expr, ... } as a DynamicObject
+Invoke in IObject, DynamicObject
+Refactoring BindingEnvironment to IBindingEnvironment
+ObjectEnvironment w/tests

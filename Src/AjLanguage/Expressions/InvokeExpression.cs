@@ -23,7 +23,7 @@
 
         public ICollection<IExpression> Arguments { get { return this.arguments; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             ICallable callable = (ICallable) environment.GetValue(this.name);
 

@@ -376,6 +376,40 @@
         }
 
         [TestMethod]
+        public void ParseNewExpressionWithPropertyInitialization()
+        {
+            IExpression expression = ParseExpression("new System.Data.SqlClient.SqlConnection() { ConnectionString = \"foo\", CommandText = \"bar\"}");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(MultipleSetExpression));
+
+            MultipleSetExpression msetexp = (MultipleSetExpression)expression;
+
+            Assert.IsNotNull(msetexp.LeftObject);
+            Assert.IsInstanceOfType(msetexp.LeftObject, typeof(NewExpression));
+            Assert.AreEqual(2, msetexp.PropertyNames.Length);
+            Assert.AreEqual("ConnectionString", msetexp.PropertyNames[0]);
+            Assert.AreEqual("CommandText", msetexp.PropertyNames[1]);
+        }
+
+        [TestMethod]
+        public void ParseNewExpressionWithDynamicObject()
+        {
+            IExpression expression = ParseExpression("new { Name = \"Adam\", Age = 800}");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(MultipleSetExpression));
+
+            MultipleSetExpression msetexp = (MultipleSetExpression)expression;
+
+            Assert.IsNotNull(msetexp.LeftObject);
+            Assert.IsInstanceOfType(msetexp.LeftObject, typeof(NewExpression));
+            Assert.AreEqual(2, msetexp.PropertyNames.Length);
+            Assert.AreEqual("Name", msetexp.PropertyNames[0]);
+            Assert.AreEqual("Age", msetexp.PropertyNames[1]);
+        }
+
+        [TestMethod]
         public void ParseSetPropertyCommand()
         {
             ICommand command = ParseCommand("x.FirstName = \"Adam\";");

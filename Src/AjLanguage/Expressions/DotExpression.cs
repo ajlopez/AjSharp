@@ -33,7 +33,7 @@
 
         public ICollection<IExpression> Arguments { get { return this.arguments; } }
 
-        public object Evaluate(BindingEnvironment environment)
+        public object Evaluate(IBindingEnvironment environment)
         {
             object obj = null;
             
@@ -42,7 +42,7 @@
 
             object[] parameters = null;
 
-            if (this.arguments != null && this.arguments.Count > 0)
+            if (this.arguments != null)
             {
                 List<object> values = new List<object>();
 

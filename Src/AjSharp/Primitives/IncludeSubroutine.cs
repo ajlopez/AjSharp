@@ -13,7 +13,9 @@
 
     public class IncludeSubroutine : ICallable
     {
-        public object Invoke(BindingEnvironment environment, object[] arguments)
+        public int Arity { get { return 1; } }
+
+        public object Invoke(IBindingEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length != 1)
                 throw new InvalidOperationException("Invalid number of parameters");

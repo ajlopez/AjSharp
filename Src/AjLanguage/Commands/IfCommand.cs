@@ -31,7 +31,7 @@
 
         public ICommand ElseCommand { get { return this.elseCommand; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             object result = this.condition.Evaluate(environment);
 

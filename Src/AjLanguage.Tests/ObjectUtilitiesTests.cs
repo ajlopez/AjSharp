@@ -32,7 +32,6 @@
             dynobj.SetValue("FirstName", "Adam");
 
             Assert.AreEqual("Adam", ObjectUtilities.GetValue(dynobj, "FirstName"));
-            Assert.AreEqual("Adam", ObjectUtilities.GetValue(dynobj, "FirstName", new object[] {}));
         }
     }
 }

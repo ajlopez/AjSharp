@@ -22,7 +22,7 @@
 
         public ICommand Command { get { return this.command; } } 
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             while (Predicates.IsTrue(this.condition.Evaluate(environment)))
                 this.command.Execute(environment);

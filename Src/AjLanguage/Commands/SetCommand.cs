@@ -23,7 +23,7 @@
 
         public IExpression Expression { get { return this.expression; } }
 
-        public void Execute(BindingEnvironment environment)
+        public void Execute(IBindingEnvironment environment)
         {
             object value = this.expression.Evaluate(environment);
 
@@ -44,7 +44,7 @@
                 throw new InvalidOperationException("Invalid left value");
         }
 
-        private static object ResolveToObject(IExpression expression, BindingEnvironment environment)
+        private static object ResolveToObject(IExpression expression, IBindingEnvironment environment)
         {
             if (expression is VariableExpression)
             {
