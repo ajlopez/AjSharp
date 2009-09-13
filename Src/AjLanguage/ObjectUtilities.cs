@@ -50,13 +50,13 @@
 
         public static bool IsNumber(object obj)
         {
-            return obj is System.Int32 ||
-                obj is System.Int16 ||
-                obj is System.Int64 ||
-                obj is System.Decimal ||
-                obj is System.Double ||
-                obj is System.Single ||
-                obj is System.Byte;
+            return obj is int ||
+                obj is short ||
+                obj is long ||
+                obj is decimal ||
+                obj is double ||
+                obj is float ||
+                obj is byte;
         }
     }
 }

@@ -292,7 +292,29 @@
                 return new ArithmeticUnaryExpression(op, unaryExpression);
             }
 
-            return this.ParseTermExpression();
+            if (this.TryParse(TokenType.Operator, "++", "--"))
+            {
+                Token oper = this.lexer.NextToken();
+
+                IExpression expression = this.ParseTermExpression();
+
+                IncrementOperator op = oper.Value == "++" ? IncrementOperator.PreIncrement : IncrementOperator.PreDecrement;
+
+                return new IncrementExpression(expression, op);
+            }
+
+            IExpression termexpr = this.ParseTermExpression();
+
+            if (this.TryParse(TokenType.Operator, "++", "--"))
+            {
+                Token oper = this.lexer.NextToken();
+
+                IncrementOperator op = oper.Value == "++" ? IncrementOperator.PostIncrement : IncrementOperator.PostDecrement;
+
+                return new IncrementExpression(termexpr, op);
+            }
+
+            return termexpr;
         }
 
         private IExpression ParseTermExpression()
@@ -370,8 +392,6 @@
                     }
 
                     return new VariableExpression(token.Value);
-
-                    break;
             }
 
             throw new UnexpectedTokenException(token);

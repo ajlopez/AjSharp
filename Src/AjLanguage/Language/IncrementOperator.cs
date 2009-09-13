@@ -5,10 +5,11 @@
     using System.Linq;
     using System.Text;
 
-    public interface ICallable
+    public enum IncrementOperator
     {
-        int Arity { get; }
-
-        object Invoke(IBindingEnvironment environment, object[] arguments);
+        PreIncrement,
+        PostIncrement,
+        PreDecrement,
+        PostDecrement
     }
 }

@@ -45,6 +45,24 @@
 
         public override object Apply(object leftValue, object rightValue)
         {
+            if (this.operation == ArithmeticOperator.Add)
+            {
+                if (leftValue == null)
+                    if (ObjectUtilities.IsNumber(rightValue))
+                        leftValue = 0;
+
+                if (rightValue == null)
+                    if (ObjectUtilities.IsNumber(leftValue))
+                        rightValue = 0;
+            }
+            else
+            {
+                if (leftValue == null)
+                    leftValue = 0;
+                if (rightValue == null)
+                    rightValue = 0;
+            }
+
             return this.function(leftValue, rightValue);
         }
 
@@ -52,6 +70,12 @@
         {
             if (ObjectUtilities.IsNumber(left) && ObjectUtilities.IsNumber(right))
                 return Operators.AddObject(left, right);
+
+            if (left == null)
+                left = string.Empty;
+
+            if (right == null)
+                right = string.Empty;
 
             return Operators.ConcatenateObject(left, right);
         }

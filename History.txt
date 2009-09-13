@@ -87,7 +87,6 @@ Support for new { prop = expr, ... } as a DynamicObject
 Invoke in IObject, DynamicObject
 Refactoring BindingEnvironment to IBindingEnvironment
 ObjectEnvironment w/tests
-
 ObjectUtilites.IsNumber
 concatenate using +
 IClass
@@ -98,3 +97,9 @@ DefineClassCommand w/test
 class Foo { ... } in parser and evaluation w/tests
 new Foo() in evaluation w/tests
 new { } in parser and evaluation w/tests
+
+2009-09-13
+IncrementOperator
+IncrementExpression w/tests
+ExpressionUtilities
+Refactoring SetCommand to use ExpressionUtilities.SetValue

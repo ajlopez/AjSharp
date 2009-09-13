@@ -20,7 +20,7 @@
 
         #region IExpression Members
 
-        public object Evaluate(IBindingEnvironment environment)
+        public virtual object Evaluate(IBindingEnvironment environment)
         {
             return this.Apply(this.expression.Evaluate(environment));
         }

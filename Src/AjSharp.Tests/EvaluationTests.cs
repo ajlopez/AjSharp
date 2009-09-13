@@ -48,6 +48,15 @@
         }
 
         [TestMethod]
+        public void EvaluateSimpleArithmeticExpressionWithUndefinedVariables()
+        {
+            Assert.AreEqual(1, this.EvaluateExpression("1+foo"));
+            Assert.AreEqual(0, this.EvaluateExpression("foo*3"));
+            Assert.AreEqual(5, this.EvaluateExpression("5-foo"));
+            Assert.AreEqual(0.0, this.EvaluateExpression("foo/3"));
+        }
+
+        [TestMethod]
         public void EvaluateSimpleComparisonExpressions()
         {
             Assert.IsTrue((bool)this.EvaluateExpression("1<2"));
@@ -309,6 +318,22 @@
         }
 
         [TestMethod]
+        public void EvaluateConcatExpressionWithUndefinedVariable()
+        {
+            object result = this.EvaluateExpression("foo + \"bar\"");
+
+            Assert.AreEqual("bar", result);
+        }
+
+        [TestMethod]
+        public void EvaluateConcatExpressionWithUndefinedVariables()
+        {
+            object result = this.EvaluateExpression("foo + bar");
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
         public void EvaluateConcatExpressionWithStringAndInteger()
         {
             object result = this.EvaluateExpression("\"foo\" + 4");
@@ -369,6 +394,60 @@
             Assert.AreEqual(800, obj.GetValue("Age"));
             Assert.AreEqual("Adam", obj.Invoke("GetName", new object[] { }));
             Assert.AreEqual("Adam", obj.Invoke("GetName", null));
+        }
+
+        [TestMethod]
+        public void EvaluateIncrementOperatorsOnVariable()
+        {
+            this.machine.Environment.SetValue("foo", 1);
+
+            Assert.AreEqual(2, this.EvaluateExpression("++foo"));
+            Assert.AreEqual(2, this.machine.Environment.GetValue("foo"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo++"));
+            Assert.AreEqual(3, this.machine.Environment.GetValue("foo"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("--foo"));
+            Assert.AreEqual(2, this.machine.Environment.GetValue("foo"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo--"));
+            Assert.AreEqual(1, this.machine.Environment.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void EvaluateIncrementOperatorsOnObjectProperty()
+        {
+            this.machine.Environment.SetValue("foo", new Person() { Age = 1 });
+
+            Assert.AreEqual(2, this.EvaluateExpression("++foo.Age"));
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age++"));
+            Assert.AreEqual(3, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("--foo.Age"));
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age--"));
+            Assert.AreEqual(1, this.EvaluateExpression("foo.Age"));
+        }
+
+        [TestMethod]
+        public void EvaluateIncrementOperatorsOnDynamicObjectProperty()
+        {
+            this.ExecuteCommand("foo = new { Age = 1 };");
+
+            Assert.AreEqual(2, this.EvaluateExpression("++foo.Age"));
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age++"));
+            Assert.AreEqual(3, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("--foo.Age"));
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age"));
+
+            Assert.AreEqual(2, this.EvaluateExpression("foo.Age--"));
+            Assert.AreEqual(1, this.EvaluateExpression("foo.Age"));
         }
 
         private object EvaluateExpression(string text)

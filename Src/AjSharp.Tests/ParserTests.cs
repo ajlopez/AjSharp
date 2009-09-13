@@ -486,6 +486,66 @@
             Assert.IsInstanceOfType(funcexp.Body, typeof(ReturnCommand));
         }
 
+        [TestMethod]
+        public void ParsePreIncrementExpressionWithVariable()
+        {
+            IExpression expression = ParseExpression("++foo");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IncrementExpression));
+
+            IncrementExpression incexpr = (IncrementExpression)expression;
+
+            Assert.AreEqual(IncrementOperator.PreIncrement, incexpr.Operator);
+            Assert.IsNotNull(incexpr.Expression);
+            Assert.IsInstanceOfType(incexpr.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParsePreDecrementExpressionWithDotName()
+        {
+            IExpression expression = ParseExpression("--adam.Age");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IncrementExpression));
+
+            IncrementExpression incexpr = (IncrementExpression)expression;
+
+            Assert.AreEqual(IncrementOperator.PreDecrement, incexpr.Operator);
+            Assert.IsNotNull(incexpr.Expression);
+            Assert.IsInstanceOfType(incexpr.Expression, typeof(DotExpression));
+        }
+
+        [TestMethod]
+        public void ParsePostIncrementExpressionWithVariable()
+        {
+            IExpression expression = ParseExpression("foo++");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IncrementExpression));
+
+            IncrementExpression incexpr = (IncrementExpression)expression;
+
+            Assert.AreEqual(IncrementOperator.PostIncrement, incexpr.Operator);
+            Assert.IsNotNull(incexpr.Expression);
+            Assert.IsInstanceOfType(incexpr.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParsePostDecrementExpressionWithDotName()
+        {
+            IExpression expression = ParseExpression("adam.Age--");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(IncrementExpression));
+
+            IncrementExpression incexpr = (IncrementExpression)expression;
+
+            Assert.AreEqual(IncrementOperator.PostDecrement, incexpr.Operator);
+            Assert.IsNotNull(incexpr.Expression);
+            Assert.IsInstanceOfType(incexpr.Expression, typeof(DotExpression));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

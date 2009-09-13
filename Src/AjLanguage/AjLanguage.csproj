@@ -56,9 +56,12 @@
     <Compile Include="Commands\Function.cs" />
     <Compile Include="Commands\FunctionStatus.cs" />
     <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Expressions\IncrementExpression.cs" />
     <Compile Include="Expressions\FunctionExpression.cs" />
     <Compile Include="Expressions\MultipleSetExpression.cs" />
+    <Compile Include="ExpressionUtilities.cs" />
     <Compile Include="IBindingEnvironment.cs" />
+    <Compile Include="Language\IncrementOperator.cs" />
     <Compile Include="Language\DynamicClass.cs" />
     <Compile Include="Language\DynamicClassicObject.cs" />
     <Compile Include="Language\ICallable.cs" />

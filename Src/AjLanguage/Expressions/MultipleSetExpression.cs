@@ -33,11 +33,11 @@
         {
             object obj = this.leftObject.Evaluate(environment);
 
-            int k=0;
+            int k = 0;
 
             foreach (IExpression expression in this.expressions) 
             {
-                string name = propertyNames[k++];
+                string name = this.propertyNames[k++];
 
                 object value = expression.Evaluate(environment);
 

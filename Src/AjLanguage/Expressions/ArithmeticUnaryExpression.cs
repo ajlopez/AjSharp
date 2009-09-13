@@ -36,6 +36,9 @@
 
         public override object Apply(object value)
         {
+            if (value == null)
+                return value;
+
             return this.function(value);
         }
     }
