@@ -1,6 +1,7 @@
 ﻿namespace AjLanguage
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -57,6 +58,103 @@
                 obj is double ||
                 obj is float ||
                 obj is byte;
+        }
+
+        public static object GetIndexedValue(object obj, object[] indexes)
+        {
+            if (obj is System.Array)
+                return GetIndexedValue((System.Array)obj, indexes);
+
+            if (obj is IList)
+                return GetIndexedValue((IList)obj, indexes);
+
+            if (obj is IDictionary)
+                return GetIndexedValue((IDictionary)obj, indexes);
+
+            throw new InvalidOperationException(string.Format("Not indexed value of type {0}", obj.GetType().ToString()));
+        }
+
+        public static void SetIndexedValue(object obj, object[] indexes, object value)
+        {
+            if (obj is System.Array)
+            {
+                System.Array array = (System.Array)obj;
+
+                switch (indexes.Length)
+                {
+                    case 1:
+                        array.SetValue(value, (int)indexes[0]);
+                        return;
+                    case 2:
+                        array.SetValue(value, (int)indexes[0], (int)indexes[1]);
+                        return;
+                    case 3:
+                        array.SetValue(value, (int)indexes[0], (int)indexes[1], (int)indexes[2]);
+                        return;
+                }
+
+                throw new InvalidOperationException("Invalid number of subindices");
+            }
+
+            if (obj is IList)
+            {
+                if (indexes.Length != 1)
+                    throw new InvalidOperationException("Invalid number of subindices");
+
+                int index = (int)indexes[0];
+
+                IList list = (IList)obj;
+
+                if (list.Count == index)
+                    list.Add(value);
+                else
+                    list[index] = value;
+
+                return;
+            }
+
+            if (obj is IDictionary)
+            {
+                if (indexes.Length != 1)
+                    throw new InvalidOperationException("Invalid number of subindices");
+
+                ((IDictionary)obj)[indexes[0]] = value;
+
+                return;
+            }
+
+            throw new InvalidOperationException(string.Format("Not indexed value of type {0}", obj.GetType().ToString()));
+        }
+
+        private static object GetIndexedValue(System.Array array, object[] indexes)
+        {
+            switch (indexes.Length)
+            {
+                case 1:
+                    return array.GetValue((int)indexes[0]);
+                case 2:
+                    return array.GetValue((int)indexes[0], (int)indexes[1]);
+                case 3:
+                    return array.GetValue((int)indexes[0], (int)indexes[1], (int)indexes[2]);
+            }
+
+            throw new InvalidOperationException("Invalid number of subindices");
+        }
+
+        private static object GetIndexedValue(IList list, object[] indexes)
+        {
+            if (indexes.Length != 1)
+                throw new InvalidOperationException("Invalid number of subindices");
+
+            return list[(int)indexes[0]];
+        }
+
+        private static object GetIndexedValue(IDictionary dictionary, object[] indexes)
+        {
+            if (indexes.Length != 1)
+                throw new InvalidOperationException("Invalid number of subindices");
+
+            return dictionary[indexes[0]];
         }
     }
 }

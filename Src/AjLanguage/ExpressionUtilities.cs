@@ -28,21 +28,6 @@
             throw new InvalidOperationException("Invalid left value");
         }
 
-        private static void SetValue(VariableExpression expression, object value, IBindingEnvironment environment)
-        {
-            environment.SetValue(expression.VariableName, value);
-        }
-
-        private static void SetValue(DotExpression expression, object value, IBindingEnvironment environment)
-        {
-            if (expression.Arguments != null)
-                throw new InvalidOperationException("Invalid left value");
-
-            object obj = ResolveToObject(expression.Expression, environment);
-
-            ObjectUtilities.SetValue(obj, expression.Name, value);
-        }
-
         public static object ResolveToObject(IExpression expression, IBindingEnvironment environment)
         {
             if (expression is VariableExpression)
@@ -63,6 +48,21 @@
                 return ResolveToList((DotExpression)expression, environment);
 
             return (IList) expression.Evaluate(environment);
+        }
+
+        private static void SetValue(VariableExpression expression, object value, IBindingEnvironment environment)
+        {
+            environment.SetValue(expression.VariableName, value);
+        }
+
+        private static void SetValue(DotExpression expression, object value, IBindingEnvironment environment)
+        {
+            if (expression.Arguments != null)
+                throw new InvalidOperationException("Invalid left value");
+
+            object obj = ResolveToObject(expression.Expression, environment);
+
+            ObjectUtilities.SetValue(obj, expression.Name, value);
         }
 
         private static object ResolveToObject(VariableExpression expression, IBindingEnvironment environment)

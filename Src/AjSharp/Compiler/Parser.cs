@@ -73,18 +73,26 @@
 
             IExpression expr = this.ParseExpression();
 
-            if (this.TryParse(TokenType.Separator, ";")) 
+            if (this.TryParse(TokenType.Separator, ";"))
             {
                 this.lexer.NextToken();
 
                 return new ExpressionCommand(expr);
             }
 
-            if (this.TryParse(TokenType.Operator, "=")) 
+            if (this.TryParse(TokenType.Operator, "="))
             {
                 this.lexer.NextToken();
 
-                ICommand command = new SetCommand(expr, this.ParseExpression());
+                ICommand command = null;
+
+                if (expr is ArrayExpression)
+                {
+                    ArrayExpression aexpr = (ArrayExpression)expr;
+                    command = new SetArrayCommand(aexpr.Expression, aexpr.Arguments, this.ParseExpression());
+                }
+                else
+                    command = new SetCommand(expr, this.ParseExpression());
 
                 this.Parse(TokenType.Separator, ";");
 
@@ -155,6 +163,10 @@
             if (this.TryPeekName())
             {
                 string typename = this.ParseQualifiedName();
+
+                if (this.TryParse(TokenType.Separator, "["))
+                    return this.ParseNewArrayExpression(typename);
+
                 ICollection<IExpression> arguments = this.ParseArgumentList();
 
                 expression = new NewExpression(typename, arguments);
@@ -206,6 +218,39 @@
             this.Parse(TokenType.Separator, "}");
 
             return new MultipleSetExpression(expression, names.ToArray(), expressions);
+        }
+
+        private IExpression ParseNewArrayExpression(string typename)
+        {
+            ICollection<IExpression> arguments = this.ParseArrayArgumentList();
+
+            if (arguments.Count == 0)
+            {
+                ICollection<IExpression> values = this.ParseArrayValues();
+
+                return new InitializeArrayExpression(typename, values);
+            }
+
+            return new NewArrayExpression(typename, arguments);
+        }
+
+        private ICollection<IExpression> ParseArrayValues()
+        {
+            this.Parse(TokenType.Separator, "{");
+
+            List<IExpression> expressions = new List<IExpression>();
+
+            while (!this.TryParse(TokenType.Separator, "}"))
+            {
+                if (expressions.Count > 0)
+                    this.Parse(TokenType.Separator, ",");
+
+                expressions.Add(this.ParseExpression());
+            }
+
+            this.Parse(TokenType.Separator, "}");
+
+            return expressions;
         }
 
         private IExpression ParseBinaryExpressionZerothLevel()
@@ -321,16 +366,25 @@
         {
             IExpression expression = this.ParseSimpleTermExpression();
 
-            while (this.TryParse(TokenType.Operator, "."))
+            while (this.TryParse(TokenType.Operator, ".") || this.TryParse(TokenType.Separator, "["))
             {
-                this.lexer.NextToken();
-                string name = this.ParseName();
-                List<IExpression> arguments = null;
+                if (this.TryParse(TokenType.Operator, "."))
+                {
+                    this.lexer.NextToken();
+                    string name = this.ParseName();
+                    List<IExpression> arguments = null;
 
-                if (this.TryParse(TokenType.Separator, "("))
-                    arguments = this.ParseArgumentList();
+                    if (this.TryParse(TokenType.Separator, "("))
+                        arguments = this.ParseArgumentList();
 
-                expression = new DotExpression(expression, name, arguments);
+                    expression = new DotExpression(expression, name, arguments);
+                }
+                else
+                {
+                    List<IExpression> arguments = this.ParseArrayArgumentList();
+
+                    expression = new ArrayExpression(expression, arguments);
+                }
             }
 
             return expression;
@@ -351,6 +405,25 @@
             }
 
             this.Parse(TokenType.Separator, ")");
+
+            return expressions;
+        }
+
+        private List<IExpression> ParseArrayArgumentList()
+        {
+            List<IExpression> expressions = new List<IExpression>();
+
+            this.Parse(TokenType.Separator, "[");
+
+            while (!this.TryParse(TokenType.Separator, "]"))
+            {
+                if (expressions.Count > 0)
+                    this.Parse(TokenType.Separator, ",");
+
+                expressions.Add(this.ParseExpression());
+            }
+
+            this.Parse(TokenType.Separator, "]");
 
             return expressions;
         }

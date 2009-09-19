@@ -5,31 +5,18 @@
     using System.Linq;
     using System.Text;
 
-    public class DotExpression : IExpression
+    public class ArrayExpression : IExpression
     {
         private IExpression expression;
-        private string name;
         private ICollection<IExpression> arguments;
-        private Type type;
 
-        public DotExpression(IExpression expression, string name)
-            : this(expression, name, null)
-        {
-        }
-
-        public DotExpression(IExpression expression, string name, ICollection<IExpression> arguments)
+        public ArrayExpression(IExpression expression, ICollection<IExpression> arguments)
         {
             this.expression = expression;
-            this.name = name;
             this.arguments = arguments;
-            this.type = AsType(this.expression);
         }
 
-        public string Name { get { return this.name; } }
-
         public IExpression Expression { get { return this.expression; } }
-
-        public Type Type { get { return this.type; } }
 
         public ICollection<IExpression> Arguments { get { return this.arguments; } }
 
@@ -37,12 +24,7 @@
         {
             object obj = null;
 
-            // TODO refactor compare to Add, case sensitive? IsListVerb(this.name)?
-            if (this.type == null)
-                if (this.name == "Add")
-                    obj = ExpressionUtilities.ResolveToList(this.expression, environment);
-                else
-                    obj = this.expression.Evaluate(environment);
+            obj = this.Expression.Evaluate(environment);
 
             object[] parameters = null;
 
@@ -56,14 +38,11 @@
                 parameters = values.ToArray();
             }
 
-            if (this.type != null)
-                return TypeUtilities.InvokeTypeMember(this.type, this.name, parameters);
-
             // TODO if undefined, do nothing
             if (obj == null)
                 return null;
 
-            return ObjectUtilities.GetValue(obj, this.name, parameters);
+            return ObjectUtilities.GetIndexedValue(obj, parameters);
         }
 
         private static Type AsType(IExpression expression)

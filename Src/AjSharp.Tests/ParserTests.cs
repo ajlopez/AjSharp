@@ -546,6 +546,86 @@
             Assert.IsInstanceOfType(incexpr.Expression, typeof(DotExpression));
         }
 
+        [TestMethod]
+        public void ParseNewArray()
+        {
+            IExpression expression = ParseExpression("new System.Int32[10]");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NewArrayExpression));
+
+            NewArrayExpression newarrexpr = (NewArrayExpression)expression;
+
+            Assert.AreEqual("System.Int32", newarrexpr.TypeName);
+            Assert.IsNotNull(newarrexpr.Arguments);
+            Assert.AreEqual(1, newarrexpr.Arguments.Count);
+        }
+
+        [TestMethod]
+        public void ParseNewArrayWithValues()
+        {
+            IExpression expression = ParseExpression("new int[] { 1, 2, 3 }");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(InitializeArrayExpression));
+
+            InitializeArrayExpression newarrexpr = (InitializeArrayExpression)expression;
+
+            Assert.AreEqual("int", newarrexpr.TypeName);
+            Assert.IsNotNull(newarrexpr.Values);
+            Assert.AreEqual(3, newarrexpr.Values.Count);
+        }
+
+        [TestMethod]
+        public void ParseArrayExpression()
+        {
+            IExpression expression = ParseExpression("numbers[1]");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ArrayExpression));
+
+            ArrayExpression arrexpr = (ArrayExpression) expression;
+
+            Assert.IsInstanceOfType(arrexpr.Expression, typeof(VariableExpression));
+
+            VariableExpression varexpr = (VariableExpression) arrexpr.Expression;
+
+            Assert.AreEqual("numbers", varexpr.VariableName);
+
+            Assert.AreEqual(1, arrexpr.Arguments.Count);
+            Assert.IsInstanceOfType(arrexpr.Arguments.First(), typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void ParseSetArrayCommand()
+        {
+            ICommand command = ParseCommand("numbers[0] = 1;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SetArrayCommand));
+
+            SetArrayCommand setcmd = (SetArrayCommand) command;
+
+            Assert.IsInstanceOfType(setcmd.LeftValue, typeof(VariableExpression));
+            Assert.AreEqual(1, setcmd.Arguments.Count);
+            Assert.IsInstanceOfType(setcmd.Expression, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
+        public void ParseSetArrayCommandWithDotExpression()
+        {
+            ICommand command = ParseCommand("foo.Values[0] = 1;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(SetArrayCommand));
+
+            SetArrayCommand setcmd = (SetArrayCommand)command;
+
+            Assert.IsInstanceOfType(setcmd.LeftValue, typeof(DotExpression));
+            Assert.AreEqual(1, setcmd.Arguments.Count);
+            Assert.IsInstanceOfType(setcmd.Expression, typeof(ConstantExpression));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

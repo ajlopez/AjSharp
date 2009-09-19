@@ -3,9 +3,10 @@ To do list
 Support for expression expansion in strings
 
 Array support
-	- Access
+	+ Access
 	- Iterate
-	- Creation
+	+ Creation
+	- Assign
 	
 new DynamicObject, new List, new Wrapper(obj)
 

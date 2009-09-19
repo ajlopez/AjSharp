@@ -110,4 +110,9 @@ AjSharpMachine
 List, DynamicObject, DinamicClass in AjSharpMachine
 ExpressionUtilities.ResolveToList w/tests
 ExpressionUtilitiesTests
-
+ArrayExpression with tests
+SetArrayCommand with tests
+NewArrayExpression with tests
+AjSharpMachineTests
+InitializeNewArrayExpression with tests
+array support in Parser (new, access, setting)

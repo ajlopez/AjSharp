@@ -364,6 +364,90 @@
             Assert.AreEqual("Doe", dynobj.GetValue("LastName"));
         }
 
+        [TestMethod]
+        public void EvaluateSimpleNewArrayExpression()
+        {
+            IExpression expression = new NewArrayExpression("System.Int32", new IExpression[] { new ConstantExpression(10) });
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int[]));
+
+            int[] array = (int[])result;
+
+            Assert.AreEqual(10, array.Length);
+        }
+
+        [TestMethod]
+        public void EvaluateSimpleInitializeArrayExpression()
+        {
+            IExpression expression = new InitializeArrayExpression("System.Int32", new IExpression[] { new ConstantExpression(1), new ConstantExpression(2) });
+
+            object result = expression.Evaluate(new BindingEnvironment());
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int[]));
+
+            int[] array = (int[])result;
+
+            Assert.AreEqual(2, array.Length);
+            Assert.AreEqual(1, array[0]);
+            Assert.AreEqual(2, array[1]);
+        }
+
+        [TestMethod]
+        public void EvaluateSimpleNewIClassicObjectArrayExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("ADynamicClass", new DynamicClass());
+
+            IExpression expression = new NewArrayExpression("ADynamicClass", new IExpression[] { new ConstantExpression(10) });
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IClassicObject[]));
+
+            IClassicObject[] array = (IClassicObject[])result;
+
+            Assert.AreEqual(10, array.Length);
+        }
+
+        [TestMethod]
+        public void EvaluateArrayVariableExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("array", new string[] { "one" , "two", "three" });
+
+            IExpression expression = new ArrayExpression(new VariableExpression("array"), new IExpression[] { new ConstantExpression(1) });
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("two", result);
+        }
+
+        [TestMethod]
+        public void EvaluateArrayDotExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            DynamicObject data = new DynamicObject();
+            data.SetValue("Numbers", new string[] { "one", "two", "three" });
+
+            environment.SetValue("data", data);
+
+            IExpression expression = new ArrayExpression(new DotExpression(new VariableExpression("data"), "Numbers"), new IExpression[] { new ConstantExpression(1) });
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("two", result);
+        }
+
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)
         {
             IExpression expression = new ArithmeticBinaryExpression(operation, new ConstantExpression(left), new ConstantExpression(right));

@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -234,6 +235,49 @@
             command.Execute(machine.Environment);
 
             Assert.AreEqual(machine.Out, outwriter);
+        }
+
+        [TestMethod]
+        public void ExecuteSetArrayCommandWithVariable()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            SetArrayCommand command = new SetArrayCommand(new VariableExpression("foo"), new IExpression[] { new ConstantExpression(0) }, new ConstantExpression("bar"));
+
+            command.Execute(environment);
+
+            object result = environment.GetValue("foo");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IList));
+            Assert.AreEqual(1, ((IList)result).Count);
+            Assert.AreEqual("bar", ((IList)result)[0]);
+        }
+
+        [TestMethod]
+        public void ExecuteSetArrayCommandWithDotExpression()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            DotExpression dotexpr = new DotExpression(new VariableExpression("foo"), "Values");
+            SetArrayCommand command = new SetArrayCommand(dotexpr, new IExpression[] { new ConstantExpression(0) }, new ConstantExpression("bar"));
+
+            command.Execute(environment);
+
+            object obj = environment.GetValue("foo");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)obj;
+
+            object obj2 = dynobj.GetValue("Values");
+
+            Assert.IsNotNull(obj2);
+            Assert.IsInstanceOfType(obj2, typeof(IList));
+
+            IList list = (IList)obj2;
+
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual("bar", list[0]);
         }
     }
 }

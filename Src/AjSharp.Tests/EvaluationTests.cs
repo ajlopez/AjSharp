@@ -515,6 +515,63 @@
             Assert.IsInstanceOfType(entities, typeof(IList));
         }
 
+        [TestMethod]
+        public void CreateArrayOfDoubles()
+        {
+            object result = this.EvaluateExpression("new double[10]");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(double[]));
+
+            double[] array = (double[])result;
+
+            Assert.AreEqual(10, array.Length);
+        }
+
+        [TestMethod]
+        public void CreateArrayOfIntegersWithValues()
+        {
+            object result = this.EvaluateExpression("new int[] { 1, 2, 3 }");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int[]));
+
+            int[] array = (int[])result;
+
+            Assert.AreEqual(3, array.Length);
+
+            Assert.AreEqual(1, array[0]);
+            Assert.AreEqual(2, array[1]);
+            Assert.AreEqual(3, array[2]);
+        }
+
+        [TestMethod]
+        public void EvaluateArrayElements()
+        {
+            this.ExecuteCommand("numbers = new int[] { 1, 2, 3 };");
+
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[0]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[1]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[2]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers.Length"));
+        }
+
+        [TestMethod]
+        public void EvaluatePredefinedConstants()
+        {
+            Assert.AreEqual(true, this.EvaluateExpression("true"));
+            Assert.AreEqual(false, this.EvaluateExpression("false"));
+            Assert.AreEqual(null, this.EvaluateExpression("null"));
+        }
+
+        [TestMethod]
+        public void EvaluateUndefinedComplexExpressionToNull()
+        {
+            Assert.IsNull(this.EvaluateExpression("Project.Entities.Count"));
+            Assert.IsNull(this.EvaluateExpression("Project.Entities"));
+            Assert.IsNull(this.EvaluateExpression("Project"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);
