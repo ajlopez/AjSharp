@@ -40,6 +40,7 @@
 
             // Alias to Native Types
             this.Environment.SetValue("List", typeof(ArrayList));
+            this.Environment.SetValue("Dictionary", typeof(Hashtable));
 
             // Primitive Functions
             this.Environment.SetValue("Print", new PrintSubroutine());

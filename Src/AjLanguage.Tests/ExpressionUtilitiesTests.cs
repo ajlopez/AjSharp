@@ -28,6 +28,34 @@
         }
 
         [TestMethod]
+        public void ResolveVariableExpressionToList()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            IExpression expression = new VariableExpression("foo");
+
+            object obj = ExpressionUtilities.ResolveToList(expression, environment);
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(IList));
+
+            Assert.AreEqual(obj, environment.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void ResolveVariableExpressionToDictionary()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            IExpression expression = new VariableExpression("foo");
+
+            object obj = ExpressionUtilities.ResolveToDictionary(expression, environment);
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(IDictionary));
+
+            Assert.AreEqual(obj, environment.GetValue("foo"));
+        }
+
+        [TestMethod]
         public void ResolveDotExpressionToObject()
         {
             BindingEnvironment environment = new BindingEnvironment();
@@ -71,6 +99,30 @@
 
             Assert.IsNotNull(entities);
             Assert.IsInstanceOfType(entities, typeof(IList));
+
+            Assert.AreEqual(obj, entities);
+        }
+
+        [TestMethod]
+        public void ResolveDotExpressionToDictionary()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            IExpression expression = new DotExpression(new VariableExpression("Project"), "Entities");
+
+            object obj = ExpressionUtilities.ResolveToDictionary(expression, environment);
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(IDictionary));
+
+            object project = environment.GetValue("Project");
+
+            Assert.IsNotNull(project);
+            Assert.IsInstanceOfType(project, typeof(IObject));
+
+            object entities = ((IObject)project).GetValue("Entities");
+
+            Assert.IsNotNull(entities);
+            Assert.IsInstanceOfType(entities, typeof(IDictionary));
 
             Assert.AreEqual(obj, entities);
         }

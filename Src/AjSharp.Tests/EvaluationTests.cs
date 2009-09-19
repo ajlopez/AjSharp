@@ -187,6 +187,18 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\SumArray.ajs")]
+        public void SumArrayUsingInclude()
+        {
+            IncludeFile("SumArray.ajs");
+
+            Assert.AreEqual(6, this.EvaluateExpression("sum"));
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[0]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[1]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[2]"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\Apply.ajs")]
         public void ApplySquareToNumbersUsingInclude()
         {
@@ -570,6 +582,58 @@
             Assert.IsNull(this.EvaluateExpression("Project.Entities.Count"));
             Assert.IsNull(this.EvaluateExpression("Project.Entities"));
             Assert.IsNull(this.EvaluateExpression("Project"));
+        }
+
+        [TestMethod]
+        public void CreateAndSetArrayValues()
+        {
+            this.ExecuteCommand("numbers = new int[3];");
+
+            this.ExecuteCommand("numbers[0] = 1;");
+            this.ExecuteCommand("numbers[1] = 2;");
+            this.ExecuteCommand("numbers[2] = 3;");
+
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[0]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[1]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[2]"));
+        }
+
+        [TestMethod]
+        public void CreateDinamicallyAndSetArrayValues()
+        {
+            this.ExecuteCommand("numbers[0] = 1;");
+            this.ExecuteCommand("numbers[1] = 2;");
+            this.ExecuteCommand("numbers[2] = 3;");
+
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[0]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[1]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[2]"));
+        }
+
+        [TestMethod]
+        public void CreateAndSetDictionaryValues()
+        {
+            this.ExecuteCommand("numbers = new Dictionary();");
+
+            this.ExecuteCommand("numbers[\"one\"] = 1;");
+            this.ExecuteCommand("numbers[\"two\"] = 2;");
+            this.ExecuteCommand("numbers[\"three\"] = 3;");
+
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[\"one\"]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[\"two\"]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[\"three\"]"));
+        }
+
+        [TestMethod]
+        public void CreateDinamicallyAndSetDictionaryValues()
+        {
+            this.ExecuteCommand("numbers[\"one\"] = 1;");
+            this.ExecuteCommand("numbers[\"two\"] = 2;");
+            this.ExecuteCommand("numbers[\"three\"] = 3;");
+
+            Assert.AreEqual(1, this.EvaluateExpression("numbers[\"one\"]"));
+            Assert.AreEqual(2, this.EvaluateExpression("numbers[\"two\"]"));
+            Assert.AreEqual(3, this.EvaluateExpression("numbers[\"three\"]"));
         }
 
         private object EvaluateExpression(string text)

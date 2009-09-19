@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -38,7 +39,8 @@
         [TestMethod]
         public void TypeAliasAreDefined()
         {
-            this.IsType("List", typeof(System.Collections.ArrayList));
+            this.IsType("List", typeof(ArrayList));
+            this.IsType("Dictionary", typeof(Hashtable));
             this.IsType("DynamicObject", typeof(DynamicObject));
             this.IsType("DynamicClass", typeof(DynamicClass));
         }

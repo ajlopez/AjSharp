@@ -50,6 +50,17 @@
             return (IList) expression.Evaluate(environment);
         }
 
+        public static IDictionary ResolveToDictionary(IExpression expression, IBindingEnvironment environment)
+        {
+            if (expression is VariableExpression)
+                return ResolveToDictionary((VariableExpression)expression, environment);
+
+            if (expression is DotExpression)
+                return ResolveToDictionary((DotExpression)expression, environment);
+
+            return (IDictionary)expression.Evaluate(environment);
+        }
+
         private static void SetValue(VariableExpression expression, object value, IBindingEnvironment environment)
         {
             environment.SetValue(expression.VariableName, value);
@@ -141,6 +152,45 @@
             }
 
             return (IList) ObjectUtilities.GetValue(obj, expression.Name);
+        }
+
+        private static IDictionary ResolveToDictionary(VariableExpression expression, IBindingEnvironment environment)
+        {
+            string name = expression.VariableName;
+
+            object obj = environment.GetValue(name);
+
+            if (obj == null)
+            {
+                obj = new Hashtable();
+
+                // TODO Review if Local or not
+                environment.SetValue(name, obj);
+            }
+
+            return (IDictionary)obj;
+        }
+
+        private static IDictionary ResolveToDictionary(DotExpression expression, IBindingEnvironment environment)
+        {
+            object obj = ResolveToObject(expression.Expression, environment);
+
+            if (obj is DynamicObject)
+            {
+                DynamicObject dynobj = (DynamicObject)obj;
+
+                obj = dynobj.GetValue(expression.Name);
+
+                if (obj == null)
+                {
+                    obj = new Hashtable();
+                    dynobj.SetValue(expression.Name, obj);
+                }
+
+                return (IDictionary)obj;
+            }
+
+            return (IDictionary)ObjectUtilities.GetValue(obj, expression.Name);
         }
     }
 }

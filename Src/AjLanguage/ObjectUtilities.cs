@@ -78,22 +78,8 @@
         {
             if (obj is System.Array)
             {
-                System.Array array = (System.Array)obj;
-
-                switch (indexes.Length)
-                {
-                    case 1:
-                        array.SetValue(value, (int)indexes[0]);
-                        return;
-                    case 2:
-                        array.SetValue(value, (int)indexes[0], (int)indexes[1]);
-                        return;
-                    case 3:
-                        array.SetValue(value, (int)indexes[0], (int)indexes[1], (int)indexes[2]);
-                        return;
-                }
-
-                throw new InvalidOperationException("Invalid number of subindices");
+                SetIndexedValue((System.Array)obj, indexes, value);
+                return;
             }
 
             if (obj is IList)
@@ -155,6 +141,24 @@
                 throw new InvalidOperationException("Invalid number of subindices");
 
             return dictionary[indexes[0]];
+        }
+
+        public static void SetIndexedValue(System.Array array, object[] indexes, object value)
+        {
+            switch (indexes.Length)
+            {
+                case 1:
+                    array.SetValue(value, (int)indexes[0]);
+                    return;
+                case 2:
+                    array.SetValue(value, (int)indexes[0], (int)indexes[1]);
+                    return;
+                case 3:
+                    array.SetValue(value, (int)indexes[0], (int)indexes[1], (int)indexes[2]);
+                    return;
+            }
+
+            throw new InvalidOperationException("Invalid number of subindices");
         }
     }
 }

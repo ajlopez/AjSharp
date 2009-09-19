@@ -29,7 +29,6 @@
 
         public void Execute(IBindingEnvironment environment)
         {
-            object obj = ExpressionUtilities.ResolveToList(this.leftValue, environment);
             object value = this.expression.Evaluate(environment);
             object[] indexes = null;
             List<object> values = new List<object>();
@@ -38,6 +37,13 @@
                 values.Add(expression.Evaluate(environment));
 
             indexes = values.ToArray();
+
+            object obj = null;
+
+            if (ObjectUtilities.IsNumber(indexes[0]))
+                obj = ExpressionUtilities.ResolveToList(this.leftValue, environment);
+            else
+                obj = ExpressionUtilities.ResolveToDictionary(this.leftValue, environment);
 
             ObjectUtilities.SetIndexedValue(obj, indexes, value);
         }

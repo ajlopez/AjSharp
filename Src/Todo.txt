@@ -6,7 +6,7 @@ Array support
 	+ Access
 	- Iterate
 	+ Creation
-	- Assign
+	+ Assign
 	
 new DynamicObject, new List, new Wrapper(obj)
 

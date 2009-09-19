@@ -61,6 +61,9 @@
     <None Include="Examples\Apply.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SumArray.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\SetNumbers.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
