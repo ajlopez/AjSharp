@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		AjLanguage.vsmdi = AjLanguage.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		Todo.txt = Todo.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjSharp", "AjSharp\AjSharp.csproj", "{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}"

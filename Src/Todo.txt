@@ -1,0 +1,22 @@
+To do list
+
+Support for expression expansion in strings
+
+Array support
+	- Access
+	- Iterate
+	- Creation
+	
+new DynamicObject, new List, new Wrapper(obj)
+
+Methods in DynamicClassicObject overrides Class methods
+Invoke of base, class, this methods	
+
+AjLanguage tree compiled to DLR
+AjBasic as another language over AjLanguage
+
+Template support
+Integration with AjGenesis
+
+Load of Dynamic Object from XML, text files or other sources
+

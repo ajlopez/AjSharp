@@ -103,3 +103,11 @@ IncrementOperator
 IncrementExpression w/tests
 ExpressionUtilities
 Refactoring SetCommand to use ExpressionUtilities.SetValue
+
+2009-09-19
+Creation of List when obj.prop.Add(...)
+AjSharpMachine
+List, DynamicObject, DinamicClass in AjSharpMachine
+ExpressionUtilities.ResolveToList w/tests
+ExpressionUtilitiesTests
+

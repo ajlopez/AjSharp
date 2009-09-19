@@ -16,12 +16,8 @@
     {
         public static void Main(string[] args)
         {
-            Machine machine = new Machine();
+            AjSharpMachine machine = new AjSharpMachine();
             Parser parser = new Parser(machine.In);
-
-            machine.Environment.SetValue("Print", new PrintSubroutine());
-            machine.Environment.SetValue("PrintLine", new PrintLineSubroutine());
-            machine.Environment.SetValue("Include", new IncludeSubroutine());
 
             ICommand command;
 

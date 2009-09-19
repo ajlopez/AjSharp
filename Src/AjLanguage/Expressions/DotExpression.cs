@@ -36,9 +36,13 @@
         public object Evaluate(IBindingEnvironment environment)
         {
             object obj = null;
-            
+
+            // TODO refactor compare to Add, case sensitive? IsListVerb(this.name)?
             if (this.type == null)
-                obj = this.expression.Evaluate(environment);
+                if (this.name == "Add")
+                    obj = ExpressionUtilities.ResolveToList(this.expression, environment);
+                else
+                    obj = ExpressionUtilities.ResolveToObject(this.expression, environment);
 
             object[] parameters = null;
 

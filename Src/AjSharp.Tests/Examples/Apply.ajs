@@ -1,6 +1,6 @@
 ﻿function Apply(func,values)
 {
-	list = new System.Collections.ArrayList();
+	list = new List();
 	
 	foreach (value in values)
 		list.Add(func(value));
@@ -8,7 +8,7 @@
 	return list;
 }
 
-numbers = new System.Collections.ArrayList();
+numbers = new List();
 numbers.Add(1);
 numbers.Add(2);
 numbers.Add(3);

@@ -45,6 +45,7 @@
     <Compile Include="DynamicClassTests.cs" />
     <Compile Include="DynamicObjectTests.cs" />
     <Compile Include="ExpressionsTests.cs" />
+    <Compile Include="ExpressionUtilitiesTests.cs" />
     <Compile Include="FunctionTests.cs" />
     <Compile Include="MachineTests.cs" />
     <Compile Include="ObjectEnvironmentTests.cs" />

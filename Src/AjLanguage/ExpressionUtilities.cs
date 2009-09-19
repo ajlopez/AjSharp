@@ -1,6 +1,7 @@
 ﻿namespace AjLanguage
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -42,7 +43,7 @@
             ObjectUtilities.SetValue(obj, expression.Name, value);
         }
 
-        private static object ResolveToObject(IExpression expression, IBindingEnvironment environment)
+        public static object ResolveToObject(IExpression expression, IBindingEnvironment environment)
         {
             if (expression is VariableExpression)
                 return ResolveToObject((VariableExpression)expression, environment);
@@ -51,6 +52,17 @@
                 return ResolveToObject((DotExpression)expression, environment);
 
             return expression.Evaluate(environment);
+        }
+
+        public static IList ResolveToList(IExpression expression, IBindingEnvironment environment)
+        {
+            if (expression is VariableExpression)
+                return ResolveToList((VariableExpression)expression, environment);
+
+            if (expression is DotExpression)
+                return ResolveToList((DotExpression)expression, environment);
+
+            return (IList) expression.Evaluate(environment);
         }
 
         private static object ResolveToObject(VariableExpression expression, IBindingEnvironment environment)
@@ -90,6 +102,45 @@
             }
 
             return ObjectUtilities.GetValue(obj, expression.Name);
+        }
+
+        private static IList ResolveToList(VariableExpression expression, IBindingEnvironment environment)
+        {
+            string name = expression.VariableName;
+
+            object obj = environment.GetValue(name);
+
+            if (obj == null)
+            {
+                obj = new ArrayList();
+
+                // TODO Review if Local or not
+                environment.SetValue(name, obj);
+            }
+
+            return (IList) obj;
+        }
+
+        private static IList ResolveToList(DotExpression expression, IBindingEnvironment environment)
+        {
+            object obj = ResolveToObject(expression.Expression, environment);
+
+            if (obj is DynamicObject)
+            {
+                DynamicObject dynobj = (DynamicObject)obj;
+
+                obj = dynobj.GetValue(expression.Name);
+
+                if (obj == null)
+                {
+                    obj = new ArrayList();
+                    dynobj.SetValue(expression.Name, obj);
+                }
+
+                return (IList) obj;
+            }
+
+            return (IList) ObjectUtilities.GetValue(obj, expression.Name);
         }
     }
 }

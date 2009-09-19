@@ -21,12 +21,12 @@
     [TestClass]
     public class EvaluationTests
     {
-        private Machine machine;
+        private AjSharpMachine machine;
 
         [TestInitialize]
         public void SetupMachine()
         {
-            machine = new Machine();
+            machine = new AjSharpMachine();
         }
 
         [TestMethod]
@@ -142,9 +142,9 @@
         {
             this.machine.Environment.SetValue("numbers", new int[] { 1, 2, 3 });
             this.ExecuteCommand("function Add(x,y) return x+y;");
-            this.ExecuteCommand("function Apply(func, values) { sum = 0; foreach (value in values) sum = Add(sum, value+1); return sum;}");
+            this.ExecuteCommand("function Apply(func, values) { sum = 0; foreach (value in values) sum = func(sum, value+1); return sum;}");
 
-            Assert.AreEqual(9, this.EvaluateExpression("Apply(function (n) { return n+1; }, numbers)"));
+            Assert.AreEqual(9, this.EvaluateExpression("Apply(Add, numbers)"));
         }
 
         [TestMethod]
@@ -448,6 +448,71 @@
 
             Assert.AreEqual(2, this.EvaluateExpression("foo.Age--"));
             Assert.AreEqual(1, this.EvaluateExpression("foo.Age"));
+        }
+
+        [TestMethod]
+        public void EvaluateNewDynamicObject()
+        {
+            object obj = this.EvaluateExpression("new DynamicObject()");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(DynamicObject));
+        }
+
+        [TestMethod]
+        public void EvaluateNewList()
+        {
+            object obj = this.EvaluateExpression("new List()");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(ArrayList));
+        }
+
+        [TestMethod]
+        public void EvaluateNewDynamicClass()
+        {
+            object obj = this.EvaluateExpression("new DynamicClass()");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(DynamicClass));
+        }
+
+        [TestMethod]
+        public void CreateDynamicObjectSettingProperties()
+        {
+            this.ExecuteCommand("Project.Database.Server = \"(local)\";");
+
+            object project = this.EvaluateExpression("Project");
+
+            Assert.IsNotNull(project);
+            Assert.IsInstanceOfType(project, typeof(DynamicObject));
+
+            object database = this.EvaluateExpression("Project.Database");
+
+            Assert.IsNotNull(database);
+            Assert.IsInstanceOfType(database, typeof(DynamicObject));
+
+            object server = this.EvaluateExpression("Project.Database.Server");
+
+            Assert.IsNotNull(server);
+            Assert.IsInstanceOfType(server, typeof(String));
+            Assert.AreEqual("(local)", server);
+        }
+
+        [TestMethod]
+        public void CreateDynamicListAddingObject()
+        {
+            this.ExecuteCommand("Project.Entities.Add(new { Name = \"Person\" });");
+
+            object project = this.EvaluateExpression("Project");
+
+            Assert.IsNotNull(project);
+            Assert.IsInstanceOfType(project, typeof(DynamicObject));
+
+            object entities = this.EvaluateExpression("Project.Entities");
+
+            Assert.IsNotNull(entities);
+            Assert.IsInstanceOfType(entities, typeof(IList));
         }
 
         private object EvaluateExpression(string text)
