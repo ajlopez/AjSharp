@@ -636,6 +636,21 @@
             Assert.AreEqual(3, this.EvaluateExpression("numbers[\"three\"]"));
         }
 
+        [TestMethod]
+        public void EvaluateStringExpansions()
+        {
+            this.ExecuteCommand("foo = \"bar\";");
+            this.ExecuteCommand("add1 = function(n) { return n+1; };");
+
+            Assert.AreEqual("foobar", this.EvaluateExpression("\"foo${foo}\""));
+            Assert.AreEqual("barfoo", this.EvaluateExpression("\"${foo}foo\""));
+            Assert.AreEqual("foo3", this.EvaluateExpression("\"foo${1+2}\""));
+            Assert.AreEqual("foo", this.EvaluateExpression("\"foo${bar}\""));
+            Assert.AreEqual("1234", this.EvaluateExpression("\"1${1+1}3${1+1+1+1}\""));
+            Assert.AreEqual("01234", this.EvaluateExpression("\"${0}1${1+1}3${1+1+1+1}\""));
+            Assert.AreEqual("01234", this.EvaluateExpression("\"${0}1${add1(1)}3${add1(3)}\""));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

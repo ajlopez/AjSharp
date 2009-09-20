@@ -626,6 +626,20 @@
             Assert.IsInstanceOfType(setcmd.Expression, typeof(ConstantExpression));
         }
 
+        [TestMethod]
+        public void ParseStringWithExpression()
+        {
+            IExpression expression = ParseExpression("\"foo${bar}\"");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConcatenateExpression));
+
+            ConcatenateExpression cexpr = (ConcatenateExpression)expression;
+
+            Assert.IsInstanceOfType(cexpr.LeftExpression, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(cexpr.RightExpression, typeof(VariableExpression));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

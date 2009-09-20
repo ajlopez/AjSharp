@@ -119,3 +119,8 @@ array support in Parser (new, access, setting)
 SumArray.ajs in tests
 ExpressionUtilities.ResolveToDictionary with tests
 Non numeric subindices in array processing (using IDictionary)
+
+2009-09-20
+ConcatenateExpression w/tests
+StringUtilities w/tests
+string expansion in parser w/tests

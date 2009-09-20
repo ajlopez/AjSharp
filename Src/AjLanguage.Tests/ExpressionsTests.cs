@@ -448,6 +448,38 @@
             Assert.AreEqual("two", result);
         }
 
+        [TestMethod]
+        public void EvaluateConcatenateExpressionUsingNulls()
+        {
+            IExpression expression = new ConcatenateExpression(new ConstantExpression(null), new ConstantExpression(null));
+
+            Assert.AreEqual(string.Empty, expression.Evaluate(null));
+
+            expression = new ConcatenateExpression(new ConstantExpression("foo"), new ConstantExpression(null));
+
+            Assert.AreEqual("foo", expression.Evaluate(null));
+
+            expression = new ConcatenateExpression(new ConstantExpression(null), new ConstantExpression("bar"));
+
+            Assert.AreEqual("bar", expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void EvaluateConcatenateExpressionUsingStrings()
+        {
+            IExpression expression = new ConcatenateExpression(new ConstantExpression("foo"), new ConstantExpression("bar"));
+
+            Assert.AreEqual("foobar", expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void EvaluateConcatenateExpressionUsingIntegers()
+        {
+            IExpression expression = new ConcatenateExpression(new ConstantExpression(12), new ConstantExpression(34));
+
+            Assert.AreEqual("1234", expression.Evaluate(null));
+        }
+
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)
         {
             IExpression expression = new ArithmeticBinaryExpression(operation, new ConstantExpression(left), new ConstantExpression(right));

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{20458D50-3D54-45DD-9E22-5B2289B6AB91}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -58,6 +58,7 @@
     <Compile Include="Commands\FunctionStatus.cs" />
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
+    <Compile Include="Expressions\ConcatenateExpression.cs" />
     <Compile Include="Expressions\InitializeNewArrayExpression.cs" />
     <Compile Include="Expressions\NewArrayExpression.cs" />
     <Compile Include="Expressions\IncrementExpression.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Primitives\PrintLineSubroutine.cs" />
     <Compile Include="Primitives\PrintSubroutine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringUtilities.cs" />
     <Compile Include="TypeUtilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

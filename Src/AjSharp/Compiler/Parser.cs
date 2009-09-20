@@ -456,7 +456,23 @@
                     double realValue = Double.Parse(token.Value, System.Globalization.CultureInfo.InvariantCulture);
                     return new ConstantExpression(realValue);
                 case TokenType.String:
-                    return new ConstantExpression(token.Value);
+                    IList<string> parts = StringUtilities.SplitText(token.Value);
+
+                    if (parts.Count == 1)
+                        return new ConstantExpression(token.Value);
+
+                    IExpression strexpr = new ConstantExpression(parts[0]);
+
+                    for (int k = 1; k < parts.Count; k++)
+                        if ((k % 2) == 0)
+                            strexpr = new ConcatenateExpression(strexpr, new ConstantExpression(parts[k]));
+                        else
+                        {
+                            Parser parser = new Parser(parts[k]);
+                            strexpr = new ConcatenateExpression(strexpr, parser.ParseExpression());
+                        }
+
+                    return strexpr;
                 case TokenType.Name:
                     if (this.TryParse(TokenType.Separator, "("))
                     {
