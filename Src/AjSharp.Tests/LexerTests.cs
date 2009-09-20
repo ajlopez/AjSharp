@@ -78,6 +78,24 @@
             ParseTokens("= + - * / ++ -- <= < >= == >", TokenType.Operator);
         }
 
+        [TestMethod]
+        public void ParseWithMultiLineComment()
+        {
+            ParseNameTokens("foo /* this is a comment\r\n ending here */ bar", "foo", "bar");
+        }
+
+        [TestMethod]
+        public void ParseWithMultiLinesComment()
+        {
+            ParseNameTokens("foo /* this is a comment\r\n ending\r\n here ***/ bar", "foo", "bar");
+        }
+
+        [TestMethod]
+        public void ParseWithLineComment()
+        {
+            ParseNameTokens("foo // this is a comment\r\n bar", "foo", "bar");
+        }
+
         private static void ParseToken(string text, TokenType type, string value)
         {
             using (Lexer lexer = new Lexer(text))
@@ -107,6 +125,24 @@
                 Assert.IsNotNull(token);
 
                 Assert.AreEqual(type, token.TokenType);
+                Assert.AreEqual(value, token.Value);
+            }
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        private static void ParseNameTokens(string text, params string[] values)
+        {
+            Lexer lexer = new Lexer(text);
+            Token token;
+
+            foreach (string value in values)
+            {
+                token = lexer.NextToken();
+
+                Assert.IsNotNull(token);
+
+                Assert.AreEqual(TokenType.Name, token.TokenType);
                 Assert.AreEqual(value, token.Value);
             }
 

@@ -651,6 +651,25 @@
             Assert.AreEqual("01234", this.EvaluateExpression("\"${0}1${add1(1)}3${add1(3)}\""));
         }
 
+        [TestMethod]
+        public void EvaluateEvaluateFunction()
+        {
+            this.ExecuteCommand("one = 1;");
+            this.ExecuteCommand("two = 2;");
+            Assert.AreEqual(0, this.EvaluateExpression("Evaluate(\"0\")"));
+            Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"1+2\")"));
+            Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"one+two\")"));
+        }
+
+        [TestMethod]
+        public void EvaluateExecuteSubroutineAndEvaluateFunction()
+        {
+            this.EvaluateExpression("Execute(\"one = 1; two=2;\")");
+            Assert.AreEqual(0, this.EvaluateExpression("Evaluate(\"0\")"));
+            Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"1+2\")"));
+            Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"one+two\")"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

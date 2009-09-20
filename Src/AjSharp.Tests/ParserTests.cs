@@ -640,6 +640,75 @@
             Assert.IsInstanceOfType(cexpr.RightExpression, typeof(VariableExpression));
         }
 
+        [TestMethod]
+        public void ParseNotExpression()
+        {
+            IExpression expression = ParseExpression("!k");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(NotExpression));
+
+            NotExpression notexpr = (NotExpression)expression;
+
+            Assert.IsInstanceOfType(notexpr.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParseAndExpression()
+        {
+            IExpression expression = ParseExpression("k==1 && l==1");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(AndExpression));
+
+            AndExpression andexpr = (AndExpression)expression;
+
+            Assert.IsInstanceOfType(andexpr.LeftExpression, typeof(CompareExpression));
+            Assert.IsInstanceOfType(andexpr.RightExpression, typeof(CompareExpression));
+        }
+
+        [TestMethod]
+        public void ParseOrExpression()
+        {
+            IExpression expression = ParseExpression("k==1 || l==1");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(OrExpression));
+
+            OrExpression orexpr = (OrExpression)expression;
+
+            Assert.IsInstanceOfType(orexpr.LeftExpression, typeof(CompareExpression));
+            Assert.IsInstanceOfType(orexpr.RightExpression, typeof(CompareExpression));
+        }
+
+        [TestMethod]
+        public void ParseOrAndExpression()
+        {
+            IExpression expression = ParseExpression("k==1 || l==1 && j==1");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(OrExpression));
+
+            OrExpression orexpr = (OrExpression)expression;
+
+            Assert.IsInstanceOfType(orexpr.LeftExpression, typeof(CompareExpression));
+            Assert.IsInstanceOfType(orexpr.RightExpression, typeof(AndExpression));
+        }
+
+        [TestMethod]
+        public void ParseAndOrExpression()
+        {
+            IExpression expression = ParseExpression("k==1 && l==1 || j==1");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(OrExpression));
+
+            OrExpression orexpr = (OrExpression)expression;
+
+            Assert.IsInstanceOfType(orexpr.LeftExpression, typeof(AndExpression));
+            Assert.IsInstanceOfType(orexpr.RightExpression, typeof(CompareExpression));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

@@ -387,12 +387,59 @@
 
             ch = this.NextChar();
 
-            while (char.IsWhiteSpace(ch))
+            while (char.IsWhiteSpace(ch) || ch=='/')
             {
+                if (ch == '/')
+                {
+                    char ch2 = this.NextChar();
+
+                    if (ch2 == '/')
+                        this.SkipToEndOfLine();
+                    else if (ch2 == '*')
+                        this.SkipToEndOfComment();
+                    else
+                    {
+                        this.PushChar(ch2);
+                        return ch;
+                    }
+                }
+
                 ch = this.NextChar();
             }
 
             return ch;
+        }
+
+        private void SkipToEndOfLine()
+        {
+            char ch;
+
+            ch = this.NextChar();
+
+            while (ch != '\r' && ch != '\n')
+                ch = this.NextChar();
+
+            this.PushChar(ch);
+        }
+
+        private void SkipToEndOfComment()
+        {
+            char ch;
+
+            ch = this.NextChar();
+
+            while (true)
+            {
+                while (ch != '*')
+                    ch = this.NextChar();
+
+                char ch2 = this.NextChar();
+
+                if (ch2 == '/')
+                    return;
+
+                ch = ch2;
+            }
         }
 
         private void PushChar(char ch)

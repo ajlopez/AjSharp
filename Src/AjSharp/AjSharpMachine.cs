@@ -46,6 +46,8 @@
             this.Environment.SetValue("Print", new PrintSubroutine());
             this.Environment.SetValue("PrintLine", new PrintLineSubroutine());
             this.Environment.SetValue("Include", new IncludeSubroutine());
+            this.Environment.SetValue("Evaluate", new EvaluateFunction());
+            this.Environment.SetValue("Execute", new ExecuteSubroutine());
         }
     }
 }

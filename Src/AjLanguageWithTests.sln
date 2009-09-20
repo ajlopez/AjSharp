@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjLanguage", "AjLanguage\AjLanguage.csproj", "{20458D50-3D54-45DD-9E22-5B2289B6AB91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjLanguage.Tests", "AjLanguage.Tests\AjLanguage.Tests.csproj", "{20C30A1C-05D3-48C6-A371-5FD522499DD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B150D5AC-E0B4-4579-9C69-4CBB8F49A67C}"
+	ProjectSection(SolutionItems) = preProject
+		AjLanguage.vsmdi = AjLanguage.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		Todo.txt = Todo.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjSharp", "AjSharp\AjSharp.csproj", "{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjSharp.Tests", "AjSharp.Tests\AjSharp.Tests.csproj", "{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AjSharp.Console", "AjSharp.Console\AjSharp.Console.csproj", "{A4983D6C-8F15-4E87-B751-EDC9B9B7EB1A}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AjLanguage.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20458D50-3D54-45DD-9E22-5B2289B6AB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20458D50-3D54-45DD-9E22-5B2289B6AB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20458D50-3D54-45DD-9E22-5B2289B6AB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20458D50-3D54-45DD-9E22-5B2289B6AB91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C30A1C-05D3-48C6-A371-5FD522499DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C30A1C-05D3-48C6-A371-5FD522499DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C30A1C-05D3-48C6-A371-5FD522499DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C30A1C-05D3-48C6-A371-5FD522499DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B2BD8F-A94E-4A15-BE60-A8B68CDA0795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4983D6C-8F15-4E87-B751-EDC9B9B7EB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4983D6C-8F15-4E87-B751-EDC9B9B7EB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4983D6C-8F15-4E87-B751-EDC9B9B7EB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4983D6C-8F15-4E87-B751-EDC9B9B7EB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,18 +1,35 @@
 To do list
 
-Support for expression expansion in strings
++ Support for expression expansion in strings
+
++ Single line comments //
++ Multiple line comments /* */
+
++ Support for !, ||, &&
+
+Evaluate function
+Execute subroutine
 
 Array support
 	+ Access
-	- Iterate
+	+ Iterate
 	+ Creation
 	+ Assign
 	
-new DynamicObject, new List, new Wrapper(obj)
++ new DynamicObject
++ new List
++ new Dictionary
+new Wrapper(obj)
 
-Methods in DynamicClassicObject overrides Class methods
++ Methods in DynamicClassicObject overrides Class methods
 Invoke of base, class, this methods	
 
+DynamicClassicObject var initial values evaluated at new process
+
+Support for char constants in AjSharp parser
+
+Automatically convert from Numeric Array to Dictionary if needed
+	
 AjLanguage tree compiled to DLR
 AjBasic as another language over AjLanguage
 

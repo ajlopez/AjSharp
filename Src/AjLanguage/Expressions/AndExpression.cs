@@ -16,6 +16,10 @@
             this.rigthExpression = right;
         }
 
+        public IExpression LeftExpression { get { return this.leftExpression; } }
+
+        public IExpression RightExpression { get { return this.rigthExpression; } }
+
         public object Evaluate(IBindingEnvironment environment)
         {
             object leftValue = this.leftExpression.Evaluate(environment);

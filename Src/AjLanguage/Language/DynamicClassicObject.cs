@@ -21,7 +21,10 @@
 
         public override object Invoke(string name, object[] parameters)
         {
-            object value = this.objclass.GetMember(name);
+            object value = this.GetValue(name);
+
+            if (value == null || !(value is ICallable))
+                value = this.objclass.GetMember(name);
 
             if (value == null)
                 return base.Invoke(name, parameters);

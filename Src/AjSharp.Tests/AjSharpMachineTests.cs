@@ -51,6 +51,8 @@
             this.IsCallable("Print");
             this.IsCallable("PrintLine");
             this.IsCallable("Include");
+            this.IsCallable("Evaluate");
+            this.IsCallable("Execute");
         }
 
         private void IsCallable(string name)

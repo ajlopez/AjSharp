@@ -124,3 +124,8 @@ Non numeric subindices in array processing (using IDictionary)
 ConcatenateExpression w/tests
 StringUtilities w/tests
 string expansion in parser w/tests
+! && || support in Parser w/text
+EvaluateExpression, ExecuteSubroutine w/tests
+AjLanguageWithTests.sln
+Evaluate, Execute as primitives in AjSharpMachine
+Support for /* */ // comments in lexer

@@ -92,6 +92,38 @@
             Assert.IsInstanceOfType(result, typeof(string));
             Assert.AreEqual("Adam", result);
         }
+
+        [TestMethod]
+        public void InvokeMethodRedefinedInObject()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("Age"));
+            Function function = new Function(null, body);
+
+            ICommand body2 = new ReturnCommand(new ConstantExpression(0));
+            Function function2 = new Function(null, body2);
+
+            this.dynclass.SetMember("Name", "Adam");
+            this.dynclass.SetMember("Age", 800);
+            this.dynclass.SetMember("GetAge", function);
+
+            Assert.AreEqual(0, function.Arity);
+
+            object instance = this.dynclass.NewInstance(null);
+
+            Assert.IsNotNull(instance);
+
+            Assert.IsInstanceOfType(instance, typeof(IObject));
+
+            IObject dynobj = (IObject)instance;
+
+            dynobj.SetValue("GetAge", function2);
+
+            object result = dynobj.Invoke("GetAge", new object[] { });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(int));
+            Assert.AreEqual(0, result);
+        }
     }
 }
 

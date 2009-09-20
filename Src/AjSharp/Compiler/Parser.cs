@@ -110,7 +110,7 @@
             if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
                 return this.ParseFunctionExpression();
 
-            return this.ParseBinaryExpressionZerothLevel();
+            return this.ParseBinaryLogicalExpressionLevelOne();
         }
 
         #region IDisposable Members
@@ -253,6 +253,42 @@
             return expressions;
         }
 
+        private IExpression ParseBinaryLogicalExpressionLevelOne()
+        {
+            IExpression expression = this.ParseBinaryLogicalExpressionLevelTwo();
+
+            if (expression == null)
+                return null;
+
+            while (this.TryParse(TokenType.Operator, "||"))
+            {
+                Token oper = this.lexer.NextToken();
+                IExpression right = this.ParseBinaryLogicalExpressionLevelTwo();
+
+                expression = new OrExpression(expression, right);
+            }
+
+            return expression;
+        }
+
+        private IExpression ParseBinaryLogicalExpressionLevelTwo()
+        {
+            IExpression expression = this.ParseBinaryExpressionZerothLevel();
+
+            if (expression == null)
+                return null;
+
+            while (this.TryParse(TokenType.Operator, "&&"))
+            {
+                Token oper = this.lexer.NextToken();
+                IExpression right = this.ParseBinaryExpressionZerothLevel();
+
+                expression = new AndExpression(expression, right);
+            }
+
+            return expression;
+        }
+
         private IExpression ParseBinaryExpressionZerothLevel()
         {
             IExpression expression = this.ParseBinaryExpressionFirstLevel();
@@ -326,11 +362,14 @@
 
         private IExpression ParseUnaryExpression()
         {
-            if (this.TryParse(TokenType.Operator, "+", "-"))
+            if (this.TryParse(TokenType.Operator, "+", "-", "!"))
             {
                 Token oper = this.lexer.NextToken();
 
                 IExpression unaryExpression = this.ParseUnaryExpression();
+
+                if (oper.Value == "!")
+                    return new NotExpression(unaryExpression);
 
                 ArithmeticOperator op = oper.Value == "+" ? ArithmeticOperator.Plus : ArithmeticOperator.Minus;
 
