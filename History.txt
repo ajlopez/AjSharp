@@ -129,3 +129,9 @@ EvaluateExpression, ExecuteSubroutine w/tests
 AjLanguageWithTests.sln
 Evaluate, Execute as primitives in AjSharpMachine
 Support for /* */ // comments in lexer
+
+2009-12-26
+Fixing create a classic object with unitialized vars
+DefineObjectCommand with tests
+object ... { .... } support in Parser
+Class.ajs, Object.ajs, ClassObject.ajs in tests

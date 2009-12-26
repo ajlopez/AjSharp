@@ -1,0 +1,12 @@
+﻿
+class Person
+{
+	var Name;
+	var Age;
+	
+	function AddYears(years) 
+	{
+		this.Age = this.Age + years;
+	}
+}
+

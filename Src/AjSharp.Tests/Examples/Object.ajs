@@ -1,0 +1,15 @@
+﻿
+object Adam
+{
+	var Name = "Adam";
+	var Age = 700;
+	
+	function AddYears(years) 
+	{
+		this.Age = this.Age + years;
+	}
+}
+
+Adam.AddYears(100);
+
+

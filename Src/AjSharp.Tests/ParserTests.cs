@@ -463,6 +463,42 @@
         }
 
         [TestMethod]
+        public void ParseEmptyObjectDefinition()
+        {
+            ICommand command = ParseCommand("object Foo { }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineObjectCommand));
+        }
+
+        [TestMethod]
+        public void ParseObjectDefinitionWithMemberVariable()
+        {
+            ICommand command = ParseCommand("object Foo { var Bar; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineObjectCommand));
+        }
+
+        [TestMethod]
+        public void ParseObjectDefinitionWithInitializedMemberVariables()
+        {
+            ICommand command = ParseCommand("object Person { var Name = \"Adam\"; var Age = 800; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineObjectCommand));
+        }
+
+        [TestMethod]
+        public void ParseObjectDefinitionWithMemberVariableAndMethod()
+        {
+            ICommand command = ParseCommand("object Foo { var Bar; function GetBar() { return Bar; }}");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineObjectCommand));
+        }
+
+        [TestMethod]
         public void ParseSetPropertyCommand()
         {
             ICommand command = ParseCommand("x.FirstName = \"Adam\";");

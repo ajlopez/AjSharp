@@ -230,6 +230,57 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\Class.ajs")]
+        public void DefineClass()
+        {
+            IncludeFile("Class.ajs");
+
+            object result = this.machine.Environment.GetValue("Person");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicClass));
+
+            DynamicClass dynclass = (DynamicClass)result;
+
+            Assert.IsTrue(dynclass.GetMemberNames().Contains("Age"));
+            Assert.IsTrue(dynclass.GetMemberNames().Contains("Name"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\Object.ajs")]
+        public void DefineObject()
+        {
+            IncludeFile("Object.ajs");
+
+            object result = this.machine.Environment.GetValue("Adam");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)result;
+
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ClassObject.ajs")]
+        public void DefineClassCreateObjectCallMethod()
+        {
+            IncludeFile("ClassObject.ajs");
+
+            object result = this.machine.Environment.GetValue("adam");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicClassicObject));
+
+            DynamicClassicObject dynobj = (DynamicClassicObject)result;
+
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+        }
+
+        [TestMethod]
         public void EvaluateFunctionExpression()
         {
             object result = this.EvaluateExpression("function (n) { return n*n; }");
@@ -406,6 +457,31 @@
             Assert.AreEqual(800, obj.GetValue("Age"));
             Assert.AreEqual("Adam", obj.Invoke("GetName", new object[] { }));
             Assert.AreEqual("Adam", obj.Invoke("GetName", null));
+        }
+
+        [TestMethod]
+        public void EvaluateNewClassInstanceWithUnitializedMembers()
+        {
+            this.ExecuteCommand("class Person { var Name; var Age; function GetName() { return Name; } }");
+            this.ExecuteCommand("adam = new Person();");
+
+            object result = this.machine.Environment.GetValue("Person");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IClass));
+            Assert.AreEqual(3, ((IClass)result).GetMemberNames().Count);
+
+            object instance = this.machine.Environment.GetValue("adam");
+
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(IClassicObject));
+
+            IClassicObject obj = (IClassicObject)instance;
+
+            Assert.IsNull(obj.GetValue("Name"));
+            Assert.IsNull(obj.GetValue("Age"));
+            Assert.IsNull(obj.Invoke("GetName", new object[] { }));
+            Assert.IsNull(obj.Invoke("GetName", null));
         }
 
         [TestMethod]

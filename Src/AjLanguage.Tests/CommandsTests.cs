@@ -279,5 +279,24 @@
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual("bar", list[0]);
         }
+
+        [TestMethod]
+        public void ExecuteDefineObjectCommand()
+        {
+            DefineObjectCommand command = new DefineObjectCommand("adam", new string[] { "Age", "Name" }, new IExpression[] { new ConstantExpression(800), new ConstantExpression("Adam") });
+            BindingEnvironment environment = new BindingEnvironment();
+
+            command.Execute(environment);
+
+            object result = environment.GetValue("adam");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicObject));
+
+            DynamicObject dynobj = (DynamicObject)result;
+
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+        }
     }
 }

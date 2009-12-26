@@ -8,20 +8,20 @@
     using AjLanguage.Expressions;
     using AjLanguage.Language;
 
-    public class DefineClassCommand : ICommand
+    public class DefineObjectCommand : ICommand
     {
         private string name;
         private string[] memberNames;
         private ICollection<IExpression> memberExpressions;
 
-        public DefineClassCommand(string name, string[] memberNames, ICollection<IExpression> memberExpressions)
+        public DefineObjectCommand(string name, string[] memberNames, ICollection<IExpression> memberExpressions)
         {
             this.name = name;
             this.memberNames = memberNames;
             this.memberExpressions = memberExpressions;
         }
 
-        public string ClassName { get { return this.name; } }
+        public string ObjectName { get { return this.name; } }
 
         public string[] MemberNames { get { return this.MemberNames; } }
 
@@ -29,7 +29,7 @@
 
         public void Execute(IBindingEnvironment environment)
         {
-            DynamicClass dynclass = new DynamicClass();
+            DynamicObject dynobj = new DynamicObject();
 
             int k = 0;
 
@@ -42,10 +42,10 @@
                     if (expression != null)
                         value = expression.Evaluate(environment);
 
-                    dynclass.SetMember(name, value);
+                    dynobj.SetValue(name, value);
                 }
 
-            Machine.Current.Environment.SetValue(this.name, dynclass);
+            environment.SetValue(this.name, dynobj);
         }
     }
 }

@@ -60,6 +60,9 @@
                 if (token.Value == "class")
                     return this.ParseClassCommand();
 
+                if (token.Value == "object")
+                    return this.ParseObjectCommand();
+
                 //if (this.TryParse(TokenType.Separator, "("))
                 //    return this.ParseInvokeCommand(token.Value);
 
@@ -623,6 +626,33 @@
             this.Parse(TokenType.Separator, "}");
 
             DefineClassCommand cmd = new DefineClassCommand(name, memberNames.ToArray(), memberExpressions);
+
+            return cmd;
+        }
+
+        private ICommand ParseObjectCommand()
+        {
+            string name = this.ParseName();
+            List<string> memberNames = new List<string>();
+            List<IExpression> memberExpressions = new List<IExpression>();
+
+            this.Parse(TokenType.Separator, "{");
+
+            while (this.TryParse(TokenType.Name, "var", "function", "sub"))
+            {
+                Token token = this.lexer.NextToken();
+
+                if (token.Value == "var")
+                    this.ParseMemberVariable(memberNames, memberExpressions);
+                else if (token.Value == "function" || token.Value == "sub")
+                    this.ParseMemberMethod(memberNames, memberExpressions);
+                else
+                    throw new UnexpectedTokenException(token);
+            }
+
+            this.Parse(TokenType.Separator, "}");
+
+            DefineObjectCommand cmd = new DefineObjectCommand(name, memberNames.ToArray(), memberExpressions);
 
             return cmd;
         }
