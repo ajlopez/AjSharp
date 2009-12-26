@@ -36,6 +36,9 @@
                 case ArithmeticOperator.IntegerDivide:
                     this.function = Operators.IntDivideObject;
                     break;
+                case ArithmeticOperator.Modulo:
+                    this.function = Operators.ModObject;
+                    break;
                 default:
                     throw new ArgumentException("Invalid operator");
             }

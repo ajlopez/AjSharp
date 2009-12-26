@@ -42,5 +42,10 @@
         {
             this.obj.SetValue(name, value);
         }
+
+        public bool ContainsName(string name)
+        {
+            return this.obj.GetNames().Contains(name);
+        }
     }
 }

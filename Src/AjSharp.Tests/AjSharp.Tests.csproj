@@ -76,6 +76,12 @@
     <None Include="Examples\ChannelManyTimes.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\ChannelOperator.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\ChannelManyTimesOperator.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\For.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

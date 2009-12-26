@@ -99,6 +99,7 @@
     <Compile Include="Language\IClass.cs" />
     <Compile Include="Language\IClassicObject.cs" />
     <Compile Include="Language\IObject.cs" />
+    <Compile Include="LocalBindingEnvironment.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="ObjectEnvironment.cs" />
     <Compile Include="ObjectUtilities.cs" />

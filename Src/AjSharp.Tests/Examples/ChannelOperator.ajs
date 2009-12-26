@@ -1,0 +1,7 @@
+﻿
+channel = new Channel();
+
+go channel <- 10;
+
+result = <- channel;
+

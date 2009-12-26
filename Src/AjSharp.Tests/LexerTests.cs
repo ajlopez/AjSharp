@@ -75,7 +75,7 @@
         [TestMethod]
         public void ParseOperators()
         {
-            ParseTokens("= + - * / ++ -- <= < >= == >", TokenType.Operator);
+            ParseTokens("= + - * / % ++ -- <= < >= == > <-", TokenType.Operator);
         }
 
         [TestMethod]

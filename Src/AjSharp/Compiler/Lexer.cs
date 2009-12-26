@@ -14,7 +14,7 @@
         private const string Operators = "!~+-*/%&|^<>=.\\";
         private const string Separators = "()[]{},:;";
 
-        private static string[] otherOperators = new string[] { "++", "--", "<=", ">=", "==", "!=", "&&", "||", "*=", "/=", "%=", "+=", "-=" };
+        private static string[] otherOperators = new string[] { "++", "--", "<=", ">=", "==", "!=", "&&", "||", "*=", "/=", "%=", "+=", "-=", "<-" };
 
         private TextReader reader;
         private Token lastToken;

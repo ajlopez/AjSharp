@@ -68,6 +68,35 @@
             Assert.AreEqual("newbar", environment.GetValue("foo"));
             Assert.AreEqual("bar", parent.GetValue("foo"));
         }
+
+        [TestMethod]
+        public void ContainsName()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            Assert.IsFalse(environment.ContainsName("foo"));
+
+            environment.SetValue("foo", null);
+
+            Assert.IsTrue(environment.ContainsName("foo"));
+
+            environment.SetValue("bar", "foo");
+
+            Assert.IsTrue(environment.ContainsName("bar"));
+        }
+
+        [TestMethod]
+        public void SetValueThruLocalEnviroment()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("one", 0);
+
+            LocalBindingEnvironment local = new LocalBindingEnvironment(environment);
+            local.SetValue("one", 1);
+
+            Assert.AreEqual(1, local.GetValue("one"));
+            Assert.AreEqual(1, environment.GetValue("one"));
+        }
     }
 }
 

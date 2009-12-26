@@ -79,6 +79,23 @@
         }
 
         [TestMethod]
+        public void ParseModExpression()
+        {
+            IExpression expression = ParseExpression("a % 2");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ArithmeticBinaryExpression));
+
+            ArithmeticBinaryExpression operation = (ArithmeticBinaryExpression)expression;
+
+            Assert.AreEqual(ArithmeticOperator.Modulo, operation.Operation);
+            Assert.IsNotNull(operation.LeftExpression);
+            Assert.IsInstanceOfType(operation.LeftExpression, typeof(VariableExpression));
+            Assert.IsNotNull(operation.RightExpression);
+            Assert.IsInstanceOfType(operation.RightExpression, typeof(ConstantExpression));
+        }
+
+        [TestMethod]
         public void ParseSimpleCompareExpression()
         {
             IExpression expression = ParseExpression("x <= 1");
@@ -782,6 +799,41 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(GoCommand));
+        }
+
+        [TestMethod]
+        public void ParseChannelReceiveUsingOperator()
+        {
+            IExpression expression = ParseExpression("<- a");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DotExpression));
+
+            DotExpression dotexp = (DotExpression)expression;
+
+            Assert.AreEqual("Receive", dotexp.Name);
+            Assert.IsNotNull(dotexp.Expression);
+            Assert.IsInstanceOfType(dotexp.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParseChannelSendUsingOperator()
+        {
+            ICommand command = ParseCommand("a <- 10;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+
+            ExpressionCommand expcmd = (ExpressionCommand)command;
+
+            Assert.IsInstanceOfType(expcmd.Expression, typeof(DotExpression));
+
+            DotExpression dotexp = (DotExpression)expcmd.Expression;
+
+            Assert.AreEqual(dotexp.Name, "Send");
+            Assert.AreEqual(1, dotexp.Arguments.Count);
+            Assert.IsInstanceOfType(dotexp.Arguments.First(), typeof(ConstantExpression));
+            Assert.IsInstanceOfType(dotexp.Expression, typeof(VariableExpression));
         }
 
         private static IExpression ParseExpression(string text)

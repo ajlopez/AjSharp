@@ -1,5 +1,6 @@
 ﻿
 handle = new System.Threading.AutoResetEvent(false);
+
 one = 0;
 
 go { one = 1; handle.Set(); }

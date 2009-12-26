@@ -110,6 +110,13 @@
         }
 
         [TestMethod]
+        public void EvaluateModOperation()
+        {
+            Assert.AreEqual(1, EvaluateArithmeticBinaryOperator(ArithmeticOperator.Modulo, 3, 2));
+            Assert.AreEqual(0, EvaluateArithmeticBinaryOperator(ArithmeticOperator.Modulo, 6, 3));
+        }
+
+        [TestMethod]
         public void EvaluateNotExpression()
         {
             Assert.IsTrue(EvaluateNotOperator(null));

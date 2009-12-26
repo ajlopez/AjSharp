@@ -75,35 +75,44 @@
 
             this.lexer.PushToken(token);
 
-            IExpression expr = this.ParseExpression();
+            ICommand command = this.ParseSimpleCommand();
 
-            if (this.TryParse(TokenType.Separator, ";"))
-            {
-                this.lexer.NextToken();
+            if (command == null)
+                throw new UnexpectedTokenException(token);
 
-                return new ExpressionCommand(expr);
-            }
+            this.Parse(TokenType.Separator, ";");
 
-            if (this.TryParse(TokenType.Operator, "="))
-            {
-                this.lexer.NextToken();
+            return command;
 
-                ICommand command = null;
+            //IExpression expr = this.ParseExpression();
 
-                if (expr is ArrayExpression)
-                {
-                    ArrayExpression aexpr = (ArrayExpression)expr;
-                    command = new SetArrayCommand(aexpr.Expression, aexpr.Arguments, this.ParseExpression());
-                }
-                else
-                    command = new SetCommand(expr, this.ParseExpression());
+            //if (this.TryParse(TokenType.Separator, ";"))
+            //{
+            //    this.lexer.NextToken();
 
-                this.Parse(TokenType.Separator, ";");
+            //    return new ExpressionCommand(expr);
+            //}
 
-                return command;
-            }
+            //if (this.TryParse(TokenType.Operator, "="))
+            //{
+            //    this.lexer.NextToken();
 
-            throw new UnexpectedTokenException(token);
+            //    ICommand command = null;
+
+            //    if (expr is ArrayExpression)
+            //    {
+            //        ArrayExpression aexpr = (ArrayExpression)expr;
+            //        command = new SetArrayCommand(aexpr.Expression, aexpr.Arguments, this.ParseExpression());
+            //    }
+            //    else
+            //        command = new SetCommand(expr, this.ParseExpression());
+
+            //    this.Parse(TokenType.Separator, ";");
+
+            //    return command;
+            //}
+
+            //throw new UnexpectedTokenException(token);
         }
 
         public IExpression ParseExpression()
@@ -127,6 +136,9 @@
         {
             IExpression expression = this.ParseExpression();
 
+            if (expression == null)
+                return null;
+
             if (this.TryParse(TokenType.Operator, "="))
             {
                 this.lexer.NextToken();
@@ -144,8 +156,14 @@
                 return command;
             }
 
-            if (expression == null)
-                return null;
+            if (this.TryParse(TokenType.Operator, "<-"))
+            {
+                this.lexer.NextToken();
+
+                expression = new DotExpression(expression, "Send", new IExpression[] { this.ParseExpression() });
+
+                return new ExpressionCommand(expression);
+            }
 
             return new ExpressionCommand(expression);
         }
@@ -375,11 +393,22 @@
             if (expression == null)
                 return null;
 
-            while (this.TryParse(TokenType.Operator, "*", "/", @"\"))
+            while (this.TryParse(TokenType.Operator, "*", "/", @"\", "%"))
             {
                 Token oper = this.lexer.NextToken();
                 IExpression right = this.ParseUnaryExpression();
-                ArithmeticOperator op = oper.Value == "*" ? ArithmeticOperator.Multiply : (oper.Value == "/" ? ArithmeticOperator.Divide : ArithmeticOperator.IntegerDivide);
+                ArithmeticOperator op;
+
+                if (oper.Value == "*")
+                    op = ArithmeticOperator.Multiply;
+                else if (oper.Value == "/")
+                    op = ArithmeticOperator.Divide;
+                else if (oper.Value == "\\")
+                    op = ArithmeticOperator.IntegerDivide;
+                else if (oper.Value == "%")
+                    op = ArithmeticOperator.Modulo;
+                else
+                    throw new ParserException(string.Format("Invalid operator '{0}'", oper.Value));
 
                 expression = new ArithmeticBinaryExpression(op, expression, right);
             }
@@ -412,6 +441,15 @@
                 IncrementOperator op = oper.Value == "++" ? IncrementOperator.PreIncrement : IncrementOperator.PreDecrement;
 
                 return new IncrementExpression(expression, op);
+            }
+
+            if (this.TryParse(TokenType.Operator, "<-"))
+            {
+                this.lexer.NextToken();
+
+                IExpression expression = this.ParseTermExpression();
+
+                return new DotExpression(expression, "Receive");
             }
 
             IExpression termexpr = this.ParseTermExpression();

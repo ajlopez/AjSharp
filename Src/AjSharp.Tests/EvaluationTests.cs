@@ -325,10 +325,28 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\ChannelOperator.ajs")]
+        public void UseChannelWithGoCommandAndOperator()
+        {
+            IncludeFile("ChannelOperator.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\ChannelManyTimes.ajs")]
         public void UseChannelManyTimesWithGoCommand()
         {
             IncludeFile("ChannelManyTimes.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ChannelManyTimesOperator.ajs")]
+        public void UseChannelManyTimesWithGoCommandAndOperator()
+        {
+            IncludeFile("ChannelManyTimesOperator.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
         }

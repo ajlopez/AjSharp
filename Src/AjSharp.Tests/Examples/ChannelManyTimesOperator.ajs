@@ -1,0 +1,9 @@
+﻿
+channel = new Channel();
+
+go for (k=1; k<=5; k++) channel <- k;
+
+for (j=1; j<=5; j++)
+	result = result + <-channel;
+	
+

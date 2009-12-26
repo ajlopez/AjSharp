@@ -7,8 +7,8 @@
 
     public class BindingEnvironment : AjLanguage.IBindingEnvironment
     {
-        private IBindingEnvironment parent;
-        private Dictionary<string, object> values = new Dictionary<string, object>();
+        protected IBindingEnvironment parent;
+        protected Dictionary<string, object> values = new Dictionary<string, object>();
 
         public BindingEnvironment()
         {
@@ -35,6 +35,11 @@
         public virtual void SetValue(string name, object value)
         {
             this.values[name] = value;
+        }
+
+        public virtual bool ContainsName(string name)
+        {
+            return this.values.ContainsKey(name);
         }
     }
 }

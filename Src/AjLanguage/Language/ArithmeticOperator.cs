@@ -13,6 +13,7 @@
         Divide,
         IntegerDivide,
         Plus,
-        Minus
+        Minus,
+        Modulo
     }
 }
