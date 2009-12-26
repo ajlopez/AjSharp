@@ -16,6 +16,8 @@
             this.expression = expression;
         }
 
+        public IExpression Expression { get { return this.expression; } }
+
         public void Execute(IBindingEnvironment environment)
         {
             this.expression.Evaluate(environment);

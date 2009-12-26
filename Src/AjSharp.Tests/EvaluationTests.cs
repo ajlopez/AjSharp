@@ -298,12 +298,39 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\For.ajs")]
+        public void ExecuteForCommand()
+        {
+            IncludeFile("For.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\Go.ajs")]
         public void ExecuteGoCommand()
         {
             IncludeFile("Go.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\Channel.ajs")]
+        public void UseChannelWithGoCommand()
+        {
+            IncludeFile("Channel.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ChannelManyTimes.ajs")]
+        public void UseChannelManyTimesWithGoCommand()
+        {
+            IncludeFile("ChannelManyTimes.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
         }
 
         [TestMethod]

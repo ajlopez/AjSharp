@@ -141,3 +141,5 @@ Channel as aliased type in AjSharpMachine
 GoCommand in AjLanguage
 go command in AjSharp parser
 New file tests: Constructor.ajs, Go.ajs
+for command in Parser
+New file tests: Channel.ajs, ChannelManyTimes.ajs, For.ajs

@@ -1,0 +1,5 @@
+﻿
+result = 0;
+
+for (k=1; k<=5; k++)
+	result = result + k;

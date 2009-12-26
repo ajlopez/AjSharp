@@ -261,6 +261,36 @@
         }
 
         [TestMethod]
+        public void ParseSimpleIncrement()
+        {
+            ICommand command = ParseCommand("k++;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+
+            ExpressionCommand expcmd = (ExpressionCommand)command;
+
+            Assert.IsNotNull(expcmd.Expression);
+            Assert.IsInstanceOfType(expcmd.Expression, typeof(IncrementExpression));
+        }
+
+        [TestMethod]
+        public void ParseSimpleFor()
+        {
+            ICommand command = ParseCommand("for (k=1; k<=5; k++) result=result+k;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ForCommand));
+
+            ForCommand forcommand = (ForCommand)command;
+
+            Assert.IsNotNull(forcommand.InitialCommand);
+            Assert.IsNotNull(forcommand.Condition);
+            Assert.IsNotNull(forcommand.EndCommand);
+            Assert.IsNotNull(forcommand.Body);
+        }
+
+        [TestMethod]
         public void ParseCompositeCommand()
         {
             ICommand command = ParseCommand("{ x=1; y=2; }");

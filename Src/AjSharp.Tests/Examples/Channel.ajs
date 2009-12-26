@@ -1,0 +1,7 @@
+﻿
+channel = new Channel();
+
+go channel.Send(10);
+
+result = channel.Receive();
+

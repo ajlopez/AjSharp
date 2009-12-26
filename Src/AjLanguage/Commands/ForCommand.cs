@@ -22,6 +22,14 @@
             this.body = body;
         }
 
+        public ICommand InitialCommand { get { return this.initialCommand; } }
+
+        public IExpression Condition { get { return this.condition; } }
+
+        public ICommand EndCommand { get { return this.endCommand; } }
+
+        public ICommand Body { get { return this.body; } }
+
         public void Execute(IBindingEnvironment environment)
         {
             if (this.initialCommand != null)

@@ -20,7 +20,7 @@
         public void Execute(IBindingEnvironment environment)
         {
             Thread thread = new Thread(new ParameterizedThreadStart(this.ExecuteGo));
-            thread.Start(environment);
+            thread.Start(new BindingEnvironment(environment));
         }
 
         private void ExecuteGo(object environment)

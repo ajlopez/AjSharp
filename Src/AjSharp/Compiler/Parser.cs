@@ -51,6 +51,9 @@
                 if (token.Value == "foreach")
                     return this.ParseForEachCommand();
 
+                if (token.Value == "for")
+                    return this.ParseForCommand();
+
                 if (token.Value == "return")
                     return this.ParseReturnCommand();
 
@@ -65,11 +68,6 @@
 
                 if (token.Value == "go")
                     return new GoCommand(this.ParseCommand());
-
-                //if (this.TryParse(TokenType.Separator, "("))
-                //    return this.ParseInvokeCommand(token.Value);
-
-                //return this.ParseSetCommand(token.Value);
             }
 
             if (token.TokenType == TokenType.Separator && token.Value == "{")
@@ -119,15 +117,38 @@
             return this.ParseBinaryLogicalExpressionLevelOne();
         }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             if (this.lexer != null)
                 this.lexer.Dispose();
         }
 
-        #endregion
+        private ICommand ParseSimpleCommand()
+        {
+            IExpression expression = this.ParseExpression();
+
+            if (this.TryParse(TokenType.Operator, "="))
+            {
+                this.lexer.NextToken();
+
+                ICommand command = null;
+
+                if (expression is ArrayExpression)
+                {
+                    ArrayExpression aexpr = (ArrayExpression)expression;
+                    command = new SetArrayCommand(aexpr.Expression, aexpr.Arguments, this.ParseExpression());
+                }
+                else
+                    command = new SetCommand(expression, this.ParseExpression());
+
+                return command;
+            }
+
+            if (expression == null)
+                return null;
+
+            return new ExpressionCommand(expression);
+        }
 
         private static bool IsName(Token token, string value)
         {
@@ -595,6 +616,20 @@
             ICommand command = this.ParseCommand();
 
             return new ForEachCommand(name, values, command);
+        }
+
+        private ICommand ParseForCommand()
+        {
+            this.Parse(TokenType.Separator, "(");
+            ICommand initial = this.ParseSimpleCommand();
+            this.Parse(TokenType.Separator, ";");
+            IExpression condition = this.ParseExpression();
+            this.Parse(TokenType.Separator, ";");
+            ICommand endcmd = this.ParseSimpleCommand();
+            this.Parse(TokenType.Separator, ")");
+            ICommand command = this.ParseCommand();
+
+            return new ForCommand(initial, condition, endcmd, command);
         }
 
         private ICommand ParseFunctionCommand()

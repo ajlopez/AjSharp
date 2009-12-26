@@ -1,0 +1,9 @@
+﻿
+channel = new Channel();
+
+go for (k=1; k<=5; k++) channel.Send(k);
+
+for (k=1; k<=5; k++)
+	result = result + channel.Receive();
+	
+
