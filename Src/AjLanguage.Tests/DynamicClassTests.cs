@@ -19,7 +19,13 @@
         [TestInitialize]
         public void SetUp()
         {
-            this.dynclass = new DynamicClass();
+            this.dynclass = new DynamicClass("MyClass");
+        }
+
+        [TestMethod]
+        public void GetName()
+        {
+            Assert.AreEqual("MyClass", this.dynclass.Name);
         }
 
         [TestMethod]
@@ -55,6 +61,27 @@
             this.dynclass.SetMember("Age", 800);
 
             object instance = this.dynclass.NewInstance(null);
+
+            Assert.IsNotNull(instance);
+
+            Assert.IsInstanceOfType(instance, typeof(IObject));
+
+            IObject obj = (IObject)instance;
+
+            Assert.AreEqual("Adam", obj.GetValue("Name"));
+            Assert.AreEqual(800, obj.GetValue("Age"));
+        }
+
+        [TestMethod]
+        public void CreateNewInstanceWithConstructor()
+        {
+            ICommand body = new SetCommand(new DotExpression(new VariableExpression("this"), "Name"), new VariableExpression("n"));
+            Function function = new Function(new string [] { "n" }, body);
+            this.dynclass.SetMember(this.dynclass.Name, function);
+            this.dynclass.SetMember("Name", null);
+            this.dynclass.SetMember("Age", 800);
+
+            object instance = this.dynclass.NewInstance(new object[] { "Adam" });
 
             Assert.IsNotNull(instance);
 

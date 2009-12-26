@@ -1,0 +1,15 @@
+﻿
+class Person
+{
+	var Name;
+	var Age;
+	
+	function Person(name, age)
+	{
+		this.Name = name;
+		this.Age = age;
+	}
+}
+
+adam = new Person("Adam", 800);
+

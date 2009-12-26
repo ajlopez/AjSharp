@@ -745,6 +745,15 @@
             Assert.IsInstanceOfType(orexpr.RightExpression, typeof(CompareExpression));
         }
 
+        [TestMethod]
+        public void ParseGoWithSimpleCommand()
+        {
+            ICommand command = ParseCommand("go a=1;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(GoCommand));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

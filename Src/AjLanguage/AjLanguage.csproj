@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{20458D50-3D54-45DD-9E22-5B2289B6AB91}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\GoCommand.cs" />
     <Compile Include="Commands\DefineObjectCommand.cs" />
     <Compile Include="Commands\SetArrayCommand.cs" />
     <Compile Include="Commands\DefineClassCommand.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Expressions\MultipleSetExpression.cs" />
     <Compile Include="ExpressionUtilities.cs" />
     <Compile Include="IBindingEnvironment.cs" />
+    <Compile Include="Language\Channel.cs" />
     <Compile Include="Language\IncrementOperator.cs" />
     <Compile Include="Language\DynamicClass.cs" />
     <Compile Include="Language\DynamicClassicObject.cs" />

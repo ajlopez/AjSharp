@@ -7,6 +7,8 @@
 
     public interface IClass
     {
+        string Name { get; } 
+
         void SetMember(string name, object value);
 
         object GetMember(string name);

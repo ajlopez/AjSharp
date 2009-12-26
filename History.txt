@@ -135,3 +135,9 @@ Fixing create a classic object with unitialized vars
 DefineObjectCommand with tests
 object ... { .... } support in Parser
 Class.ajs, Object.ajs, ClassObject.ajs in tests
+Channel in AjLanguage.Language
+ChannelTests
+Channel as aliased type in AjSharpMachine
+GoCommand in AjLanguage
+go command in AjSharp parser
+New file tests: Constructor.ajs, Go.ajs

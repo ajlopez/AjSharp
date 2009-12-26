@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingEnvironmentTest.cs" />
+    <Compile Include="ChannelTests.cs" />
     <Compile Include="CommandsTests.cs" />
     <Compile Include="DynamicClassTests.cs" />
     <Compile Include="DynamicObjectTests.cs" />

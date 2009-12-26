@@ -29,7 +29,7 @@
 
         public void Execute(IBindingEnvironment environment)
         {
-            DynamicClass dynclass = new DynamicClass();
+            DynamicClass dynclass = new DynamicClass(this.name);
 
             int k = 0;
 

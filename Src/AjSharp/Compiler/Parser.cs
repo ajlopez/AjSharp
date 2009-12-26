@@ -63,6 +63,9 @@
                 if (token.Value == "object")
                     return this.ParseObjectCommand();
 
+                if (token.Value == "go")
+                    return new GoCommand(this.ParseCommand());
+
                 //if (this.TryParse(TokenType.Separator, "("))
                 //    return this.ParseInvokeCommand(token.Value);
 

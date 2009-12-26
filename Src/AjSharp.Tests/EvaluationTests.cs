@@ -281,6 +281,32 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\Constructor.ajs")]
+        public void DefineClassCreateObjectUsingConstructor()
+        {
+            IncludeFile("Constructor.ajs");
+
+            object result = this.machine.Environment.GetValue("adam");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicClassicObject));
+
+            DynamicClassicObject dynobj = (DynamicClassicObject)result;
+
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\Go.ajs")]
+        public void ExecuteGoCommand()
+        {
+            IncludeFile("Go.ajs");
+
+            Assert.AreEqual(1, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         public void EvaluateFunctionExpression()
         {
             object result = this.EvaluateExpression("function (n) { return n*n; }");
@@ -559,7 +585,7 @@
         [TestMethod]
         public void EvaluateNewDynamicClass()
         {
-            object obj = this.EvaluateExpression("new DynamicClass()");
+            object obj = this.EvaluateExpression("new DynamicClass(\"MyClass\")");
 
             Assert.IsNotNull(obj);
             Assert.IsInstanceOfType(obj, typeof(DynamicClass));
@@ -744,6 +770,15 @@
             Assert.AreEqual(0, this.EvaluateExpression("Evaluate(\"0\")"));
             Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"1+2\")"));
             Assert.AreEqual(3, this.EvaluateExpression("Evaluate(\"one+two\")"));
+        }
+
+        [TestMethod]
+        public void CreateChannel()
+        {
+            object result = this.EvaluateExpression("new Channel()");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Channel));
         }
 
         private object EvaluateExpression(string text)

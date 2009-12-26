@@ -331,6 +331,19 @@
         }
 
         [TestMethod]
+        public void EvaluateNewExpressionWithAliasedType()
+        {
+            IExpression expression = new NewExpression("Channel", null);
+            BindingEnvironment environment = new BindingEnvironment();
+            environment.SetValue("Channel", typeof(Channel));
+
+            object result = expression.Evaluate(environment);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Channel));
+        }
+
+        [TestMethod]
         public void EvaluateFunctionExpression()
         {
             IExpression expression = new FunctionExpression(new string[] { "x" }, new ReturnCommand(new VariableExpression("x")));
@@ -401,7 +414,7 @@
         {
             BindingEnvironment environment = new BindingEnvironment();
 
-            environment.SetValue("ADynamicClass", new DynamicClass());
+            environment.SetValue("ADynamicClass", new DynamicClass("ADynamicClass"));
 
             IExpression expression = new NewArrayExpression("ADynamicClass", new IExpression[] { new ConstantExpression(10) });
 
