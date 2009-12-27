@@ -143,3 +143,11 @@ go command in AjSharp parser
 New file tests: Constructor.ajs, Go.ajs
 for command in Parser
 New file tests: Channel.ajs, ChannelManyTimes.ajs, For.ajs
+
+2009-12-27
+File processing in AjSharp.Console
+Examples in AjSharp.Console: Generate.ajs, Filter.ajs, Primes.ajs
+Setting Machine.Current when go command
+New file tests: Generate.ajs, Filter.ajs
+LocalBindingEnvironment in CompositeCommand
+ContainsName override in LocalBindingEnvironment 

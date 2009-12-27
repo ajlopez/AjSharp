@@ -30,6 +30,14 @@
 
             this.values[name] = value;
         }
+
+        public override bool ContainsName(string name)
+        {
+            if (this.values.ContainsKey(name))
+                return true;
+
+            return this.parent.ContainsName(name);
+        }
     }
 }
 

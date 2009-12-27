@@ -20,12 +20,14 @@
 
         public void Execute(IBindingEnvironment environment)
         {
+            LocalBindingEnvironment local = new LocalBindingEnvironment(environment);
+
             foreach (ICommand command in this.commands)
             {
                 if (Machine.CurrentFunctionStatus.Returned)
                     return;
 
-                command.Execute(environment);
+                command.Execute(local);
             }
         }
     }

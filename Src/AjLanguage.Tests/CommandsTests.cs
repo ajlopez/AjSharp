@@ -43,11 +43,14 @@
 
             CompositeCommand command = new CompositeCommand(commands);
 
+            environment.SetValue("foo", null);
+            environment.SetValue("one", null);
+
             command.Execute(environment);
 
             Assert.AreEqual("bar", environment.GetValue("foo"));
             Assert.AreEqual(1, environment.GetValue("one"));
-            Assert.AreEqual("bar", environment.GetValue("bar"));
+            Assert.IsNull(environment.GetValue("bar"));
         }
 
         [TestMethod]
@@ -158,6 +161,8 @@
             ForCommand forcmd = new ForCommand(initialCommand, condition, endCommand, addToY);
 
             BindingEnvironment environment = new BindingEnvironment();
+
+            environment.SetValue("y", null);
 
             forcmd.Execute(environment);
 
