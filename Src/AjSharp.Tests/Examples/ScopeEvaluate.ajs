@@ -1,0 +1,7 @@
+﻿
+value = 10;
+k = 12;
+
+result = Evaluate("value + k");
+
+// result == 22

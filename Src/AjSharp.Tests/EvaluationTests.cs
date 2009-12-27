@@ -175,6 +175,20 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\TwoFactorials.ajs")]
+        public void EvaluateFactorialUsingTwoFunctions()
+        {
+            IncludeFile("TwoFactorials.ajs");
+
+            Assert.AreEqual(1, this.EvaluateExpression("FactorialOne(0)"));
+            Assert.AreEqual(1, this.EvaluateExpression("FactorialTwo(1)"));
+            Assert.AreEqual(2, this.EvaluateExpression("FactorialOne(2)"));
+            Assert.AreEqual(6, this.EvaluateExpression("FactorialTwo(3)"));
+            Assert.AreEqual(24, this.EvaluateExpression("FactorialOne(4)"));
+            Assert.AreEqual(120, this.EvaluateExpression("FactorialTwo(5)"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\SetNumbers.ajs")]
         public void SetNumbersUsingInclude()
         {
@@ -367,6 +381,65 @@
             IncludeFile("Filter.ajs");
 
             Assert.AreEqual(16, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeWhile.ajs")]
+        public void ScopeInSimpleWhile()
+        {
+            IncludeFile("ScopeWhile.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+            Assert.AreEqual(6, this.EvaluateExpression("k"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeWhileComposite.ajs")]
+        public void ScopeInCompositeWhile()
+        {
+            IncludeFile("ScopeWhileComposite.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+            Assert.AreEqual(6, this.EvaluateExpression("k"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeFunction.ajs")]
+        public void ScopeInSimpleFunction()
+        {
+            IncludeFile("ScopeFunction.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("value"));
+            Assert.AreEqual(5, this.EvaluateExpression("k"));
+            Assert.AreEqual(17, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeFunctionReturn.ajs")]
+        public void ScopeInFunctionWithReturn()
+        {
+            IncludeFile("ScopeFunctionReturn.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("value"));
+            Assert.IsNull(this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeEvaluate.ajs")]
+        public void ScopeInEvaluateAtTop()
+        {
+            IncludeFile("ScopeEvaluate.ajs");
+
+            Assert.AreEqual(22, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeEvaluateInFunction.ajs")]
+        public void ScopeInEvaluateInFunction()
+        {
+            IncludeFile("ScopeEvaluateInFunction.ajs");
+
+            Assert.AreEqual(3, this.EvaluateExpression("result"));
         }
 
         [TestMethod]

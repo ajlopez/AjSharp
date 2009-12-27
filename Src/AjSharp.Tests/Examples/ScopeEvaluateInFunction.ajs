@@ -1,0 +1,16 @@
+﻿
+value = 10;
+k = 12;
+
+function Test()
+{
+	value = 1;
+	k = 2;
+
+	// Evaluate uses current binding environment
+	return Evaluate("value + k");
+}
+
+result = Test();
+
+// result == 3

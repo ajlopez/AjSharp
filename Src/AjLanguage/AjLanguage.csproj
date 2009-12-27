@@ -69,6 +69,7 @@
     <Compile Include="ExpressionUtilities.cs" />
     <Compile Include="IBindingEnvironment.cs" />
     <Compile Include="Language\Channel.cs" />
+    <Compile Include="Language\ILocalCallable.cs" />
     <Compile Include="Language\IncrementOperator.cs" />
     <Compile Include="Language\DynamicClass.cs" />
     <Compile Include="Language\DynamicClassicObject.cs" />

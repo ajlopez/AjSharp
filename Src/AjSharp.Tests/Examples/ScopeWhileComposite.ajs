@@ -1,0 +1,16 @@
+﻿
+// result is not defined out of the while
+// but the first time it is set
+// it is in the "outer while" environment
+
+k = 0;
+
+while (k <= 5) 
+{
+	result = result + k; 
+	k = k+1;
+}
+	
+// now, k should be visible with 6
+// and result should be 1+2+3+4+5 = 15
+

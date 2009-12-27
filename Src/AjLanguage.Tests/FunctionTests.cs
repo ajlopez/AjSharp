@@ -32,23 +32,23 @@
         [TestMethod]
         public void EvaluateFactorialFunction()
         {
-            BindingEnvironment environment = new BindingEnvironment();
+            Machine machine = new Machine();
             ICallable factorial = BuildFactorialFunction();
-            environment.SetValue("Factorial", factorial);
+            machine.Environment.SetValue("Factorial", factorial);
 
             object result;
 
-            result = factorial.Invoke(environment, new object[] { 3 });
+            result = factorial.Invoke(new object[] { 3 });
 
             Assert.IsNotNull(result);
             Assert.AreEqual(6, result);
 
-            result = factorial.Invoke(environment, new object[] { 4 });
+            result = factorial.Invoke(new object[] { 4 });
 
             Assert.IsNotNull(result);
             Assert.AreEqual(24, result);
 
-            result = factorial.Invoke(environment, new object[] { 5 });
+            result = factorial.Invoke(new object[] { 5 });
 
             Assert.IsNotNull(result);
             Assert.AreEqual(120, result);

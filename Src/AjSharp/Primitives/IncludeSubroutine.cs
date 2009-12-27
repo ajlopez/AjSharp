@@ -31,5 +31,10 @@
 
             return null;
         }
+
+        public object Invoke(object[] arguments)
+        {
+            return this.Invoke(Machine.Current.Environment, arguments);
+        }
     }
 }

@@ -1,0 +1,16 @@
+﻿function FactorialOne(n)
+{
+	if (n<=1)
+		return 1;
+		
+	return n * FactorialTwo(n-1);
+}
+
+function FactorialTwo(n)
+{
+	if (n<=1)
+		return 1;
+		
+	return n * FactorialOne(n-1);
+}
+

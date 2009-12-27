@@ -12,8 +12,14 @@
         private string[] parameterNames;
         private ICommand body;
         private int arity;
+        private IBindingEnvironment environment;
 
         public Function(string[] parameterNames, ICommand body)
+            : this(parameterNames, body, null)
+        {
+        }
+
+        public Function(string[] parameterNames, ICommand body, IBindingEnvironment environment)
         {
             this.parameterNames = parameterNames;
             this.body = body;
@@ -22,6 +28,8 @@
                 this.arity = 0;
             else
                 this.arity = parameterNames.Length;
+
+            this.environment = environment;
         }
 
         public int Arity { get { return this.parameterNames == null ? 0 : this.parameterNames.Length; } }
@@ -29,6 +37,11 @@
         public string[] ParameterNames { get { return this.parameterNames; } }
 
         public ICommand Body { get { return this.body; } }
+
+        public object Invoke(object[] arguments)
+        {
+            return this.Invoke(this.environment, arguments);
+        }
 
         public object Invoke(IBindingEnvironment environment, object[] arguments)
         {
@@ -52,7 +65,7 @@
 
             try
             {
-                this.body.Execute(newenv);
+                this.body.Execute(new LocalBindingEnvironment(newenv));
 
                 return Machine.CurrentFunctionStatus.ReturnValue;
             }

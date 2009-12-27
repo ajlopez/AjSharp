@@ -14,6 +14,9 @@
         {
             object obj = environment.GetValue(name);
 
+            if (obj == null && Machine.Current != null)
+                obj = Machine.Current.Environment.GetValue(name);
+
             if (obj != null && obj is Type)
                 return (Type)obj;
 

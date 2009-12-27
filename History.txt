@@ -143,6 +143,10 @@ go command in AjSharp parser
 New file tests: Constructor.ajs, Go.ajs
 for command in Parser
 New file tests: Channel.ajs, ChannelManyTimes.ajs, For.ajs
+LocalBindingEnvironment to use in parallel GoCommand execution
+Support for a = <-channel;
+Support for channel <- a;
+New test files: ChannelOperator.ajs, ChannelManyTimesOperator.ajs
 
 2009-12-27
 File processing in AjSharp.Console
@@ -151,3 +155,10 @@ Setting Machine.Current when go command
 New file tests: Generate.ajs, Filter.ajs
 LocalBindingEnvironment in CompositeCommand
 ContainsName override in LocalBindingEnvironment 
+ILocalCallable for functions that SHOULD received an environment
+EvaluateFunction is ILocalCallable
+New file tests (about scope): ScopeWhile.ajs, ScopeWhileComposite.ajs,
+	ScopeEvaluate.ajs, ScopeEvaluateInFunction.ajs,
+	ScopeFunction.ajs, ScopeFunctionReturn.ajs
+New examples in Console: TwoFilters.ajs, PrimesVerbose.ajs
+Fixed Primes.ajs example in Console

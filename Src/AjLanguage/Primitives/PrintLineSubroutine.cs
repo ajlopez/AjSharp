@@ -13,7 +13,12 @@
     {
         public int Arity { get { return -1; } }
 
-        public object Invoke(IBindingEnvironment environemnt, object[] arguments)
+        public object Invoke(IBindingEnvironment environment, object[] arguments)
+        {
+            return this.Invoke(arguments);
+        }
+
+        public object Invoke(object[] arguments)
         {
             Machine machine = Machine.Current;
             foreach (object argument in arguments)

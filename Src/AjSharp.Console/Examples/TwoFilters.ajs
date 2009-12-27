@@ -1,0 +1,32 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 0;
+
+go while(running) channel <- k++;
+
+function filter(in, out, number)
+{
+	while (true) 
+	{
+		value = <-in;
+		PrintLine("Received " + value + " filtering multiples of " + number);
+		if (value % number)
+			out <- value;
+	}
+}
+
+noeven = new Channel();
+
+go filter(channel, noeven, 2);
+
+nothree = new Channel();
+
+go filter(noeven, nothree, 3);
+
+for (number = <-nothree; number <= 20; number = <-nothree) 
+	PrintLine("Received " + number);
+	
+running = false;
+

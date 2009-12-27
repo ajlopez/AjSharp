@@ -9,6 +9,8 @@ To do list
 
 - Assignments += -= ....
 
+- Lexical scopy in anonymous functions
+
 Evaluate function
 Execute subroutine
 

@@ -1,0 +1,14 @@
+﻿
+value = 10;
+result = 20;
+
+function Test()
+{
+	return value; // value is local and undefined, then returns null
+}
+
+result = Test();
+
+// now, value == 10
+// result == null
+

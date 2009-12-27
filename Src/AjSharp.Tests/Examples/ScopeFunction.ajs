@@ -1,0 +1,16 @@
+﻿
+value = 10;
+k = 5;
+
+function Test(k)
+{
+	value = k; // value is local, k is local
+	return value;
+}
+
+result = Test(17);
+
+// now, value == 10
+// now, k == 5
+// result == 17
+

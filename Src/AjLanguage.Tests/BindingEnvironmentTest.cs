@@ -97,6 +97,21 @@
             Assert.AreEqual(1, local.GetValue("one"));
             Assert.AreEqual(1, environment.GetValue("one"));
         }
+
+        [TestMethod]
+        public void SetUndefinedValueUsingTwoLocalEnviroments()
+        {
+            BindingEnvironment environment = new BindingEnvironment();
+
+            LocalBindingEnvironment local = new LocalBindingEnvironment(environment);
+            LocalBindingEnvironment local2 = new LocalBindingEnvironment(local);
+
+            local2.SetValue("one", 1);
+
+            Assert.AreEqual(1, local.GetValue("one"));
+            Assert.AreEqual(1, local2.GetValue("one"));
+            Assert.IsNull(environment.GetValue("one"));
+        }
     }
 }
 

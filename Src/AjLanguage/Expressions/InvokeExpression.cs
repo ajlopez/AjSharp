@@ -27,13 +27,18 @@
         {
             ICallable callable = (ICallable) environment.GetValue(this.name);
 
+            if (callable == null)
+                callable = (ICallable)Machine.Current.Environment.GetValue(this.name);
+
             List<object> parameters = new List<object>();
 
             foreach (IExpression expression in this.arguments)
                 parameters.Add(expression.Evaluate(environment));
 
-            // TODO get global environment here
-            return callable.Invoke(environment, parameters.ToArray());
+            if (callable is ILocalCallable)
+                return callable.Invoke(environment, parameters.ToArray());
+
+            return callable.Invoke(parameters.ToArray());
         }
     }
 }

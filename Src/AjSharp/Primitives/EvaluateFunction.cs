@@ -12,7 +12,7 @@
 
     using AjSharp.Compiler;
 
-    public class EvaluateFunction : ICallable
+    public class EvaluateFunction : ICallable, ILocalCallable
     {
         public int Arity { get { return 1; } }
 
@@ -28,6 +28,11 @@
             IExpression expression = parser.ParseExpression();
 
             return expression.Evaluate(environment);
+        }
+
+        public object Invoke(object[] arguments)
+        {
+            return this.Invoke(Machine.Current.Environment, arguments);
         }
     }
 }

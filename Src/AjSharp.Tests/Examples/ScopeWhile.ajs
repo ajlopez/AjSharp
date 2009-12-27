@@ -1,0 +1,8 @@
+﻿
+
+while (++k <= 5)
+	result = result + k; 
+	
+// now, k should be visible with 6
+// and result should be 1+2+3+4+5 = 15
+
