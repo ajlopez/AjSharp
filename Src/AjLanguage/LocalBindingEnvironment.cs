@@ -16,27 +16,27 @@
 
         public override void SetValue(string name, object value)
         {
-            if (this.values.ContainsKey(name))
+            if (this.Values.ContainsKey(name))
             {
-                this.values[name] = value;
+                this.Values[name] = value;
                 return;
             }
 
-            if (this.parent.ContainsName(name) || this.parent is LocalBindingEnvironment)
+            if (this.Parent.ContainsName(name) || this.Parent is LocalBindingEnvironment)
             {
-                this.parent.SetValue(name, value);
+                this.Parent.SetValue(name, value);
                 return;
             }
 
-            this.values[name] = value;
+            this.Values[name] = value;
         }
 
         public override bool ContainsName(string name)
         {
-            if (this.values.ContainsKey(name))
+            if (this.Values.ContainsKey(name))
                 return true;
 
-            return this.parent.ContainsName(name);
+            return this.Parent.ContainsName(name);
         }
     }
 }

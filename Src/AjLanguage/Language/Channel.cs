@@ -14,15 +14,15 @@
 
         public void Send(object value)
         {
-            gethandle.WaitOne();
+            this.gethandle.WaitOne();
             this.value = value;
-            sethandle.Set();
+            this.sethandle.Set();
         }
 
         public object Receive()
         {
-            gethandle.Set();
-            sethandle.WaitOne();
+            this.gethandle.Set();
+            this.sethandle.WaitOne();
 
             object result = this.value;
             return result;

@@ -7,8 +7,8 @@
 
     public class BindingEnvironment : AjLanguage.IBindingEnvironment
     {
-        protected IBindingEnvironment parent;
-        protected Dictionary<string, object> values = new Dictionary<string, object>();
+        private IBindingEnvironment parent;
+        private Dictionary<string, object> values = new Dictionary<string, object>();
 
         public BindingEnvironment()
         {
@@ -18,6 +18,10 @@
         {
             this.parent = parent;
         }
+
+        protected IBindingEnvironment Parent { get { return this.parent; } }
+
+        protected Dictionary<string, object> Values { get { return this.values; } }
 
         public virtual object GetValue(string name)
         {

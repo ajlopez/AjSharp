@@ -31,6 +31,7 @@
         {
             // TODO use only one environment
             this.environment = new LocalBindingEnvironment(this.environment);
+
             if (iscurrent)
                 this.SetCurrent();
         }

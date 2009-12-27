@@ -83,36 +83,6 @@
             this.Parse(TokenType.Separator, ";");
 
             return command;
-
-            //IExpression expr = this.ParseExpression();
-
-            //if (this.TryParse(TokenType.Separator, ";"))
-            //{
-            //    this.lexer.NextToken();
-
-            //    return new ExpressionCommand(expr);
-            //}
-
-            //if (this.TryParse(TokenType.Operator, "="))
-            //{
-            //    this.lexer.NextToken();
-
-            //    ICommand command = null;
-
-            //    if (expr is ArrayExpression)
-            //    {
-            //        ArrayExpression aexpr = (ArrayExpression)expr;
-            //        command = new SetArrayCommand(aexpr.Expression, aexpr.Arguments, this.ParseExpression());
-            //    }
-            //    else
-            //        command = new SetCommand(expr, this.ParseExpression());
-
-            //    this.Parse(TokenType.Separator, ";");
-
-            //    return command;
-            //}
-
-            //throw new UnexpectedTokenException(token);
         }
 
         public IExpression ParseExpression()
@@ -131,6 +101,12 @@
 
         private ICommand ParseSimpleCommand()
         {
+            if (this.TryParse(TokenType.Name, "var"))
+            {
+                this.lexer.NextToken();
+                return this.ParseVarCommand();
+            }
+
             IExpression expression = this.ParseExpression();
 
             if (expression == null)
@@ -646,12 +622,20 @@
         {
             this.Parse(TokenType.Separator, "(");
             string name = this.ParseName();
+            bool localvar = false;
+
+            if (name == "var")
+            {
+                localvar = true;
+                name = this.ParseName();
+            }
+
             this.Parse(TokenType.Name, "in");
             IExpression values = this.ParseExpression();
             this.Parse(TokenType.Separator, ")");
             ICommand command = this.ParseCommand();
 
-            return new ForEachCommand(name, values, command);
+            return new ForEachCommand(name, values, command, localvar);
         }
 
         private ICommand ParseForCommand()
@@ -675,6 +659,20 @@
             ICommand body = this.ParseCommand();
 
             return new DefineFunctionCommand(name, parameterNames, body);
+        }
+
+        private ICommand ParseVarCommand()
+        {
+            string name = this.ParseName();
+            IExpression expression = null;
+
+            if (this.TryParse(TokenType.Operator, "="))
+            {
+                this.lexer.NextToken();
+                expression = this.ParseExpression();
+            }
+
+            return new VarCommand(name, expression);
         }
 
         private ICommand ParseClassCommand()

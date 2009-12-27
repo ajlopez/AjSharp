@@ -112,6 +112,24 @@
             throw new InvalidOperationException(string.Format("Not indexed value of type {0}", obj.GetType().ToString()));
         }
 
+        public static void SetIndexedValue(System.Array array, object[] indexes, object value)
+        {
+            switch (indexes.Length)
+            {
+                case 1:
+                    array.SetValue(value, (int)indexes[0]);
+                    return;
+                case 2:
+                    array.SetValue(value, (int)indexes[0], (int)indexes[1]);
+                    return;
+                case 3:
+                    array.SetValue(value, (int)indexes[0], (int)indexes[1], (int)indexes[2]);
+                    return;
+            }
+
+            throw new InvalidOperationException("Invalid number of subindices");
+        }
+
         private static object GetIndexedValue(System.Array array, object[] indexes)
         {
             switch (indexes.Length)
@@ -141,24 +159,6 @@
                 throw new InvalidOperationException("Invalid number of subindices");
 
             return dictionary[indexes[0]];
-        }
-
-        public static void SetIndexedValue(System.Array array, object[] indexes, object value)
-        {
-            switch (indexes.Length)
-            {
-                case 1:
-                    array.SetValue(value, (int)indexes[0]);
-                    return;
-                case 2:
-                    array.SetValue(value, (int)indexes[0], (int)indexes[1]);
-                    return;
-                case 3:
-                    array.SetValue(value, (int)indexes[0], (int)indexes[1], (int)indexes[2]);
-                    return;
-            }
-
-            throw new InvalidOperationException("Invalid number of subindices");
         }
     }
 }

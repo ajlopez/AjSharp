@@ -32,15 +32,17 @@
 
         public void Execute(IBindingEnvironment environment)
         {
-            if (this.initialCommand != null)
-                this.initialCommand.Execute(environment);
+            IBindingEnvironment newenv = new LocalBindingEnvironment(environment);
 
-            while (this.condition == null || Predicates.IsTrue(this.condition.Evaluate(environment)))
+            if (this.initialCommand != null)
+                this.initialCommand.Execute(newenv);
+
+            while (this.condition == null || Predicates.IsTrue(this.condition.Evaluate(newenv)))
             {
                 if (this.body != null)
-                    this.body.Execute(environment);
+                    this.body.Execute(newenv);
                 if (this.endCommand != null)
-                    this.endCommand.Execute(environment);
+                    this.endCommand.Execute(newenv);
             }
         }
     }

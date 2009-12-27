@@ -1,0 +1,10 @@
+﻿
+result = 10;
+
+{
+	var result = 20; // local to braces
+}
+
+// result == 10
+
+

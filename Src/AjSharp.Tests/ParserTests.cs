@@ -275,6 +275,25 @@
             Assert.IsInstanceOfType(foreachcmd.Expression, typeof(VariableExpression));
             Assert.IsNotNull(foreachcmd.Command);
             Assert.IsInstanceOfType(foreachcmd.Command, typeof(SetCommand));
+            Assert.IsFalse(foreachcmd.LocalVariable);
+        }
+
+        [TestMethod]
+        public void ParseSimpleForEachWithLocalVar()
+        {
+            ICommand command = ParseCommand("foreach (var x in xs) y=y+x;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ForEachCommand));
+
+            ForEachCommand foreachcmd = (ForEachCommand)command;
+
+            Assert.AreEqual("x", foreachcmd.Name);
+            Assert.IsNotNull(foreachcmd.Expression);
+            Assert.IsInstanceOfType(foreachcmd.Expression, typeof(VariableExpression));
+            Assert.IsNotNull(foreachcmd.Command);
+            Assert.IsInstanceOfType(foreachcmd.Command, typeof(SetCommand));
+            Assert.IsTrue(foreachcmd.LocalVariable);
         }
 
         [TestMethod]
@@ -849,6 +868,35 @@
             Assert.AreEqual(1, dotexp.Arguments.Count);
             Assert.IsInstanceOfType(dotexp.Arguments.First(), typeof(ConstantExpression));
             Assert.IsInstanceOfType(dotexp.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParseVarCommand()
+        {
+            ICommand command = ParseCommand("var x;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(VarCommand));
+
+            VarCommand varcmd = (VarCommand)command;
+
+            Assert.AreEqual("x", varcmd.Name);
+            Assert.IsNull(varcmd.Expression);
+        }
+
+        [TestMethod]
+        public void ParseVarCommandWithInitialValue()
+        {
+            ICommand command = ParseCommand("var x = 10;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(VarCommand));
+
+            VarCommand varcmd = (VarCommand)command;
+
+            Assert.AreEqual("x", varcmd.Name);
+            Assert.IsNotNull(varcmd.Expression);
+            Assert.IsInstanceOfType(varcmd.Expression, typeof(ConstantExpression));
         }
 
         private static IExpression ParseExpression(string text)

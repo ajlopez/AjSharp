@@ -415,6 +415,35 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\ScopeVar.ajs")]
+        public void ScopeVar()
+        {
+            IncludeFile("ScopeVar.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeVarFor.ajs")]
+        public void ScopeVarInForCommand()
+        {
+            IncludeFile("ScopeVarFor.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("k"));
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ScopeVarForEach.ajs")]
+        public void ScopeVarInForEachCommand()
+        {
+            IncludeFile("ScopeVarForEach.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("number"));
+            Assert.AreEqual(3, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\ScopeFunctionReturn.ajs")]
         public void ScopeInFunctionWithReturn()
         {

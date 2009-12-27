@@ -168,4 +168,13 @@ New file tests: Function.ajs, FunctionClass.ajs
 	FunctionIncrement.ajs, FunctionMakeIncrement.ajs
 Environment property in ICallable
 DynamicObject and DynamicClassicObject now use ICallable.Environment
+var <variable> in Parser with tests
+var in for command with tests
+var in foreach command with tests
+New file tests: ScopeVar.ajs, ScopeVarFor.ajs, ScopeVarForEach.ajs
+IBindingEnviroment.SetLocalValue
+StyleCop improvement
+
+
+
 

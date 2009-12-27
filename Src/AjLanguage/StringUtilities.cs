@@ -18,7 +18,7 @@
             for (Match match = rex.Match(text); match.Success; match = match.NextMatch())
             {
                 parts.Add(text.Substring(lastindex, match.Index - lastindex));
-                parts.Add(match.ToString().Substring(2, match.Length-3));
+                parts.Add(match.ToString().Substring(2, match.Length - 3));
                 lastindex = match.Index + match.Length;
             }
 

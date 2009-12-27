@@ -4,9 +4,9 @@
     using System.Collections;
     using System.Linq;
     using System.Text;
+    using System.Threading;
 
     using AjLanguage.Expressions;
-    using System.Threading;
 
     public class GoCommand : ICommand
     {
@@ -37,6 +37,7 @@
     internal class GoCommandParameter
     {
         internal Machine Machine { get; set; }
+
         internal BindingEnvironment Environment { get; set; }
     }
 }

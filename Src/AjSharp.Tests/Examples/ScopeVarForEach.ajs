@@ -1,0 +1,13 @@
+﻿
+number = 10;
+
+numbers.Add(1);
+numbers.Add(2);
+
+foreach (var number in numbers) // local number
+	result = result + number;
+
+// result == 3
+// number == 10
+
+

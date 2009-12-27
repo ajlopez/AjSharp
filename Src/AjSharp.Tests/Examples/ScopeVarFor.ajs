@@ -1,0 +1,10 @@
+﻿
+k = 10;
+
+for (var k=1; k<=5; k++) // local k
+	result = result + k;
+
+// result == 15
+// k == 10
+
+
