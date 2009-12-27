@@ -20,12 +20,23 @@
         public void Execute(IBindingEnvironment environment)
         {
             Thread thread = new Thread(new ParameterizedThreadStart(this.ExecuteGo));
-            thread.Start(new LocalBindingEnvironment(environment));
+            GoCommandParameter parameter = new GoCommandParameter() { Machine = Machine.Current, Environment = new LocalBindingEnvironment(environment) };
+            thread.Start(parameter);
         }
 
-        private void ExecuteGo(object environment)
+        private void ExecuteGo(object obj)
         {
-            this.command.Execute((IBindingEnvironment) environment);
+            GoCommandParameter parameter = (GoCommandParameter)obj;
+
+            parameter.Machine.SetCurrent();
+
+            this.command.Execute(parameter.Environment);
         }
+    }
+
+    internal class GoCommandParameter
+    {
+        internal Machine Machine { get; set; }
+        internal BindingEnvironment Environment { get; set; }
     }
 }

@@ -1,0 +1,29 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 0;
+
+go while(running) channel <- k++;
+
+function filter(in, out)
+{
+	while (true) 
+	{
+		value = <-in;
+		if (value % 2)
+			out <- value;
+	}
+}
+
+odds = new Channel();
+
+go filter(channel, odds);
+
+result = 0;
+
+for (number = <-odds; number <= 7; number = <-odds) 
+	result = result + number;
+	
+running = false;
+

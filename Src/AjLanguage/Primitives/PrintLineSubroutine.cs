@@ -17,7 +17,8 @@
         {
             Machine machine = Machine.Current;
             foreach (object argument in arguments)
-                machine.Out.Write(argument.ToString());
+                if (argument != null)
+                    machine.Out.Write(argument.ToString());
 
             machine.Out.WriteLine();
 

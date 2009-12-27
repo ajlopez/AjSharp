@@ -1,0 +1,17 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 0;
+
+go while(running) channel <- k++;
+
+result = 0;
+
+for (value = <-channel; value<=5; value = <-channel)
+	result = result + value;
+	
+running = false;
+
+
+

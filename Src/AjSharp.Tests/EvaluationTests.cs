@@ -352,6 +352,24 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\Generate.ajs")]
+        public void UseChannelToGenerateNumbers()
+        {
+            IncludeFile("Generate.ajs");
+
+            Assert.AreEqual(15, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\Filter.ajs")]
+        public void UseChannelToSumOddNumbers()
+        {
+            IncludeFile("Filter.ajs");
+
+            Assert.AreEqual(16, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         public void EvaluateFunctionExpression()
         {
             object result = this.EvaluateExpression("function (n) { return n*n; }");

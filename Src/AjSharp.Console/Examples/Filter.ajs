@@ -1,0 +1,28 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 0;
+
+go while(running) channel <- k++;
+
+function filter(in, out)
+{
+	while (true) 
+	{
+		value = <-in;
+		PrintLine("Received in filter " + value);
+		if (value % 2)
+			out <- value;
+	}
+}
+
+odds = new Channel();
+
+go filter(channel, odds);
+
+for (number = <-odds; number <= 7; number = <-odds) 
+	PrintLine("Received in main " + number);
+	
+running = false;
+

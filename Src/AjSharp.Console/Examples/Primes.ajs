@@ -1,0 +1,36 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 2;
+
+go while(running) channel <- k++;
+
+function filter(in, out, prime)
+{
+	while (true) 
+	{
+		value = <-in;
+		PrintLine("Processing " + value + " in " + prime);
+		if (value % prime)
+			out <- value;
+	}
+}
+
+number = <- channel;
+
+while (number < 1000) 
+{
+	PrintLine(number);
+	
+	newchannel = new Channel();
+	
+	go filter(channel, newchannel, number);
+	
+	number = <- newchannel;
+	
+	channel = newchannel;
+}
+
+running = false;
+

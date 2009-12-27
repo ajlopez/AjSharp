@@ -10,7 +10,9 @@
 
     public class Machine
     {
-        private static FunctionStatus currentFunctionStatus = new FunctionStatus();
+        [ThreadStatic]
+        private static FunctionStatus currentFunctionStatus;
+
         [ThreadStatic]
         private static Machine current;
 
@@ -28,13 +30,15 @@
         public Machine(bool iscurrent)
         {
             if (iscurrent)
-                current = this;
+                this.SetCurrent();
         }
 
         public static FunctionStatus CurrentFunctionStatus
         {
             get
             {
+                if (currentFunctionStatus == null)
+                    currentFunctionStatus = new FunctionStatus();
                 return currentFunctionStatus;
             }
 
@@ -72,6 +76,11 @@
             {
                 this.outwriter = value;
             }
+        }
+
+        public void SetCurrent()
+        {
+            current = this;
         }
     }
 }

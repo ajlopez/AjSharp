@@ -1,0 +1,13 @@
+﻿
+channel = new Channel();
+
+running = true;
+k = 0;
+
+go while(running) channel <- k++;
+
+for (value = <-channel; value<=10; value = <-channel)
+	PrintLine(value);
+
+
+

@@ -17,9 +17,18 @@
         public static void Main(string[] args)
         {
             AjSharpMachine machine = new AjSharpMachine();
-            Parser parser = new Parser(machine.In);
-
+            Parser parser;
             ICommand command;
+
+            foreach (string filename in args)
+            {
+                parser = new Parser(System.IO.File.OpenText(filename));
+
+                while ((command = parser.ParseCommand()) != null)
+                    command.Execute(machine.Environment);
+            }
+
+            parser = new Parser(machine.In);
 
             command = parser.ParseCommand();
 
