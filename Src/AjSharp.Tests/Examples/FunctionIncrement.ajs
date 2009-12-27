@@ -1,0 +1,10 @@
+﻿
+x = 1;
+
+Increment = function(n) {
+	return n + x;	// x is free, bound at global environment
+};
+
+result = Increment(2);
+
+// result == 3

@@ -43,6 +43,11 @@
             this.obj.SetValue(name, value);
         }
 
+        public void SetLocalValue(string name, object value)
+        {
+            throw new NotSupportedException();
+        }
+
         public bool ContainsName(string name)
         {
             return this.obj.GetNames().Contains(name);

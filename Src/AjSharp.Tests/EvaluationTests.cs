@@ -443,6 +443,46 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\Function.ajs")]
+        public void EvaluateIncrementFunction()
+        {
+            IncludeFile("Function.ajs");
+
+            Assert.AreEqual(2, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionIncrement.ajs")]
+        public void CreateAndCallIncrementFunction()
+        {
+            IncludeFile("FunctionIncrement.ajs");
+
+            Assert.AreEqual(3, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionMakeIncrement.ajs")]
+        public void MakeAndCallIncrementFunction()
+        {
+            IncludeFile("FunctionMakeIncrement.ajs");
+
+            Assert.AreEqual(4, this.EvaluateExpression("result"));
+            Assert.AreEqual(5, this.EvaluateExpression("result2"));
+            Assert.AreEqual(7, this.EvaluateExpression("result3"));
+            Assert.AreEqual(9, this.EvaluateExpression("result4"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionClass.ajs")]
+        public void CallFunctionAssignedToClass()
+        {
+            IncludeFile("FunctionClass.ajs");
+
+            Assert.AreEqual(800, this.EvaluateExpression("result"));
+            Assert.AreEqual(100, this.EvaluateExpression("result2"));
+        }
+
+        [TestMethod]
         public void EvaluateFunctionExpression()
         {
             object result = this.EvaluateExpression("function (n) { return n*n; }");

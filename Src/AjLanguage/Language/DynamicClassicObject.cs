@@ -39,7 +39,7 @@
 
             ICallable method = (ICallable)value;
 
-            IBindingEnvironment objenv = new ObjectEnvironment(this, Machine.Current == null ? null : Machine.Current.Environment);
+            IBindingEnvironment objenv = new ObjectEnvironment(this, method.Environment);
 
             return method.Invoke(objenv, parameters);
         }

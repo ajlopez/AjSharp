@@ -162,3 +162,10 @@ New file tests (about scope): ScopeWhile.ajs, ScopeWhileComposite.ajs,
 	ScopeFunction.ajs, ScopeFunctionReturn.ajs
 New examples in Console: TwoFilters.ajs, PrimesVerbose.ajs
 Fixed Primes.ajs example in Console
+VarCommand with tests
+InvokeExpressionExpression with tests and parser support
+New file tests: Function.ajs, FunctionClass.ajs
+	FunctionIncrement.ajs, FunctionMakeIncrement.ajs
+Environment property in ICallable
+DynamicObject and DynamicClassicObject now use ICallable.Environment
+

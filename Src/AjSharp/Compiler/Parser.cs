@@ -120,9 +120,6 @@
             if (this.TryParse(TokenType.Name, "new"))
                 return this.ParseNewExpression();
 
-            if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
-                return this.ParseFunctionExpression();
-
             return this.ParseBinaryLogicalExpressionLevelOne();
         }
 
@@ -470,9 +467,11 @@
         {
             IExpression expression = this.ParseSimpleTermExpression();
 
-            while (this.TryParse(TokenType.Operator, ".") || this.TryParse(TokenType.Separator, "["))
+            while (this.TryParse(TokenType.Operator, ".") || this.TryParse(TokenType.Separator, "[", "("))
             {
-                if (this.TryParse(TokenType.Operator, "."))
+                if (this.TryParse(TokenType.Separator, "("))
+                    expression = new InvokeExpressionExpression(expression, this.ParseArgumentList());
+                else if (this.TryParse(TokenType.Operator, "."))
                 {
                     this.lexer.NextToken();
                     string name = this.ParseName();
@@ -484,11 +483,7 @@
                     expression = new DotExpression(expression, name, arguments);
                 }
                 else
-                {
-                    List<IExpression> arguments = this.ParseArrayArgumentList();
-
-                    expression = new ArrayExpression(expression, arguments);
-                }
+                    expression = new ArrayExpression(expression, this.ParseArrayArgumentList());
             }
 
             return expression;
@@ -534,6 +529,9 @@
 
         private IExpression ParseSimpleTermExpression()
         {
+            if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
+                return this.ParseFunctionExpression();
+
             Token token = this.lexer.NextToken();
 
             if (token == null)

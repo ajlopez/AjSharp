@@ -15,6 +15,8 @@
     {
         public int Arity { get { return 1; } }
 
+        public IBindingEnvironment Environment { get { return null; } }
+
         public object Invoke(IBindingEnvironment environment, object[] arguments)
         {
             if (arguments == null || arguments.Length != 1)

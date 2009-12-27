@@ -1,0 +1,11 @@
+﻿
+x = 1;
+
+function Increment(n)
+{
+	return n + x;	// x is local and undefined, value 0
+}
+
+result = Increment(2);
+
+// result == 2

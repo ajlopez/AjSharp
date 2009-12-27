@@ -9,6 +9,8 @@
     {
         int Arity { get; }
 
+        IBindingEnvironment Environment { get; }
+
         object Invoke(IBindingEnvironment environment, object[] arguments);
 
         object Invoke(object[] arguments);

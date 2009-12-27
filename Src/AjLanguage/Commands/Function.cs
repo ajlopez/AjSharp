@@ -38,6 +38,8 @@
 
         public ICommand Body { get { return this.body; } }
 
+        public IBindingEnvironment Environment { get { return this.environment; } }
+
         public object Invoke(object[] arguments)
         {
             return this.Invoke(this.environment, arguments);

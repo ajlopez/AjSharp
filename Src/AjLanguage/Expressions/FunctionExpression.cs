@@ -24,7 +24,7 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            return new Function(this.parameterNames, this.body);
+            return new Function(this.parameterNames, this.body, environment);
         }
     }
 }

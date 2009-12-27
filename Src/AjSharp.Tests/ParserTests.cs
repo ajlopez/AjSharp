@@ -361,6 +361,21 @@
         }
 
         [TestMethod]
+        public void ParseInvokeExpressionExpression()
+        {
+            IExpression expression = ParseExpression("MyFunc(2)(3)");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(InvokeExpressionExpression));
+
+            InvokeExpressionExpression invexp = (InvokeExpressionExpression)expression;
+
+            Assert.IsInstanceOfType(invexp.Expression, typeof(InvokeExpression));
+            Assert.AreEqual(1, invexp.Arguments.Count);
+            Assert.IsInstanceOfType(invexp.Arguments.First(), typeof(ConstantExpression));
+        }
+
+        [TestMethod]
         public void ParsePrintCommand()
         {
             ICommand command = ParseCommand("Print(1);");

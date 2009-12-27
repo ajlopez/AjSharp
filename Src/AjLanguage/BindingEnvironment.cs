@@ -41,5 +41,10 @@
         {
             return this.values.ContainsKey(name);
         }
+
+        public virtual void SetLocalValue(string name, object value)
+        {
+            this.values[name] = value;
+        }
     }
 }

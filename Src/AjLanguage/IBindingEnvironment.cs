@@ -9,5 +9,7 @@
         void SetValue(string name, object value);
 
         bool ContainsName(string name);
+
+        void SetLocalValue(string name, object value);
     }
 }

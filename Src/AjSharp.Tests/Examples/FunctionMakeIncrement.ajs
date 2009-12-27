@@ -1,0 +1,30 @@
+﻿
+x = 1;
+
+function MakeIncrement(x) 
+{
+	return function(n) { return n + x; }; // x is bounded to local parameter
+}
+
+Increment2 = MakeIncrement(2);
+
+result = Increment2(2);
+
+// result == 4
+
+Increment3 = MakeIncrement(3);
+
+result2 = Increment3(2);
+
+// result2 == 5
+
+result3 = MakeIncrement(4)(3);
+
+// result3 == 7
+
+x = 4;
+
+result4 = function(n) { return n+x; }(5);
+
+// result4 == 9
+

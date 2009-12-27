@@ -303,5 +303,41 @@
             Assert.AreEqual(800, dynobj.GetValue("Age"));
             Assert.AreEqual("Adam", dynobj.GetValue("Name"));
         }
+
+        [TestMethod]
+        public void ExecuteVarCommand()
+        {
+            VarCommand command = new VarCommand("foo", new ConstantExpression(10));
+
+            IBindingEnvironment environment = new BindingEnvironment();
+            IBindingEnvironment local = new LocalBindingEnvironment(environment);
+            IBindingEnvironment local2 = new LocalBindingEnvironment(local);
+
+            command.Execute(local2);
+
+            Assert.IsTrue(local2.ContainsName("foo"));
+            Assert.IsFalse(local.ContainsName("foo"));
+            Assert.IsFalse(environment.ContainsName("foo"));
+
+            Assert.AreEqual(10, local2.GetValue("foo"));
+        }
+
+        [TestMethod]
+        public void ExecuteVarCommandWithNullExpression()
+        {
+            VarCommand command = new VarCommand("foo", null);
+
+            IBindingEnvironment environment = new BindingEnvironment();
+            IBindingEnvironment local = new LocalBindingEnvironment(environment);
+            IBindingEnvironment local2 = new LocalBindingEnvironment(local);
+
+            command.Execute(local2);
+
+            Assert.IsTrue(local2.ContainsName("foo"));
+            Assert.IsFalse(local.ContainsName("foo"));
+            Assert.IsFalse(environment.ContainsName("foo"));
+
+            Assert.IsNull(local2.GetValue("foo"));
+        }
     }
 }

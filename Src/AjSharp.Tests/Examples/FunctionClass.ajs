@@ -1,0 +1,25 @@
+﻿
+class Person
+{
+	var Name;
+	var Age;
+	
+	function Person()
+	{
+		x = 100;
+		this.GetYears = function () { return this.Age; };
+		this.GetX = function() { return x; };
+	}
+}
+
+adam = new Person() { Name = "Adam", Age = 800 };
+
+result = adam.GetYears();
+
+// result == 800
+
+result2 = adam.GetX();
+
+// result2 == 100
+
+

@@ -13,6 +13,8 @@
     {
         public int Arity { get { return -1; } }
 
+        public IBindingEnvironment Environment { get { return null; } }
+
         public object Invoke(IBindingEnvironment environemnt, object[] arguments)
         {
             return this.Invoke(arguments);
