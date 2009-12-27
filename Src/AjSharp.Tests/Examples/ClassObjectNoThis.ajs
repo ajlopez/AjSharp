@@ -1,0 +1,20 @@
+﻿
+class Person
+{
+	var Name;
+	var Age;
+	
+	function AddYears(years) 
+	{
+		Age = Age + years; // set this.Age as it is defined in object
+		Age2 = Age;	// Age2 is local, no defined in object
+		this.Something = 100; // a new object instance variable
+	}
+}
+
+adam = new Person();
+
+adam.AddYears(800);
+adam.Name = "Adam";
+
+

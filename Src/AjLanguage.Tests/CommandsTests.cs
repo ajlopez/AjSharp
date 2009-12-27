@@ -50,7 +50,7 @@
 
             Assert.AreEqual("bar", environment.GetValue("foo"));
             Assert.AreEqual(1, environment.GetValue("one"));
-            Assert.IsNull(environment.GetValue("bar"));
+            Assert.AreEqual("bar", environment.GetValue("bar"));
         }
 
         [TestMethod]

@@ -9,15 +9,6 @@
     <milliseconds>961</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/27/2009 17:24:40</timestamp>
-      <milliseconds>118</milliseconds>
-    </settings>
-    <timestamp>12/27/2009 17:20:05</timestamp>
-    <milliseconds>207</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="CompositeCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/27/2009 17:24:40</timestamp>
@@ -61,15 +52,6 @@
     </settings>
     <timestamp>12/26/2009 23:56:31</timestamp>
     <milliseconds>288</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Function.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/27/2009 17:24:40</timestamp>
-      <milliseconds>118</milliseconds>
-    </settings>
-    <timestamp>12/27/2009 16:19:58</timestamp>
-    <milliseconds>626</milliseconds>
     <violations />
   </sourcecode>
   <sourcecode name="FunctionStatus.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
@@ -486,24 +468,6 @@
     <milliseconds>219</milliseconds>
     <violations />
   </sourcecode>
-  <sourcecode name="LocalBindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/27/2009 17:24:40</timestamp>
-      <milliseconds>118</milliseconds>
-    </settings>
-    <timestamp>12/27/2009 17:20:49</timestamp>
-    <milliseconds>452</milliseconds>
-    <violations />
-  </sourcecode>
-  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
-    <settings>
-      <timestamp>12/27/2009 17:24:40</timestamp>
-      <milliseconds>118</milliseconds>
-    </settings>
-    <timestamp>12/27/2009 17:18:46</timestamp>
-    <milliseconds>86</milliseconds>
-    <violations />
-  </sourcecode>
   <sourcecode name="ObjectEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/27/2009 17:24:40</timestamp>
@@ -576,9 +540,6 @@
     <milliseconds>695</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-738601673">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="ForCommand.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>12/27/2009 17:24:40</timestamp>
@@ -595,6 +556,45 @@
     </settings>
     <timestamp>12/27/2009 17:44:58</timestamp>
     <milliseconds>982</milliseconds>
+    <violations />
+  </sourcecode>
+  <project key="-738601673">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="Function.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/27/2009 17:24:40</timestamp>
+      <milliseconds>118</milliseconds>
+    </settings>
+    <timestamp>12/27/2009 18:30:46</timestamp>
+    <milliseconds>734</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="BindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/27/2009 17:24:40</timestamp>
+      <milliseconds>118</milliseconds>
+    </settings>
+    <timestamp>12/27/2009 18:41:57</timestamp>
+    <milliseconds>834</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="LocalBindingEnvironment.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/27/2009 17:24:40</timestamp>
+      <milliseconds>118</milliseconds>
+    </settings>
+    <timestamp>12/27/2009 18:25:46</timestamp>
+    <milliseconds>544</milliseconds>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Machine.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
+    <settings>
+      <timestamp>12/27/2009 17:24:40</timestamp>
+      <milliseconds>118</milliseconds>
+    </settings>
+    <timestamp>12/27/2009 19:04:33</timestamp>
+    <milliseconds>337</milliseconds>
     <violations />
   </sourcecode>
 </stylecopresultscache>

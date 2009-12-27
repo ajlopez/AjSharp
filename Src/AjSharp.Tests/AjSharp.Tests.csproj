@@ -82,6 +82,9 @@
     <None Include="Examples\ChannelManyTimesOperator.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\ClassObjectNoThis.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\ScopeVarForEach.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

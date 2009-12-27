@@ -36,5 +36,21 @@ namespace AjLanguage.Tests
         {
             Assert.AreEqual(this.dynobj, this.environment.GetValue(ObjectEnvironment.ThisName));
         }
+
+        [TestMethod]
+        public void SetValueThruBindingEnvironmentIfDefinedInObject()
+        {
+            this.environment.SetValue("Age", null);
+
+            BindingEnvironment binding = new BindingEnvironment(this.environment);
+
+            binding.SetValue("Age", 800);
+            binding.SetValue("Local", 100);
+
+            Assert.AreEqual(800, binding.GetValue("Age"));
+            Assert.AreEqual(100, binding.GetValue("Local"));
+            Assert.AreEqual(800, this.environment.GetValue("Age"));
+            Assert.IsNull(this.environment.GetValue("Local"));
+        }
     }
 }

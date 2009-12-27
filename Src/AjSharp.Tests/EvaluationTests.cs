@@ -295,6 +295,25 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\ClassObjectNoThis.ajs")]
+        public void DefineClassCreateObjectCallMethodWithoutUsingThis()
+        {
+            IncludeFile("ClassObjectNoThis.ajs");
+
+            object result = this.machine.Environment.GetValue("adam");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DynamicClassicObject));
+
+            DynamicClassicObject dynobj = (DynamicClassicObject)result;
+
+            Assert.AreEqual(800, dynobj.GetValue("Age"));
+            Assert.AreEqual("Adam", dynobj.GetValue("Name"));
+            Assert.IsNull(dynobj.GetValue("Age2"));
+            Assert.AreEqual(100, dynobj.GetValue("Something"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\Constructor.ajs")]
         public void DefineClassCreateObjectUsingConstructor()
         {

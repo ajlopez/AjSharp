@@ -29,9 +29,6 @@
 
         public Machine(bool iscurrent)
         {
-            // TODO use only one environment
-            this.environment = new LocalBindingEnvironment(this.environment);
-
             if (iscurrent)
                 this.SetCurrent();
         }

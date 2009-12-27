@@ -110,7 +110,7 @@
 
             Assert.AreEqual(1, local.GetValue("one"));
             Assert.AreEqual(1, local2.GetValue("one"));
-            Assert.IsNull(environment.GetValue("one"));
+            Assert.AreEqual(1, environment.GetValue("one"));
         }
     }
 }

@@ -67,7 +67,7 @@
 
             try
             {
-                this.body.Execute(new LocalBindingEnvironment(newenv));
+                this.body.Execute(newenv);
 
                 return Machine.CurrentFunctionStatus.ReturnValue;
             }

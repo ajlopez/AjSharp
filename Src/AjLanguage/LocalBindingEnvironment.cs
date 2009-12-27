@@ -22,7 +22,7 @@
                 return;
             }
 
-            if (this.Parent.ContainsName(name) || this.Parent is LocalBindingEnvironment)
+            if (this.Parent != null)
             {
                 this.Parent.SetValue(name, value);
                 return;
