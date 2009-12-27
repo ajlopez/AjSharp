@@ -52,5 +52,19 @@ namespace AjLanguage.Tests
             Assert.AreEqual(800, this.environment.GetValue("Age"));
             Assert.IsNull(this.environment.GetValue("Local"));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void RaiseOnSetLocalValue()
+        {
+            this.environment.SetLocalValue("local", 100);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void RaiseOnDefineGlobal()
+        {
+            this.environment.DefineGlobal("global");
+        }
     }
 }

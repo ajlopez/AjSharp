@@ -11,5 +11,7 @@
         bool ContainsName(string name);
 
         void SetLocalValue(string name, object value);
+
+        void DefineGlobal(string name);
     }
 }

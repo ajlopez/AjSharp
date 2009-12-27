@@ -178,6 +178,9 @@ New file test: ClassObjectNoThis.ajs
 machine.Environment is a BindingEnvironment (it was a LocalBindingEnvironment)
 BindingEnvironment set value on parent if it is ObjectEnvironment and name is defined in object
 LocalBindingEnvironment set value on parent if it is not null and not local defined
-
+GlobalCommand with tests
+global support in Parser
+IBindingEnvironment.DefineGlobal with tests
+New file test: Global.ajs
 
 

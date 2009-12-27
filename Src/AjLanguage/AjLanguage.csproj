@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\GlobalCommand.cs" />
     <Compile Include="Commands\VarCommand.cs" />
     <Compile Include="Commands\GoCommand.cs" />
     <Compile Include="Commands\DefineObjectCommand.cs" />

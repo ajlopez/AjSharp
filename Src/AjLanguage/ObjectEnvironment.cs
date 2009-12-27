@@ -52,5 +52,10 @@
         {
             return this.obj.GetNames().Contains(name);
         }
+
+        public void DefineGlobal(string name)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

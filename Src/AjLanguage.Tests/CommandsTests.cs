@@ -339,5 +339,22 @@
 
             Assert.IsNull(local2.GetValue("foo"));
         }
+
+        [TestMethod]
+        public void ExecuteGlobalCommand()
+        {
+            GlobalCommand command = new GlobalCommand("global");
+            Machine machine = new Machine();
+
+            IBindingEnvironment environment = new BindingEnvironment();
+
+            command.Execute(environment);
+
+            environment.SetValue("global", 100);
+
+            Assert.IsFalse(environment.ContainsName("global"));
+            Assert.IsTrue(machine.Environment.ContainsName("global"));
+            Assert.AreEqual(100, machine.Environment.GetValue("global"));
+        }
     }
 }

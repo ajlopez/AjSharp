@@ -1,0 +1,13 @@
+﻿
+result = 2;
+
+function AddToResult(n)
+{
+	global result;
+	
+	result = result + n;
+}
+
+AddToResult(10);
+
+// result == 12

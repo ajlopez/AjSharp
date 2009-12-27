@@ -112,6 +112,36 @@
             Assert.AreEqual(1, local2.GetValue("one"));
             Assert.AreEqual(1, environment.GetValue("one"));
         }
+
+        [TestMethod]
+        public void DefineAndSetGlobalValue()
+        {
+            Machine machine = new Machine();
+            BindingEnvironment environment = new BindingEnvironment();
+
+            environment.DefineGlobal("global");
+
+            environment.SetValue("global", 100);
+
+            Assert.AreEqual(100, environment.GetValue("global"));
+            Assert.AreEqual(100, machine.Environment.GetValue("global"));
+        }
+
+        [TestMethod]
+        public void DefineAndSetGlobalValueThruLocalEnvironment()
+        {
+            Machine machine = new Machine();
+            BindingEnvironment environment = new BindingEnvironment();
+            LocalBindingEnvironment local = new LocalBindingEnvironment(environment);
+
+            local.DefineGlobal("global");
+
+            local.SetValue("global", 100);
+
+            Assert.AreEqual(100, local.GetValue("global"));
+            Assert.AreEqual(100, environment.GetValue("global"));
+            Assert.AreEqual(100, machine.Environment.GetValue("global"));
+        }
     }
 }
 

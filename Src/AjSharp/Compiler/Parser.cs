@@ -63,6 +63,9 @@
                 if (token.Value == "class")
                     return this.ParseClassCommand();
 
+                if (token.Value == "global")
+                    return this.ParseGlobalCommand();
+
                 if (token.Value == "object")
                     return this.ParseObjectCommand();
 
@@ -167,6 +170,14 @@
             ICommand body = this.ParseCommand();
 
             return new FunctionExpression(parameterNames, body);
+        }
+
+        private ICommand ParseGlobalCommand()
+        {
+            string name = this.ParseName();
+            this.Parse(TokenType.Separator, ";");
+
+            return new GlobalCommand(name);
         }
 
         // TODO Refactor

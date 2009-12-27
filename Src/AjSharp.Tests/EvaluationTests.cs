@@ -403,6 +403,15 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\Global.ajs")]
+        public void GlobalVariableInFunction()
+        {
+            IncludeFile("Global.ajs");
+
+            Assert.AreEqual(12, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\ScopeWhile.ajs")]
         public void ScopeInSimpleWhile()
         {

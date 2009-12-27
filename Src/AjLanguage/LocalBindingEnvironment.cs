@@ -28,7 +28,7 @@
                 return;
             }
 
-            this.Values[name] = value;
+            base.SetValue(name, value);
         }
 
         public override bool ContainsName(string name)
@@ -37,6 +37,11 @@
                 return true;
 
             return this.Parent.ContainsName(name);
+        }
+
+        public override void DefineGlobal(string name)
+        {
+            this.Parent.DefineGlobal(name);
         }
     }
 }

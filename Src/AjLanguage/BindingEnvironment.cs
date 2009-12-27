@@ -9,6 +9,7 @@
     {
         private IBindingEnvironment parent;
         private Dictionary<string, object> values = new Dictionary<string, object>();
+        private IList<string> globals;
 
         public BindingEnvironment()
         {
@@ -30,6 +31,9 @@
                 if (this.parent != null)
                     return this.parent.GetValue(name);
 
+                if (this.globals != null && this.globals.Contains(name) && Machine.Current != null)
+                    return this.GetGlobalValue(name);
+
                 return null;
             }
 
@@ -45,6 +49,12 @@
                 return;
             }
 
+            if (this.globals != null && !this.values.ContainsKey(name) && this.globals.Contains(name) && Machine.Current != null)
+            {
+                this.SetGlobalValue(name, value);
+                return;
+            }
+
             this.values[name] = value;
         }
 
@@ -56,6 +66,30 @@
         public virtual void SetLocalValue(string name, object value)
         {
             this.values[name] = value;
+        }
+
+        public virtual void DefineGlobal(string name)
+        {
+            if (Machine.Current != null && Machine.Current.Environment == this)
+                throw new InvalidOperationException("Cannot define a global at top environment");
+
+            if (this.globals == null)
+                this.globals = new List<string>();
+
+            if (this.globals.Contains(name))
+                return;
+
+            this.globals.Add(name);
+        }
+
+        private object GetGlobalValue(string name)
+        {
+            return Machine.Current.Environment.GetValue(name);
+        }
+
+        private void SetGlobalValue(string name, object value)
+        {
+            Machine.Current.Environment.SetValue(name, value);
         }
     }
 }

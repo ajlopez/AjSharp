@@ -899,6 +899,19 @@
             Assert.IsInstanceOfType(varcmd.Expression, typeof(ConstantExpression));
         }
 
+        [TestMethod]
+        public void ParseGlobalCommand()
+        {
+            ICommand command = ParseCommand("global x;");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(GlobalCommand));
+
+            GlobalCommand glbcmd = (GlobalCommand)command;
+
+            Assert.AreEqual("x", glbcmd.Name);
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

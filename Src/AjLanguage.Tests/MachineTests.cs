@@ -26,5 +26,13 @@
             Assert.IsTrue(machine != Machine.Current);
             Assert.IsNotNull(machine.Environment);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void RaiseOnDefineGlobalInMachineEnvironment()
+        {
+            Machine machine = new Machine();
+            machine.Environment.DefineGlobal("global");
+        }
     }
 }
