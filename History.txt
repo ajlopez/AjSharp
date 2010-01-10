@@ -183,4 +183,9 @@ global support in Parser
 IBindingEnvironment.DefineGlobal with tests
 New file test: Global.ajs
 
-
+2010-01-10
+IReference
+IChannel
+Channel implements IChannel, IReference
+SetValueCommand, GetValueExpression
+AjSharp now translate <- to SetValueCommand or GetValueExpression

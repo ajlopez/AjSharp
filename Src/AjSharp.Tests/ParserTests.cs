@@ -841,13 +841,12 @@
             IExpression expression = ParseExpression("<- a");
 
             Assert.IsNotNull(expression);
-            Assert.IsInstanceOfType(expression, typeof(DotExpression));
+            Assert.IsInstanceOfType(expression, typeof(GetValueExpression));
 
-            DotExpression dotexp = (DotExpression)expression;
+            GetValueExpression getvalexp = (GetValueExpression)expression;
 
-            Assert.AreEqual("Receive", dotexp.Name);
-            Assert.IsNotNull(dotexp.Expression);
-            Assert.IsInstanceOfType(dotexp.Expression, typeof(VariableExpression));
+            Assert.IsNotNull(getvalexp.Expression);
+            Assert.IsInstanceOfType(getvalexp.Expression, typeof(VariableExpression));
         }
 
         [TestMethod]
@@ -856,18 +855,12 @@
             ICommand command = ParseCommand("a <- 10;");
 
             Assert.IsNotNull(command);
-            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+            Assert.IsInstanceOfType(command, typeof(SetValueCommand));
 
-            ExpressionCommand expcmd = (ExpressionCommand)command;
+            SetValueCommand setvalcmd = (SetValueCommand)command;
 
-            Assert.IsInstanceOfType(expcmd.Expression, typeof(DotExpression));
-
-            DotExpression dotexp = (DotExpression)expcmd.Expression;
-
-            Assert.AreEqual(dotexp.Name, "Send");
-            Assert.AreEqual(1, dotexp.Arguments.Count);
-            Assert.IsInstanceOfType(dotexp.Arguments.First(), typeof(ConstantExpression));
-            Assert.IsInstanceOfType(dotexp.Expression, typeof(VariableExpression));
+            Assert.IsInstanceOfType(setvalcmd.Expression, typeof(ConstantExpression));
+            Assert.IsInstanceOfType(setvalcmd.LeftValue, typeof(VariableExpression));
         }
 
         [TestMethod]

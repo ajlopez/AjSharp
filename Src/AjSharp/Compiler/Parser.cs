@@ -135,10 +135,7 @@
             if (this.TryParse(TokenType.Operator, "<-"))
             {
                 this.lexer.NextToken();
-
-                expression = new DotExpression(expression, "Send", new IExpression[] { this.ParseExpression() });
-
-                return new ExpressionCommand(expression);
+                return new SetValueCommand(expression, this.ParseExpression());
             }
 
             return new ExpressionCommand(expression);
@@ -433,7 +430,7 @@
 
                 IExpression expression = this.ParseTermExpression();
 
-                return new DotExpression(expression, "Receive");
+                return new GetValueExpression(expression);
             }
 
             IExpression termexpr = this.ParseTermExpression();

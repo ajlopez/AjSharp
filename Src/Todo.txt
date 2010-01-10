@@ -9,6 +9,8 @@ To do list
 
 - Assignments += -= ....
 
+- Test GetValueExpression, SetValueCommand
+
 - Lexical scopy in anonymous functions
 
 Evaluate function

@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading;
 
-    public class Channel
+    public class Channel : IChannel, IReference
     {
         private AutoResetEvent sethandle = new AutoResetEvent(false);
         private AutoResetEvent gethandle = new AutoResetEvent(false);
@@ -27,5 +27,16 @@
             object result = this.value;
             return result;
         }
+
+        void IReference.SetValue(object value)
+        {
+            this.Send(value);
+        }
+
+        object IReference.GetValue()
+        {
+            return this.Receive();
+        }
     }
 }
+
