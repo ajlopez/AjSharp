@@ -1,0 +1,8 @@
+﻿
+future = new Future();
+
+go future <- 1;
+
+result = <-future;
+result2 = <-future;
+

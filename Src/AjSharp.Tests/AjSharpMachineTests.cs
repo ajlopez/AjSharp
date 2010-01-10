@@ -46,6 +46,13 @@
         }
 
         [TestMethod]
+        public void NewTypesAreDefined()
+        {
+            this.IsType("Channel", typeof(Channel));
+            this.IsType("Future", typeof(Future));
+        }
+
+        [TestMethod]
         public void PrimitiveFunctionsAreDefined()
         {
             this.IsCallable("Print");

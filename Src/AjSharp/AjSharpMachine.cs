@@ -48,7 +48,9 @@
             this.Environment.SetValue("Include", new IncludeSubroutine());
             this.Environment.SetValue("Evaluate", new EvaluateFunction());
             this.Environment.SetValue("Execute", new ExecuteSubroutine());
+
             this.Environment.SetValue("Channel", typeof(Channel));
+            this.Environment.SetValue("Future", typeof(Future));
         }
     }
 }

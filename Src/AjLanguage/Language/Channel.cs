@@ -14,18 +14,24 @@
 
         public void Send(object value)
         {
-            this.gethandle.WaitOne();
-            this.value = value;
-            this.sethandle.Set();
+            lock (this.sethandle)
+            {
+                this.gethandle.WaitOne();
+                this.value = value;
+                this.sethandle.Set();
+            }
         }
 
         public object Receive()
         {
-            this.gethandle.Set();
-            this.sethandle.WaitOne();
+            lock (this.gethandle)
+            {
+                this.gethandle.Set();
+                this.sethandle.WaitOne();
 
-            object result = this.value;
-            return result;
+                object result = this.value;
+                return result;
+            }
         }
 
         void IReference.SetValue(object value)

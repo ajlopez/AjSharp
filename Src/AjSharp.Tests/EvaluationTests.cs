@@ -1014,6 +1014,25 @@
             Assert.IsInstanceOfType(result, typeof(Channel));
         }
 
+        [TestMethod]
+        public void CreateFuture()
+        {
+            object result = this.EvaluateExpression("new Future()");
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(Future));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\Future.ajs")]
+        public void UseFutureWithGoCommand()
+        {
+            IncludeFile("Future.ajs");
+
+            Assert.AreEqual(1, this.EvaluateExpression("result"));
+            Assert.AreEqual(1, this.EvaluateExpression("result2"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

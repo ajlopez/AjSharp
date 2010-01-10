@@ -85,6 +85,9 @@
     <None Include="Examples\ClassObjectNoThis.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\Future.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\Global.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

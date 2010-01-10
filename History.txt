@@ -189,3 +189,4 @@ IChannel
 Channel implements IChannel, IReference
 SetValueCommand, GetValueExpression
 AjSharp now translate <- to SetValueCommand or GetValueExpression
+Future implementation with tests
