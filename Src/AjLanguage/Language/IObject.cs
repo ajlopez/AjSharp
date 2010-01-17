@@ -14,5 +14,7 @@
         ICollection<string> GetNames();
 
         object Invoke(string name, object[] parameters);
+
+        object Invoke(ICallable method, object[] parameters);
     }
 }

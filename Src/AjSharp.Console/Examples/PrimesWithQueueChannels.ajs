@@ -1,0 +1,40 @@
+﻿
+numbers = new QueueChannel(10);
+
+running = true;
+k = 1;
+
+go while(running) { k++; numbers <- k; }
+
+function filter(in, out, prime)
+{
+	while (true) 
+	{
+		value = <-in;
+		if (value % prime)
+			out <- value;
+	}
+}
+
+function makefilter(channel, number)
+{
+	newchannel = new QueueChannel(10);
+	go filter(channel, newchannel, number);
+	return newchannel;
+}
+
+channel = numbers;
+
+number = <-channel;
+
+while (number < 1000) 
+{
+	PrintLine("Prime " + number);
+	
+	channel = makefilter(channel, number);
+	
+	number = <-channel;
+}
+
+running = false;
+

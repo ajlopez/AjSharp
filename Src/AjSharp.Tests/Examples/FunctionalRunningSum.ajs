@@ -1,0 +1,19 @@
+﻿
+// Adapted from
+// http://blog.james-carr.org/2009/08/31/functional-programming-in-javascript/
+
+
+function runningSum(start){  
+	sum = start;  // you could use var sum, it's local
+	
+	return function(a){  
+		sum = sum + a;  // function access the "outer" sum
+		return sum;
+	};
+}  
+
+sum = runningSum(3);  // makes function
+
+result = sum(2); // returns 5  
+result2 = sum(10); // returns 15  
+

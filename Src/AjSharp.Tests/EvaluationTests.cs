@@ -1033,6 +1033,35 @@
             Assert.AreEqual(1, this.EvaluateExpression("result2"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionalRunningSum.ajs")]
+        public void EvaluateFunctionalRunningSum()
+        {
+            IncludeFile("FunctionalRunningSum.ajs");
+
+            Assert.AreEqual(5, this.EvaluateExpression("result"));
+            Assert.AreEqual(15, this.EvaluateExpression("result2"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionalRunningSumParam.ajs")]
+        public void EvaluateFunctionalRunningSumParam()
+        {
+            IncludeFile("FunctionalRunningSumParam.ajs");
+
+            Assert.AreEqual(5, this.EvaluateExpression("result"));
+            Assert.AreEqual(15, this.EvaluateExpression("result2"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionalCall.ajs")]
+        public void EvaluateFunctionalCall()
+        {
+            IncludeFile("FunctionalCall.ajs");
+
+            Assert.AreEqual(810, this.EvaluateExpression("result"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

@@ -190,3 +190,13 @@ Channel implements IChannel, IReference
 SetValueCommand, GetValueExpression
 AjSharp now translate <- to SetValueCommand or GetValueExpression
 Future implementation with tests
+
+2010-01-17
+QueueChannel with tests
+QueueChannel in AjSharp machine
+PrimesWithQueueChannels.ajsp in AjSharp.Console examples
+Implementing functional examples in tests: 
+FunctionalRunningSum.ajs, FunctionalRunningSumParam.ajs,
+FunctionalCall
+Call in Function
+Invoke method in IObject, DynamicObject

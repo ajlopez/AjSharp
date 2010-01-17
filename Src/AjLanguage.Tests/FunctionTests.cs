@@ -54,6 +54,18 @@
             Assert.AreEqual(120, result);
         }
 
+        [TestMethod]
+        public void EvaluateCallObject()
+        {
+            Machine machine = new Machine();
+            ICommand body = new ReturnCommand(new ArithmeticBinaryExpression(ArithmeticOperator.Add, new VariableExpression("x"), new DotExpression(new VariableExpression("this"), "Age")));
+            Function function = new Function(new string[] { "x" }, body);
+            DynamicObject person = new DynamicObject();
+            person.SetValue("Age", 30);
+
+            Assert.AreEqual(40, function.Call(person, new object[] { 10 }));
+        }
+
         private static ICallable BuildFactorialFunction()
         {
             IExpression condition = new CompareExpression(ComparisonOperator.LessEqual, new VariableExpression("n"), new ConstantExpression(1));

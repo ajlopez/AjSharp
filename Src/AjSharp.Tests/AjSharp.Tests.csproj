@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1FB46522-4661-4D69-B2B3-6E4CCE6517B0}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -83,6 +83,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\ClassObjectNoThis.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\FunctionalCall.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\FunctionalRunningSumParam.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\FunctionalRunningSum.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\Future.ajs">

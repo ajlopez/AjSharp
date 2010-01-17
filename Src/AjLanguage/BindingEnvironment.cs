@@ -43,7 +43,7 @@
         public virtual void SetValue(string name, object value)
         {
             // TODO Review: it's to comply with ClassObjectNoThis.ajs
-            if (this.parent != null && !this.values.ContainsKey(name) && this.parent is ObjectEnvironment && this.parent.ContainsName(name))
+            if (this.parent != null && !this.values.ContainsKey(name) && (this.parent is ObjectEnvironment || this.parent is LocalBindingEnvironment) && this.parent.ContainsName(name))
             {
                 this.parent.SetValue(name, value);
                 return;

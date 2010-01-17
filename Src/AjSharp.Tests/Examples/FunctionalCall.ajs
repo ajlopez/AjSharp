@@ -1,0 +1,9 @@
+﻿
+// Adapted from
+// http://blog.james-carr.org/2009/08/31/functional-programming-in-javascript/
+
+person = new { Name = "Adam", Age = 800 };
+
+GetAdjustedAge = function (x) { return x + this.Age; };
+
+result = GetAdjustedAge.Call(person, 10); // result == 810

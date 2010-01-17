@@ -1,0 +1,17 @@
+﻿
+// Adapted from
+// http://blog.james-carr.org/2009/08/31/functional-programming-in-javascript/
+
+
+function runningSum(start){  
+	return function(a){  
+		start = start + a;  // function access the "outer" start
+		return start;
+	};
+}  
+
+sum = runningSum(3);  // makes function
+
+result = sum(2); // returns 5  
+result2 = sum(10); // returns 15  
+

@@ -49,6 +49,7 @@
         public void NewTypesAreDefined()
         {
             this.IsType("Channel", typeof(Channel));
+            this.IsType("QueueChannel", typeof(QueueChannel));
             this.IsType("Future", typeof(Future));
         }
 

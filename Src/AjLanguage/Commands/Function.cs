@@ -40,6 +40,11 @@
 
         public IBindingEnvironment Environment { get { return this.environment; } }
 
+        public object Call(IObject obj, params object[] parameters)
+        {
+            return obj.Invoke(this, parameters);
+        }
+
         public object Invoke(object[] arguments)
         {
             return this.Invoke(this.environment, arguments);
@@ -59,7 +64,7 @@
 
             if (argcount > 0)
                 for (int k = 0; k < argcount; k++)
-                    newenv.SetValue(this.parameterNames[k], arguments[k]);
+                    newenv.SetLocalValue(this.parameterNames[k], arguments[k]);
 
             FunctionStatus fstatus = Machine.CurrentFunctionStatus;
 

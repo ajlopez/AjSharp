@@ -86,6 +86,25 @@
         }
 
         [TestMethod]
+        public void SetValueThruLocalAndNormalEnviroment()
+        {
+            BindingEnvironment parent = new BindingEnvironment();
+            LocalBindingEnvironment toplocal = new LocalBindingEnvironment(parent);
+
+            toplocal.SetLocalValue("one", 0);
+
+            BindingEnvironment environment = new BindingEnvironment(toplocal);
+
+            LocalBindingEnvironment local = new LocalBindingEnvironment(environment);
+            local.SetValue("one", 1);
+
+            Assert.AreEqual(1, local.GetValue("one"));
+            Assert.AreEqual(1, environment.GetValue("one"));
+            Assert.AreEqual(1, toplocal.GetValue("one"));
+            Assert.IsNull(parent.GetValue("one"));
+        }
+
+        [TestMethod]
         public void SetValueThruLocalEnviroment()
         {
             BindingEnvironment environment = new BindingEnvironment();

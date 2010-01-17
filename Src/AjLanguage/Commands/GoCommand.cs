@@ -21,6 +21,7 @@
         {
             Thread thread = new Thread(new ParameterizedThreadStart(this.ExecuteGo));
             GoCommandParameter parameter = new GoCommandParameter() { Machine = Machine.Current, Environment = new LocalBindingEnvironment(environment) };
+            thread.IsBackground = true;
             thread.Start(parameter);
         }
 

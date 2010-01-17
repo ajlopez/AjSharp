@@ -50,6 +50,7 @@
             this.Environment.SetValue("Execute", new ExecuteSubroutine());
 
             this.Environment.SetValue("Channel", typeof(Channel));
+            this.Environment.SetValue("QueueChannel", typeof(QueueChannel));
             this.Environment.SetValue("Future", typeof(Future));
         }
     }
