@@ -6,6 +6,7 @@
     using System.Text;
 
     using AjLanguage.Expressions;
+    using AjLanguage.Language;
 
     public class DefineFunctionCommand : ICommand
     {

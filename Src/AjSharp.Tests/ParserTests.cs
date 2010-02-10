@@ -905,6 +905,42 @@
             Assert.AreEqual("x", glbcmd.Name);
         }
 
+        [TestMethod]
+        public void ParseEmptyAgentDefinition()
+        {
+            ICommand command = ParseCommand("agent Foo { }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineAgentCommand));
+        }
+
+        [TestMethod]
+        public void ParseAgentDefinitionWithMemberVariable()
+        {
+            ICommand command = ParseCommand("agent Foo { var Bar; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineAgentCommand));
+        }
+
+        [TestMethod]
+        public void ParseAgentDefinitionWithInitializedMemberVariables()
+        {
+            ICommand command = ParseCommand("agent Person { var Name = \"Adam\"; var Age = 800; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineAgentCommand));
+        }
+
+        [TestMethod]
+        public void ParseAgentDefinitionWithMemberVariableAndMethod()
+        {
+            ICommand command = ParseCommand("agent Foo { var Bar; function GetBar() { return Bar; }}");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineAgentCommand));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

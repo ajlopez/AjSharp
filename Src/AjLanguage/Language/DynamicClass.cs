@@ -30,7 +30,6 @@
             return null;
         }
 
-        // TODO use parameters
         public virtual object NewInstance(object[] parameters)
         {
             IObject dynobj = new DynamicClassicObject(this);

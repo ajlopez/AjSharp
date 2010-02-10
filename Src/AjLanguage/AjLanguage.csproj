@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BindingEnvironment.cs" />
     <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\DefineAgentCommand.cs" />
     <Compile Include="Commands\SetValueCommand.cs" />
     <Compile Include="Commands\GlobalCommand.cs" />
     <Compile Include="Commands\VarCommand.cs" />
@@ -59,7 +60,6 @@
     <Compile Include="Commands\DefineFunctionCommand.cs" />
     <Compile Include="Commands\ForCommand.cs" />
     <Compile Include="Commands\ForEachCommand.cs" />
-    <Compile Include="Commands\Function.cs" />
     <Compile Include="Commands\FunctionStatus.cs" />
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
@@ -73,7 +73,11 @@
     <Compile Include="Expressions\MultipleSetExpression.cs" />
     <Compile Include="ExpressionUtilities.cs" />
     <Compile Include="IBindingEnvironment.cs" />
+    <Compile Include="Language\AgentClass.cs" />
+    <Compile Include="Language\AgentObject.cs" />
     <Compile Include="Language\Channel.cs" />
+    <Compile Include="Language\AgentFunction.cs" />
+    <Compile Include="Language\Function.cs" />
     <Compile Include="Language\QueueChannel.cs" />
     <Compile Include="Language\Future.cs" />
     <Compile Include="Language\IChannel.cs" />

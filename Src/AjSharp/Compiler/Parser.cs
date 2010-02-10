@@ -61,7 +61,10 @@
                     return this.ParseFunctionCommand();
 
                 if (token.Value == "class")
-                    return this.ParseClassCommand();
+                    return this.ParseClassAgentCommand(false);
+
+                if (token.Value == "agent")
+                    return this.ParseClassAgentCommand(true);
 
                 if (token.Value == "global")
                     return this.ParseGlobalCommand();
@@ -683,7 +686,7 @@
             return new VarCommand(name, expression);
         }
 
-        private ICommand ParseClassCommand()
+        private ICommand ParseClassAgentCommand(bool isagent)
         {
             string name = this.ParseName();
             List<string> memberNames = new List<string>();
@@ -704,6 +707,9 @@
             }
 
             this.Parse(TokenType.Separator, "}");
+
+            if (isagent)
+                return new DefineAgentCommand(name, memberNames.ToArray(), memberExpressions);
 
             DefineClassCommand cmd = new DefineClassCommand(name, memberNames.ToArray(), memberExpressions);
 

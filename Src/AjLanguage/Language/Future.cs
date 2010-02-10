@@ -18,7 +18,8 @@
             {
                 if (this.set)
                     throw new InvalidOperationException("Future value already calculated");
-                set = true;
+
+                this.set = true;
                 this.value = value;
                 this.handle.Set();
             }
