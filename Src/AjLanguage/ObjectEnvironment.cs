@@ -25,6 +25,8 @@
             this.parent = parent;
         }
 
+        public object Object { get { return this.obj; } }
+
         public object GetValue(string name)
         {
             if (name == ThisName)

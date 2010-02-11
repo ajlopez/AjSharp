@@ -205,3 +205,9 @@ Invoke method in IObject, DynamicObject
 DefineAgentCommand
 AgentFunction
 agent keyword in Parser with tests
+
+2010-02-11
+Invoke AgentFunction
+AgentObject: Launch, channel, SendInvoke, Execute
+AgentClass new instance
+AgentCall.ajs first example

@@ -1,0 +1,15 @@
+﻿
+agent IncrementAgent 
+{
+	sub Process(channel, value)
+	{
+		channel <- value + 1;
+	}
+}
+
+myagent = new IncrementAgent();
+channel = new Channel();
+
+myagent.Process(channel, 1);
+
+result = <-channel; // result == 2

@@ -32,7 +32,12 @@
 
         public object Invoke(IBindingEnvironment environment, object[] arguments)
         {
-            return this.function.Invoke(environment, arguments);
+            AgentObject agent = (AgentObject)((ObjectEnvironment)environment).Object;
+            agent.SendInvoke(this.function, environment, arguments);
+            // TODO if function, return a Future
+            return null;
+            // Direct code
+//            return this.function.Invoke(environment, arguments);
         }
     }
 }

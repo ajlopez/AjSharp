@@ -1062,6 +1062,15 @@
             Assert.AreEqual(810, this.EvaluateExpression("result"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples\\AgentCall.ajs")]
+        public void EvaluateAgentCall()
+        {
+            IncludeFile("AgentCall.ajs");
+
+            Assert.AreEqual(2, this.EvaluateExpression("result"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

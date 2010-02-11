@@ -34,6 +34,13 @@
         {
             IObject dynobj = new DynamicClassicObject(this);
 
+            this.NewInstance(dynobj, parameters);
+
+            return dynobj;
+        }
+
+        public virtual void NewInstance(IObject dynobj, object[] parameters)
+        {
             foreach (string name in this.members.Keys)
             {
                 object member = this.members[name];
@@ -49,12 +56,12 @@
                 if (parameters != null && parameters.Length != 0)
                     throw new InvalidOperationException(string.Format("No constructor in '{0}' for this arguments", this.name));
 
-                return dynobj;
+                return;
             }
 
             dynobj.Invoke(this.name, parameters);
 
-            return dynobj;
+            return;
         }
 
         public virtual ICollection<string> GetMemberNames()

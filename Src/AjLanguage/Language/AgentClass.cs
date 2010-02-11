@@ -11,5 +11,16 @@
             : base(name)
         {
         }
+
+        public override object NewInstance(object[] parameters)
+        {
+            AgentObject dynobj = new AgentObject(this);
+
+            this.NewInstance(dynobj, parameters);
+
+            dynobj.Launch();
+
+            return dynobj;
+        }
     }
 }
