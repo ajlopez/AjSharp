@@ -27,7 +27,18 @@
                 value = this.objclass.GetMember(name);
 
             if (value == null)
-                return base.Invoke(name, parameters);
+            {
+                // TODO try invoke native methods too
+                if (this.objclass.DefaultMember != null)
+                {
+                    ICallable defmethod = (ICallable) this.objclass.DefaultMember;
+                    IBindingEnvironment oenv = new ObjectEnvironment(this, defmethod.Environment);
+                    object[] arguments = new object[] { name, parameters };
+                    return defmethod.Invoke(oenv, arguments);
+                }
+                else
+                    return base.Invoke(name, parameters);
+            }
 
             if (!(value is ICallable))
             {

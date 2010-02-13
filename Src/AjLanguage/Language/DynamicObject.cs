@@ -31,6 +31,7 @@
         {
             object value = this.GetValue(name);
 
+            // TODO invoke native method if exists
             if (value == null)
                 throw new InvalidOperationException(string.Format("Unknown member '{0}'", name));
 

@@ -362,6 +362,7 @@
             Assert.AreEqual("x", defcmd.ParameterNames[0]);
             Assert.IsNotNull(defcmd.Body);
             Assert.IsInstanceOfType(defcmd.Body, typeof(CompositeCommand));
+            Assert.IsFalse(defcmd.IsDefault);
         }
 
         [TestMethod]
@@ -538,6 +539,15 @@
         public void ParseClassDefinitionWithMemberVariableAndMethod()
         {
             ICommand command = ParseCommand("class Foo { var Bar; function GetBar() { return Bar; }}");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineClassCommand));
+        }
+
+        [TestMethod]
+        public void ParseClassDefinitionWithMemberVariableAndDefaultMethod()
+        {
+            ICommand command = ParseCommand("class Foo { var Bar; default function GetBar() { return Bar; }}");
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(DefineClassCommand));

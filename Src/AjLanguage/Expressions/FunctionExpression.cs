@@ -12,11 +12,18 @@
     {
         private string[] parameterNames;
         private ICommand body;
+        private bool isdefault;
 
         public FunctionExpression(string[] parameterNames, ICommand body)
+            : this(parameterNames, body, false)
+        {
+        }
+
+        public FunctionExpression(string[] parameterNames, ICommand body, bool isdefault)
         {
             this.parameterNames = parameterNames;
             this.body = body;
+            this.isdefault = isdefault;
         }
 
         public string[] ParameterNames { get { return this.parameterNames; } }
@@ -25,7 +32,7 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            return new Function(this.parameterNames, this.body, environment);
+            return new Function(this.parameterNames, this.body, environment, this.isdefault);
         }
     }
 }

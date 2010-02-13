@@ -121,6 +121,37 @@
         }
 
         [TestMethod]
+        public void InvokeDefaultMethod()
+        {
+            ICommand body = new ReturnCommand(new VariableExpression("Name"));
+            Function function = new Function(new string[] { "name", "parameters" }, body, null, true);
+
+            this.dynclass.SetMember("Name", "Adam");
+            this.dynclass.SetMember("Age", 800);
+            this.dynclass.SetMember("DefaultMethod", function);
+
+            Assert.AreEqual(2, function.Arity);
+            Assert.IsTrue(function.IsDefault);
+
+            Assert.IsNotNull(this.dynclass.DefaultMember);
+            Assert.AreEqual(this.dynclass.DefaultMember, function);
+
+            object instance = this.dynclass.NewInstance(null);
+
+            Assert.IsNotNull(instance);
+
+            Assert.IsInstanceOfType(instance, typeof(IObject));
+
+            IObject dynobj = (IObject)instance;
+
+            object result = dynobj.Invoke("AnyName", new object[] { });
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(string));
+            Assert.AreEqual("Adam", result);
+        }
+
+        [TestMethod]
         public void InvokeMethodRedefinedInObject()
         {
             ICommand body = new ReturnCommand(new VariableExpression("Age"));

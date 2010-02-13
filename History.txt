@@ -211,3 +211,8 @@ Invoke AgentFunction
 AgentObject: Launch, channel, SendInvoke, Execute
 AgentClass new instance
 AgentCall.ajs first example
+
+2010-02-13
+default keyword in class methods
+Support for IsDefault in Function
+Default method invocation in Dynamic Classic objects

@@ -366,6 +366,7 @@
             Assert.AreEqual("x", function.ParameterNames[0]);
             Assert.IsNotNull(function.Body);
             Assert.IsInstanceOfType(function.Body, typeof(ReturnCommand));
+            Assert.IsFalse(function.IsDefault);
         }
 
         [TestMethod]

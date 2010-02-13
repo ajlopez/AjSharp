@@ -13,13 +13,14 @@
         private ICommand body;
         private int arity;
         private IBindingEnvironment environment;
+        private bool isdefault;
 
         public Function(string[] parameterNames, ICommand body)
-            : this(parameterNames, body, null)
+            : this(parameterNames, body, null, false)
         {
         }
 
-        public Function(string[] parameterNames, ICommand body, IBindingEnvironment environment)
+        public Function(string[] parameterNames, ICommand body, IBindingEnvironment environment, bool isdefault)
         {
             this.parameterNames = parameterNames;
             this.body = body;
@@ -30,6 +31,7 @@
                 this.arity = parameterNames.Length;
 
             this.environment = environment;
+            this.isdefault = isdefault;
         }
 
         public int Arity { get { return this.parameterNames == null ? 0 : this.parameterNames.Length; } }
@@ -37,6 +39,8 @@
         public string[] ParameterNames { get { return this.parameterNames; } }
 
         public ICommand Body { get { return this.body; } }
+
+        public bool IsDefault { get { return this.isdefault; } }
 
         public IBindingEnvironment Environment { get { return this.environment; } }
 

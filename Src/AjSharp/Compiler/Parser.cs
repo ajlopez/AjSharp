@@ -57,8 +57,18 @@
                 if (token.Value == "return")
                     return this.ParseReturnCommand();
 
+                if (token.Value == "default")
+                {
+                    Token token2 = this.lexer.NextToken();
+
+                    if (token2.Value == "function" || token2.Value == "sub")
+                        return this.ParseFunctionCommand(true);
+
+                    throw new UnexpectedTokenException(token2);
+                }
+
                 if (token.Value == "function" || token.Value == "sub")
-                    return this.ParseFunctionCommand();
+                    return this.ParseFunctionCommand(false);
 
                 if (token.Value == "class")
                     return this.ParseClassAgentCommand(false);
@@ -163,13 +173,13 @@
             return token.Value.Equals(value);
         }
 
-        private IExpression ParseFunctionExpression()
+        private IExpression ParseFunctionExpression(bool isdefault)
         {
             this.lexer.NextToken();
             string[] parameterNames = this.ParseParameters();
             ICommand body = this.ParseCommand();
 
-            return new FunctionExpression(parameterNames, body);
+            return new FunctionExpression(parameterNames, body, isdefault);
         }
 
         private ICommand ParseGlobalCommand()
@@ -230,7 +240,7 @@
                     if (token.Value == "var")
                         this.ParseMemberVariable(names, expressions);
                     else if (token.Value == "function" || token.Value == "sub")
-                        this.ParseMemberMethod(names, expressions);
+                        this.ParseMemberMethod(names, expressions, false);
                     else
                         throw new UnexpectedTokenException(token);
                 }
@@ -516,8 +526,16 @@
 
         private IExpression ParseSimpleTermExpression()
         {
+            if (this.TryParse(TokenType.Name, "default"))
+            {
+                if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
+                    return this.ParseFunctionExpression(true);
+
+                throw new UnexpectedTokenException(this.lexer.NextToken());
+            }
+
             if (this.TryParse(TokenType.Name, "function") || this.TryParse(TokenType.Name, "sub"))
-                return this.ParseFunctionExpression();
+                return this.ParseFunctionExpression(false);
 
             Token token = this.lexer.NextToken();
 
@@ -663,13 +681,13 @@
             return new ForCommand(initial, condition, endcmd, command);
         }
 
-        private ICommand ParseFunctionCommand()
+        private ICommand ParseFunctionCommand(bool isdefault)
         {
             string name = this.ParseName();
             string[] parameterNames = this.ParseParameters();
             ICommand body = this.ParseCommand();
 
-            return new DefineFunctionCommand(name, parameterNames, body);
+            return new DefineFunctionCommand(name, parameterNames, body, isdefault);
         }
 
         private ICommand ParseVarCommand()
@@ -694,14 +712,23 @@
 
             this.Parse(TokenType.Separator, "{");
 
-            while (this.TryParse(TokenType.Name, "var", "function", "sub"))
+            while (this.TryParse(TokenType.Name, "var", "function", "sub", "default"))
             {
                 Token token = this.lexer.NextToken();
 
                 if (token.Value == "var")
                     this.ParseMemberVariable(memberNames, memberExpressions);
+                else if (token.Value == "default")
+                {
+                    Token token2 = this.lexer.NextToken();
+
+                    if (token2.Value == "function" || token2.Value == "sub")
+                        this.ParseMemberMethod(memberNames, memberExpressions, true);
+                    else
+                        throw new UnexpectedTokenException(token2);
+                }
                 else if (token.Value == "function" || token.Value == "sub")
-                    this.ParseMemberMethod(memberNames, memberExpressions);
+                    this.ParseMemberMethod(memberNames, memberExpressions, false);
                 else
                     throw new UnexpectedTokenException(token);
             }
@@ -724,14 +751,23 @@
 
             this.Parse(TokenType.Separator, "{");
 
-            while (this.TryParse(TokenType.Name, "var", "function", "sub"))
+            while (this.TryParse(TokenType.Name, "var", "function", "sub", "default"))
             {
                 Token token = this.lexer.NextToken();
 
                 if (token.Value == "var")
                     this.ParseMemberVariable(memberNames, memberExpressions);
+                else if (token.Value == "default")
+                {
+                    Token token2 = this.lexer.NextToken();
+
+                    if (token2.Value == "function" || token2.Value == "sub")
+                        this.ParseMemberMethod(memberNames, memberExpressions, true);
+                    else
+                        throw new UnexpectedTokenException(token2);
+                }
                 else if (token.Value == "function" || token.Value == "sub")
-                    this.ParseMemberMethod(memberNames, memberExpressions);
+                    this.ParseMemberMethod(memberNames, memberExpressions, false);
                 else
                     throw new UnexpectedTokenException(token);
             }
@@ -761,14 +797,14 @@
             memberExpressions.Add(expression);
         }
 
-        private void ParseMemberMethod(IList<string> memberNames, IList<IExpression> memberExpressions)
+        private void ParseMemberMethod(IList<string> memberNames, IList<IExpression> memberExpressions, bool isdefault)
         {
             string name = this.ParseName();
             string[] parameterNames = this.ParseParameters();
             ICommand body = this.ParseCommand();
 
             memberNames.Add(name);
-            memberExpressions.Add(new FunctionExpression(parameterNames, body));
+            memberExpressions.Add(new FunctionExpression(parameterNames, body, isdefault));
         }
 
         private string[] ParseParameters()

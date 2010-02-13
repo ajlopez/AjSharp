@@ -9,6 +9,7 @@
     {
         private string name;
         private Dictionary<string, object> members = new Dictionary<string, object>();
+        private object defaultmember;
 
         public DynamicClass(string name)
         {
@@ -17,9 +18,14 @@
 
         public string Name { get { return this.name; } }
 
+        public object DefaultMember { get { return this.defaultmember; } }
+
         public virtual void SetMember(string name, object value)
         {
             this.members[name] = value;
+
+            if (value is Function && ((Function)value).IsDefault)
+                this.defaultmember = value;
         }
 
         public virtual object GetMember(string name)
