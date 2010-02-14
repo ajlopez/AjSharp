@@ -1,0 +1,34 @@
+﻿
+agent IncrementAgent 
+{
+	function IncrementAgent(next, channel)
+	{
+		this.channel = channel;
+		this.next = next;
+	}
+	
+	sub Process(value)
+	{
+		newvalue = value + 1;
+		
+		if (channel)
+			channel <- newvalue;
+			
+		if (next)
+			next.Process(newvalue);
+	}
+}
+
+channel = new Channel();
+
+thirdAgent = new IncrementAgent(null, channel);
+secondAgent = new IncrementAgent(thirdAgent, channel);
+firstAgent = new IncrementAgent(secondAgent, channel);
+
+firstAgent.Process(0);
+
+for (k = 1; k <= 3; k++)
+	result = result + <-channel; 
+
+// result == 1 + 2 + 3 == 6
+

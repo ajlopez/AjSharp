@@ -1072,6 +1072,15 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\AgentChain.ajs")]
+        public void EvaluateAgentChain()
+        {
+            IncludeFile("AgentChain.ajs");
+
+            Assert.AreEqual(6, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\DefaultMethodProxy.ajs")]
         public void EvaluateDefaultMethodProxy()
         {

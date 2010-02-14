@@ -220,3 +220,4 @@ Default method invocation in Dynamic Classic objects
 2010-02-14
 Support for calling native methods on DynamicObject, DynamicClassicObject
 New examples with default method: DefaultMethodProxy.ajs, DefaultMethodLoadBalancer.ajs
+New example with agents: AgentChain.ajs
