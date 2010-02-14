@@ -1071,6 +1071,24 @@
             Assert.AreEqual(2, this.EvaluateExpression("result"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples\\DefaultMethodProxy.ajs")]
+        public void EvaluateDefaultMethodProxy()
+        {
+            IncludeFile("DefaultMethodProxy.ajs");
+
+            Assert.AreEqual(4, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\DefaultMethodLoadBalancer.ajs")]
+        public void EvaluateDefaultMethodLoadBalancer()
+        {
+            IncludeFile("DefaultMethodLoadBalancer.ajs");
+
+            Assert.AreEqual(10, this.EvaluateExpression("result"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

@@ -1,0 +1,28 @@
+﻿
+object Incrementor
+{
+	function Increment(n) 
+	{
+		return n+1;
+	}
+}
+
+class Proxy
+{
+	var Object;
+	
+	function Proxy(obj)
+	{
+		this.Object = obj;
+	}
+	
+	default function InvokeMethod(name, parameters)
+	{
+		return this.Object.Invoke(name,parameters);
+	}
+}
+
+proxy = new Proxy(Incrementor);
+
+result = proxy.Increment(3); // result == 4
+

@@ -28,7 +28,9 @@
 
             if (value == null)
             {
-                // TODO try invoke native methods too
+                if (this.IsNativeMethod(name))
+                    return ObjectUtilities.GetNativeValue(this, name, parameters);
+
                 if (this.objclass.DefaultMember != null)
                 {
                     ICallable defmethod = (ICallable) this.objclass.DefaultMember;

@@ -8,6 +8,7 @@
     public class DynamicObject : IObject
     {
         private Dictionary<string, object> values = new Dictionary<string, object>();
+        private static string[] nativeMethods = new string[] { "SetValue", "GetValue", "ToString", "GetNames", "Invoke", "GetHashCode", "Equals" };
 
         public virtual void SetValue(string name, object value)
         {
@@ -27,11 +28,18 @@
             return this.values.Keys;
         }
 
+        public virtual bool IsNativeMethod(string name)
+        {
+            return nativeMethods.Contains(name);
+        }
+
         public virtual object Invoke(string name, object[] parameters)
         {
             object value = this.GetValue(name);
 
-            // TODO invoke native method if exists
+            if (value == null && this.IsNativeMethod(name))
+                return ObjectUtilities.GetNativeValue(this, name, parameters);
+
             if (value == null)
                 throw new InvalidOperationException(string.Format("Unknown member '{0}'", name));
 

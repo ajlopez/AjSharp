@@ -44,6 +44,11 @@
                 return ((DynamicObject)obj).Invoke(name, parameters);
             }
 
+            return GetNativeValue(obj, name, parameters);
+        }
+
+        public static object GetNativeValue(object obj, string name, object[] parameters)
+        {
             Type type = obj.GetType();
 
             return type.InvokeMember(name, System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Instance, null, obj, parameters);

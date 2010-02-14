@@ -39,7 +39,7 @@
             return expression.Evaluate(environment);
         }
 
-        public static IList ResolveToList(IExpression expression, IBindingEnvironment environment)
+        public static object ResolveToList(IExpression expression, IBindingEnvironment environment)
         {
             if (expression is VariableExpression)
                 return ResolveToList((VariableExpression)expression, environment);
@@ -47,7 +47,7 @@
             if (expression is DotExpression)
                 return ResolveToList((DotExpression)expression, environment);
 
-            return (IList) expression.Evaluate(environment);
+            return expression.Evaluate(environment);
         }
 
         public static IDictionary ResolveToDictionary(IExpression expression, IBindingEnvironment environment)
@@ -115,7 +115,7 @@
             return ObjectUtilities.GetValue(obj, expression.Name);
         }
 
-        private static IList ResolveToList(VariableExpression expression, IBindingEnvironment environment)
+        private static object ResolveToList(VariableExpression expression, IBindingEnvironment environment)
         {
             string name = expression.VariableName;
 
@@ -129,7 +129,7 @@
                 environment.SetValue(name, obj);
             }
 
-            return (IList) obj;
+            return obj;
         }
 
         private static IList ResolveToList(DotExpression expression, IBindingEnvironment environment)

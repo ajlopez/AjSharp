@@ -1,0 +1,47 @@
+﻿
+class Incrementor
+{
+	function Increment(n) 
+	{
+		return n+1;
+	}
+}
+
+class LoadBalancer
+{
+	var objects;
+	var random;
+	
+	function LoadBalancer()
+	{
+		this.random = new System.Random();
+		this.objects = new List();
+	}
+	
+	sub Add(obj)
+	{
+		this.objects.Add(obj);
+	}
+	
+	default function InvokeMethod(name, parameters)
+	{
+		n = random.Next(objects.Count);
+		
+		return this.objects[n].Invoke(name,parameters);
+	}
+}
+	
+balancer = new LoadBalancer();
+
+balancer.Add("Foo");
+
+for (k=1; k<=10; k++)
+	balancer.Add(new Incrementor());
+	
+result = 0;
+
+for (k=0; k<4; k++)
+	result = result + balancer.Increment(k);
+	
+// result == 1 + 2 + 3 + 4 == 10
+
