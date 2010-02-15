@@ -1081,6 +1081,16 @@
         }
 
         [TestMethod]
+        [DeploymentItem("Examples\\AgentCollatz.ajs")]
+        public void EvaluateAgentCollatz()
+        {
+            IncludeFile("AgentCollatz.ajs");
+
+            Assert.IsNotNull(this.EvaluateExpression("result"));
+            Assert.AreEqual(16, this.EvaluateExpression("result.Count"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\DefaultMethodProxy.ajs")]
         public void EvaluateDefaultMethodProxy()
         {

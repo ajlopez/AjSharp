@@ -79,6 +79,12 @@
         }
 
         [TestMethod]
+        public void ParseTriplePointOperator()
+        {
+            ParseTokens("...", TokenType.Operator);
+        }
+
+        [TestMethod]
         public void ParseWithMultiLineComment()
         {
             ParseNameTokens("foo /* this is a comment\r\n ending here */ bar", "foo", "bar");

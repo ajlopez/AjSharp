@@ -9,11 +9,15 @@ To do list
 
 - Assignments += -= ....
 
+- (param...)
+
 - Test GetValueExpression, SetValueCommand
 
 - Lexical scopy in anonymous functions
 
-= QueueChannels
++ QueueChannels
+
+- try/catch
 
 Evaluate function
 Execute subroutine

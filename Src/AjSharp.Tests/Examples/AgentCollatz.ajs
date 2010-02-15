@@ -1,0 +1,60 @@
+﻿
+agent EvenAgent 
+{
+	sub Process(number, list)
+	{
+		if (number % 2)
+		{
+			this.Next.Process(number, list);
+			return;
+		}
+		
+		list.Add(number);
+	
+		number = number / 2;
+		
+		this.Next.Process(number, list);
+	}
+}
+
+agent OddAgent 
+{
+	sub Process(number, list)
+	{
+		if ((number % 2)==0)
+		{
+			this.Next.Process(number, list);
+			return;
+		}
+		
+		list.Add(number);
+		
+		if (number == 1) 
+		{
+			this.Channel <- list;
+			return;
+		}
+		
+		number = number * 3 + 1;
+		
+		this.Next.Process(number, list);
+	}
+}
+
+channel = new Channel();
+
+even = new EvenAgent();
+odd = new OddAgent();
+
+even.Channel = channel;
+even.Next = odd;
+
+odd.Channel = channel;
+odd.Next = even;
+
+even.Process(22, new List());
+
+result = <-channel;
+
+// result = { 22 11 34 17 52 26 13 40 20 10 5 16 8 4 2 1 }
+
