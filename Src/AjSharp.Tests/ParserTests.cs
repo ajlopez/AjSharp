@@ -359,7 +359,28 @@
 
             Assert.AreEqual("Abs", defcmd.FunctionName);
             Assert.AreEqual(1, defcmd.ParameterNames.Length);
+            Assert.IsFalse(defcmd.HasVariableParameters);
             Assert.AreEqual("x", defcmd.ParameterNames[0]);
+            Assert.IsNotNull(defcmd.Body);
+            Assert.IsInstanceOfType(defcmd.Body, typeof(CompositeCommand));
+            Assert.IsFalse(defcmd.IsDefault);
+        }
+
+        [TestMethod]
+        public void ParseFunctionDefinitionWithVariableArguments()
+        {
+            ICommand command = ParseCommand("function Foo(par1,pars...) { return par1 + pars.Count; }");
+
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(DefineFunctionCommand));
+
+            DefineFunctionCommand defcmd = (DefineFunctionCommand)command;
+
+            Assert.AreEqual("Foo", defcmd.FunctionName);
+            Assert.AreEqual(2, defcmd.ParameterNames.Length);
+            Assert.IsTrue(defcmd.HasVariableParameters);
+            Assert.AreEqual("par1", defcmd.ParameterNames[0]);
+            Assert.AreEqual("pars", defcmd.ParameterNames[1]);
             Assert.IsNotNull(defcmd.Body);
             Assert.IsInstanceOfType(defcmd.Body, typeof(CompositeCommand));
             Assert.IsFalse(defcmd.IsDefault);

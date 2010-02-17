@@ -225,3 +225,7 @@ New example with agents: AgentChain.ajs
 2010-02-15
 .. and ... operators in Lexer
 New example with agents: AgentCollatz.ajs
+
+2010-02-15
+... operators in Parser as in func(par1, pars...)
+

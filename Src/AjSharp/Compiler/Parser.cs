@@ -175,11 +175,12 @@
 
         private IExpression ParseFunctionExpression(bool isdefault)
         {
+            bool hasvariableparameters = false;
             this.lexer.NextToken();
-            string[] parameterNames = this.ParseParameters();
+            string[] parameterNames = this.ParseParameters(ref hasvariableparameters);
             ICommand body = this.ParseCommand();
 
-            return new FunctionExpression(parameterNames, body, isdefault);
+            return new FunctionExpression(parameterNames, body, isdefault, hasvariableparameters);
         }
 
         private ICommand ParseGlobalCommand()
@@ -684,10 +685,11 @@
         private ICommand ParseFunctionCommand(bool isdefault)
         {
             string name = this.ParseName();
-            string[] parameterNames = this.ParseParameters();
+            bool hasvariableparameters = false;
+            string[] parameterNames = this.ParseParameters(ref hasvariableparameters);
             ICommand body = this.ParseCommand();
 
-            return new DefineFunctionCommand(name, parameterNames, body, isdefault);
+            return new DefineFunctionCommand(name, parameterNames, body, isdefault, hasvariableparameters);
         }
 
         private ICommand ParseVarCommand()
@@ -800,15 +802,17 @@
         private void ParseMemberMethod(IList<string> memberNames, IList<IExpression> memberExpressions, bool isdefault)
         {
             string name = this.ParseName();
-            string[] parameterNames = this.ParseParameters();
+            bool hasvariableparameters = false;
+            string[] parameterNames = this.ParseParameters(ref hasvariableparameters);
             ICommand body = this.ParseCommand();
 
             memberNames.Add(name);
-            memberExpressions.Add(new FunctionExpression(parameterNames, body, isdefault));
+            memberExpressions.Add(new FunctionExpression(parameterNames, body, isdefault, hasvariableparameters));
         }
 
-        private string[] ParseParameters()
+        private string[] ParseParameters(ref bool hasvariableparameters)
         {
+            hasvariableparameters = false;
             List<string> names = new List<string>();
 
             this.Parse(TokenType.Separator, "(");
@@ -819,6 +823,14 @@
                     this.Parse(TokenType.Separator, ",");
 
                 names.Add(this.ParseName());
+
+                if (this.TryParse(TokenType.Operator, "..."))
+                {
+                    this.lexer.NextToken();
+                    this.Parse(TokenType.Separator, ")");
+                    hasvariableparameters = true;
+                    return names.ToArray();
+                }
             }
 
             this.lexer.NextToken();
