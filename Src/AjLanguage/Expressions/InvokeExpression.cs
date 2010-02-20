@@ -7,6 +7,7 @@
 
     using AjLanguage.Commands;
     using AjLanguage.Language;
+    using System.Collections;
 
     public class InvokeExpression : IExpression
     {
@@ -33,7 +34,18 @@
             List<object> parameters = new List<object>();
 
             foreach (IExpression expression in this.arguments)
-                parameters.Add(expression.Evaluate(environment));
+            {
+                object parameter = expression.Evaluate(environment);
+
+                if (expression is VariableVariableExpression)
+                {
+                    if (parameter != null)
+                        foreach (object obj in (IEnumerable)parameter)
+                            parameters.Add(obj);
+                }
+                else
+                    parameters.Add(parameter);
+            }
 
             if (callable is ILocalCallable)
                 return callable.Invoke(environment, parameters.ToArray());

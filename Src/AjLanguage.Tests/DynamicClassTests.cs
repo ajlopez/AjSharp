@@ -124,7 +124,7 @@
         public void InvokeDefaultMethod()
         {
             ICommand body = new ReturnCommand(new VariableExpression("Name"));
-            Function function = new Function(new string[] { "name", "parameters" }, body, null, true);
+            Function function = new Function(new string[] { "name", "parameters" }, body, null, true, false);
 
             this.dynclass.SetMember("Name", "Adam");
             this.dynclass.SetMember("Age", 800);

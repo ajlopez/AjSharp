@@ -64,6 +64,7 @@
     <Compile Include="Commands\SetCommand.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
     <Compile Include="Expressions\ConcatenateExpression.cs" />
+    <Compile Include="Expressions\VariableVariableExpression.cs" />
     <Compile Include="Expressions\GetValueExpression.cs" />
     <Compile Include="Expressions\InvokeExpressionExpression.cs" />
     <Compile Include="Expressions\InitializeNewArrayExpression.cs" />

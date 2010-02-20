@@ -33,8 +33,6 @@ class LoadBalancer
 	
 balancer = new LoadBalancer();
 
-balancer.Add("Foo");
-
 for (k=1; k<=10; k++)
 	balancer.Add(new Incrementor());
 	

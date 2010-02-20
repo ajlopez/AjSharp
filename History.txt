@@ -229,3 +229,6 @@ New example with agents: AgentCollatz.ajs
 2010-02-15
 ... operators in Parser as in func(par1, pars...)
 
+2010-02-20
+Variable parameters fun(pars...)
+Splat invocation: myfun(1,pars...,2);

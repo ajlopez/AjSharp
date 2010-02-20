@@ -402,6 +402,21 @@
         }
 
         [TestMethod]
+        public void ParseInvokeExpressionWithSplats()
+        {
+            IExpression expression = ParseExpression("DoSomething(3, pars...)");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(InvokeExpression));
+
+            InvokeExpression invexp = (InvokeExpression)expression;
+
+            Assert.AreEqual("DoSomething", invexp.Name);
+            Assert.AreEqual(2, invexp.Arguments.Count);
+            Assert.IsInstanceOfType(invexp.Arguments.First(), typeof(ConstantExpression));
+        }
+
+        [TestMethod]
         public void ParseInvokeExpressionExpression()
         {
             IExpression expression = ParseExpression("MyFunc(2)(3)");
@@ -438,6 +453,15 @@
         public void ParseSimpleDotExpressionWithArguments()
         {
             IExpression expression = ParseExpression("foo.Bar(1,2)");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(DotExpression));
+        }
+
+        [TestMethod]
+        public void ParseSimpleDotExpressionWithSplats()
+        {
+            IExpression expression = ParseExpression("foo.Bar(pars...)");
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(DotExpression));
@@ -970,6 +994,15 @@
 
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(DefineAgentCommand));
+        }
+
+        [TestMethod]
+        public void ParseSplat()
+        {
+            IExpression expression = ParseExpression("pars...");
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(VariableVariableExpression));
+            Assert.AreEqual("pars", ((VariableVariableExpression)expression).VariableName);
         }
 
         private static IExpression ParseExpression(string text)

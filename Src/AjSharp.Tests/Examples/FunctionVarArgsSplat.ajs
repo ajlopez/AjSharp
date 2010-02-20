@@ -1,0 +1,26 @@
+﻿
+function FirstParameter(pars...)
+{
+	if (pars.Length>0)
+		return pars[0];
+		
+	return null;
+}
+
+function SecondParameter(pars...)
+{
+	if (pars.Length>1)
+		return pars[1];
+		
+	return null;
+}
+
+function JustDoIt(fn,pars...)
+{
+	return fn(pars...);
+}
+
+result = JustDoIt(FirstParameter,1,2,3);		// 1
+result2 = JustDoIt(SecondParameter,1,2,3);	// 2
+result3 = JustDoIt(SecondParameter);		// null
+

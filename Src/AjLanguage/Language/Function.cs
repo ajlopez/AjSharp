@@ -14,16 +14,18 @@
         private int arity;
         private IBindingEnvironment environment;
         private bool isdefault;
+        private bool hasvariableparameters;
 
         public Function(string[] parameterNames, ICommand body)
-            : this(parameterNames, body, null, false)
+            : this(parameterNames, body, null, false, false)
         {
         }
 
-        public Function(string[] parameterNames, ICommand body, IBindingEnvironment environment, bool isdefault)
+        public Function(string[] parameterNames, ICommand body, IBindingEnvironment environment, bool isdefault, bool hasvariableparameters)
         {
             this.parameterNames = parameterNames;
             this.body = body;
+            this.hasvariableparameters = hasvariableparameters;
 
             if (parameterNames == null)
                 this.arity = 0;
@@ -41,6 +43,8 @@
         public ICommand Body { get { return this.body; } }
 
         public bool IsDefault { get { return this.isdefault; } }
+
+        public bool HasVariableParameters { get { return this.hasvariableparameters; } }
 
         public IBindingEnvironment Environment { get { return this.environment; } }
 
@@ -62,11 +66,25 @@
                 argcount = arguments.Length;
 
             if (this.arity != argcount)
-                throw new InvalidOperationException("Invalid number of arguments");
+                if (!this.hasvariableparameters || this.arity - 1 > argcount)
+                    throw new InvalidOperationException("Invalid number of arguments");
 
             BindingEnvironment newenv = new BindingEnvironment(environment);
 
-            if (argcount > 0)
+            if (this.hasvariableparameters)
+            {
+                for (int k = 0; k < this.arity-1; k++)
+                    newenv.SetLocalValue(this.parameterNames[k], arguments[k]);
+                if (argcount == 0)
+                    newenv.SetLocalValue(this.parameterNames[0], new object[] { });
+                else
+                {
+                    object[] pars = new object[argcount - this.arity + 1];
+                    Array.Copy(arguments, argcount - pars.Length, pars, 0, pars.Length);
+                    newenv.SetLocalValue(this.parameterNames[this.arity - 1], pars);
+                }
+            }
+            else
                 for (int k = 0; k < argcount; k++)
                     newenv.SetLocalValue(this.parameterNames[k], arguments[k]);
 

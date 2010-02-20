@@ -38,7 +38,7 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            return new Function(this.parameterNames, this.body, environment, this.isdefault);
+            return new Function(this.parameterNames, this.body, environment, this.isdefault, this.hasvariableparameters);
         }
     }
 }

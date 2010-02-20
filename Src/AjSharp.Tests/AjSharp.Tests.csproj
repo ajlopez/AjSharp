@@ -94,6 +94,12 @@
     <None Include="Examples\AgentCollatz.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\FunctionVarArgsSplat.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\FunctionVarArgs.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\DefaultMethodLoadBalancer.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

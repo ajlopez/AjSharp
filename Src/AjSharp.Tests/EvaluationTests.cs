@@ -161,6 +161,58 @@
         }
 
         [TestMethod]
+        public void EvaluateVariableArgumentsFunction()
+        {
+            this.ExecuteCommand("function CountParameters(pars...) { return pars.Length; }");
+
+            object obj = this.machine.Environment.GetValue("CountParameters");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(Function));
+
+            Function func = (Function)obj;
+
+            Assert.AreEqual(1, func.Arity);
+            Assert.IsTrue(func.HasVariableParameters);
+
+            Assert.AreEqual(0, this.EvaluateExpression("CountParameters()"));
+            Assert.AreEqual(1, this.EvaluateExpression("CountParameters(10)"));
+            Assert.AreEqual(2, this.EvaluateExpression("CountParameters(10,20)"));
+        }
+
+        [TestMethod]
+        public void EvaluatePassingVariableArguments()
+        {
+            this.ExecuteCommand("function AddParameters(pars...) { var result = 0; foreach (par in pars) result = result + par; return result; }");
+
+            object obj = this.machine.Environment.GetValue("AddParameters");
+
+            Assert.IsNotNull(obj);
+            Assert.IsInstanceOfType(obj, typeof(Function));
+
+            Function func = (Function)obj;
+
+            Assert.AreEqual(1, func.Arity);
+            Assert.IsTrue(func.HasVariableParameters);
+
+            Assert.AreEqual(0, this.EvaluateExpression("AddParameters()"));
+            Assert.AreEqual(10, this.EvaluateExpression("AddParameters(10)"));
+            Assert.AreEqual(30, this.EvaluateExpression("AddParameters(10,20)"));
+        }
+
+        [TestMethod]
+        public void EvaluatePassingVariableArgumentsUsingSplats()
+        {
+            this.ExecuteCommand("function AddParameters(pars...) { var result = 0; foreach (par in pars) result = result + par; return result; }");
+            this.ExecuteCommand("pars = new int[] { 1, 2, 3 };");
+
+            Assert.AreEqual(6, this.EvaluateExpression("AddParameters(pars...)"));
+            Assert.AreEqual(16, this.EvaluateExpression("AddParameters(10, pars...)"));
+            Assert.AreEqual(26, this.EvaluateExpression("AddParameters(pars...,20)"));
+            Assert.AreEqual(3, this.EvaluateExpression("AddParameters(1,foo...,2)"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\Factorial.ajs")]
         public void EvaluateFactorialUsingInclude()
         {
@@ -1106,6 +1158,28 @@
             IncludeFile("DefaultMethodLoadBalancer.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionVarArgs.ajs")]
+        public void EvaluateFunctionVarArgs()
+        {
+            IncludeFile("FunctionVarArgs.ajs");
+
+            Assert.AreEqual(1, this.EvaluateExpression("result"));
+            Assert.AreEqual(2, this.EvaluateExpression("result2"));
+            Assert.IsNull(this.EvaluateExpression("result3"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\FunctionVarArgsSplat.ajs")]
+        public void EvaluateFunctionVarArgsSplat()
+        {
+            IncludeFile("FunctionVarArgsSplat.ajs");
+
+            Assert.AreEqual(1, this.EvaluateExpression("result"));
+            Assert.AreEqual(2, this.EvaluateExpression("result2"));
+            Assert.IsNull(this.EvaluateExpression("result3"));
         }
 
         private object EvaluateExpression(string text)

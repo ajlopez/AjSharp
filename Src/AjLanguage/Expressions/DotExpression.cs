@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Collections;
 
     public class DotExpression : IExpression
     {
@@ -51,7 +52,18 @@
                 List<object> values = new List<object>();
 
                 foreach (IExpression argument in this.arguments)
-                    values.Add(argument.Evaluate(environment));
+                {
+                    object value = argument.Evaluate(environment);
+
+                    if (argument is VariableVariableExpression)
+                    {
+                        if (value != null)
+                            foreach (object val in (IEnumerable) value)
+                                values.Add(val);
+                    }
+                    else
+                        values.Add(value);
+                }
 
                 parameters = values.ToArray();
             }

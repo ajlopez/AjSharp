@@ -588,6 +588,13 @@
                         return new InvokeExpression(token.Value, arguments);
                     }
 
+                    if (this.TryParse(TokenType.Operator, "..."))
+                    {
+                        this.lexer.NextToken();
+
+                        return new VariableVariableExpression(token.Value);
+                    }
+
                     return new VariableExpression(token.Value);
             }
 
