@@ -232,3 +232,8 @@ New example with agents: AgentCollatz.ajs
 2010-02-20
 Variable parameters fun(pars...)
 Splat invocation: myfun(1,pars...,2);
+
+2010-02-21
+WebCrawler.ajs in AjSharp.Console
+Test Retrive Enum value from Type
+Fix GetIndexedValue to support default properties

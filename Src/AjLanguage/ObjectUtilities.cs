@@ -76,7 +76,7 @@
             if (obj is IDictionary)
                 return GetIndexedValue((IDictionary)obj, indexes);
 
-            throw new InvalidOperationException(string.Format("Not indexed value of type {0}", obj.GetType().ToString()));
+            return GetValue(obj, "", indexes); 
         }
 
         public static void SetIndexedValue(object obj, object[] indexes, object value)
@@ -114,6 +114,7 @@
                 return;
             }
 
+            // TODO as in GetIndexedValue, consider Default member
             throw new InvalidOperationException(string.Format("Not indexed value of type {0}", obj.GetType().ToString()));
         }
 

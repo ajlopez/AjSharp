@@ -74,5 +74,11 @@
         {
             Assert.IsFalse((bool)TypeUtilities.InvokeTypeMember(typeof(System.IO.File), "Exists", new object[] { "unknown.txt" }));
         }
+
+        [TestMethod]
+        public void GetValueFromEnum()
+        {
+            Assert.AreEqual(System.UriKind.RelativeOrAbsolute, TypeUtilities.InvokeTypeMember(typeof(System.UriKind), "RelativeOrAbsolute", null));
+        }
     }
 }

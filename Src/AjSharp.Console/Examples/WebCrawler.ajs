@@ -1,0 +1,114 @@
+﻿
+
+// Build and launch agents
+
+object WebCrawler
+{
+	sub Process(url, fn)
+	{
+		uri = new System.Uri(url);
+		downloader = new Downloader();
+		harvester = new Harvester();
+		resolver = new Resolver(uri,5);
+		processor = new Processor(fn);
+		
+		downloader.Harvester = harvester;
+		downloader.Processor = processor;
+		harvester.Resolver = resolver;
+		resolver.Downloader = downloader;
+		
+		downloader.Process(uri, 0);
+	}
+}
+
+// Downloads a page
+
+agent Downloader 
+{
+	sub Process(uri,depth)
+	{
+		client = new System.Net.WebClient();
+		content = client.DownloadString(uri);
+		PrintLine("Downloaded: " + uri);
+		this.Harvester.Process(uri,depth,content);
+		this.Processor.Process(uri, content);
+	}
+}
+
+// Process the content retrieved
+
+agent Processor
+{
+	function Processor(fn)
+	{
+		this.fn = fn; // function to invoke
+	}
+	
+	sub Process(uri, content)
+	{
+		// Add your logic
+		this.fn(uri, content);
+	}
+}
+
+// Get links from page
+
+agent Harvester
+{
+	sub Process(uri,depth,content)
+	{
+		matches = System.Text.RegularExpressions.Regex.Matches(content, "href=\\s*\"([^&\"]*)\"");
+		results = new List();
+		
+		foreach (match in matches) {
+			value = match.Groups[1].Value;
+			
+			if (!results.Contains(value))
+				results.Add(value);
+		}
+		
+		foreach (result in results) 
+			if (result.StartsWith("http"))
+				this.Resolver.Process(new System.Uri(result), depth+1);
+	}
+}
+
+// Filter invalid or already processed links
+
+agent Resolver
+{
+	var processed = new List();	
+	
+	function Resolver(uri,maxdepth)
+	{
+		this.host = uri.Host;
+		this.maxdepth = maxdepth;
+	}
+	
+	sub Process(uri,depth) 
+	{
+		if (depth > this.maxdepth)
+			return;
+			
+		if (uri.Host != this.host)
+			return;
+		
+		if (uri.Scheme != System.Uri.UriSchemeHttp && uri.Scheme != System.Uri.UriSchemeHttps)
+			return;
+			
+		if (processed.Contains(uri))
+			return;
+			
+		processed.Add(uri);
+			
+		PrintLine("New Link: " + uri);
+		this.Downloader.Process(uri,depth); 		
+	}
+}
+
+// Example
+
+WebCrawler.Process("http://ajlopez.wordpress.com", function(uri,content) { PrintLine("From ajlopez.wordpress "+uri);});
+WebCrawler.Process("http://ajlopez.zoomblog.com", function(uri,content) { PrintLine("From ajlopez.zoomblog "+uri);});
+
+

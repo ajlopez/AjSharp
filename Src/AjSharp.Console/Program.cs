@@ -22,20 +22,38 @@
 
             foreach (string filename in args)
             {
-                parser = new Parser(System.IO.File.OpenText(filename));
+                try
+                {
+                    parser = new Parser(System.IO.File.OpenText(filename));
 
-                while ((command = parser.ParseCommand()) != null)
-                    command.Execute(machine.Environment);
+                    while ((command = parser.ParseCommand()) != null)
+                        command.Execute(machine.Environment);
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                    Console.Error.WriteLine(ex.StackTrace);
+                    Console.ReadLine();
+                }
             }
 
-            parser = new Parser(machine.In);
-
-            command = parser.ParseCommand();
-
-            while (command != null)
+            try
             {
-                command.Execute(machine.Environment);
+                parser = new Parser(machine.In);
+
                 command = parser.ParseCommand();
+
+                while (command != null)
+                {
+                    command.Execute(machine.Environment);
+                    command = parser.ParseCommand();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.StackTrace);
+                Console.ReadLine();
             }
         }
     }

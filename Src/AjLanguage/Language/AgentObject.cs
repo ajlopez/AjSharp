@@ -39,10 +39,19 @@
 
             while (true)
             {
-                object obj = this.channel.Receive();
-                AgentTask task = (AgentTask) obj;
+                try
+                {
+                    object obj = this.channel.Receive();
+                    AgentTask task = (AgentTask)obj;
 
-                task.Callable.Invoke(task.Environment, task.Arguments);
+                    task.Callable.Invoke(task.Environment, task.Arguments);
+                }
+                catch (Exception ex)
+                {
+                    // TODO review output
+                    Console.Error.WriteLine(ex.Message);
+                    Console.Error.WriteLine(ex.StackTrace);
+                }
             }
         }
     }

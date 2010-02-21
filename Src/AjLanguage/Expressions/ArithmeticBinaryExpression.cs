@@ -80,7 +80,7 @@
             if (right == null)
                 right = string.Empty;
 
-            return Operators.ConcatenateObject(left, right);
+            return Operators.ConcatenateObject(left.ToString(), right.ToString());
         }
     }
 }

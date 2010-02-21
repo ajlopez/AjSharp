@@ -161,6 +161,12 @@
         }
 
         [TestMethod]
+        public void EvaluateEnumValue()
+        {
+            Assert.AreEqual(System.UriKind.Relative, this.EvaluateExpression("System.UriKind.Relative"));
+        }
+
+        [TestMethod]
         public void EvaluateVariableArgumentsFunction()
         {
             this.ExecuteCommand("function CountParameters(pars...) { return pars.Length; }");
