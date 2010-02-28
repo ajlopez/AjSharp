@@ -1,0 +1,16 @@
+﻿
+object Adam
+{
+	var Name = "Adam";
+	var Age = 700;
+	
+	function AddYears(years) 
+	{
+		this.Age = this.Age + years;
+	}
+}
+
+result1 = Adam["Age"]; // result1 == 700
+Adam["AddYears"](100);
+result2 = Adam["Age"]; // result2 == 800
+

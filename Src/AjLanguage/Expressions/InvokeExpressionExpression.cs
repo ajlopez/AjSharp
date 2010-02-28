@@ -26,7 +26,13 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            ICallable callable = (ICallable) this.expression.Evaluate(environment);
+            object obj = null;
+            ICallable callable;
+
+            if (this.expression is ArrayExpression)
+                callable = (ICallable)((ArrayExpression)this.expression).Evaluate(environment, ref obj);
+            else
+                callable = (ICallable)this.expression.Evaluate(environment);
 
             List<object> parameters = new List<object>();
 
@@ -37,11 +43,17 @@
                 if (expression is VariableVariableExpression)
                 {
                     if (parameter != null)
-                        foreach (object obj in (IEnumerable) parameter)
-                            parameters.Add(obj);
+                        foreach (object ob in (IEnumerable) parameter)
+                            parameters.Add(ob);
                 }
                 else
                     parameters.Add(parameter);
+            }
+
+            if (obj != null && obj is DynamicObject)
+            {
+                DynamicObject dobj = (DynamicObject)obj;
+                return dobj.Invoke(callable, parameters.ToArray());
             }
 
             if (callable is ILocalCallable)

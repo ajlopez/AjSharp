@@ -94,6 +94,9 @@
     <None Include="Examples\AgentCollatz.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\ObjectArrayAccess.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\FunctionVarArgsSplat.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

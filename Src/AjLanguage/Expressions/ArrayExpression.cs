@@ -24,6 +24,11 @@
         {
             object obj = null;
 
+            return this.Evaluate(environment, ref obj);
+        }
+
+        public object Evaluate(IBindingEnvironment environment, ref object obj)
+        {
             obj = this.Expression.Evaluate(environment);
 
             object[] parameters = null;

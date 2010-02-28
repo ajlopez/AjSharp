@@ -237,3 +237,8 @@ Splat invocation: myfun(1,pars...,2);
 WebCrawler.ajs in AjSharp.Console
 Test Retrive Enum value from Type
 Fix GetIndexedValue to support default properties
+
+2010-02-28
+Adding Foo["AProperty"] access with tests
+Adding Foo["AFunction"](par1, par2) with tests
+ObjectArrayAccess.ajs test example

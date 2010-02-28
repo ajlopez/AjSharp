@@ -459,6 +459,15 @@
         }
 
         [TestMethod]
+        public void ParseExpressionExpressionArrayAccess()
+        {
+            IExpression expression = ParseExpression("foo[\"Bar\"](1,2)");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(InvokeExpressionExpression));
+        }
+
+        [TestMethod]
         public void ParseSimpleDotExpressionWithSplats()
         {
             IExpression expression = ParseExpression("foo.Bar(pars...)");

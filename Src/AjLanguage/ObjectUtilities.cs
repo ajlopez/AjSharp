@@ -76,6 +76,9 @@
             if (obj is IDictionary)
                 return GetIndexedValue((IDictionary)obj, indexes);
 
+            if (obj is DynamicObject && indexes != null && indexes.Length == 1)
+                return ((DynamicObject)obj).GetValue((string)indexes[0]);
+
             return GetValue(obj, "", indexes); 
         }
 

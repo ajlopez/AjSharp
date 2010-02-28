@@ -86,6 +86,20 @@
         }
 
         [TestMethod]
+        public void GetIndexedValuesFromDynamicObject()
+        {
+            DynamicObject obj = new DynamicObject();
+            obj.SetValue("Name", "Adam");
+            obj.SetValue("GetAge", new Function(new string[] { "n" }, null));
+
+            Assert.AreEqual("Adam", ObjectUtilities.GetIndexedValue(obj, new object[] { "Name" }));
+            
+            object f = ObjectUtilities.GetIndexedValue(obj, new object[] { "GetAge" });
+            Assert.IsNotNull(f);
+            Assert.IsInstanceOfType(f, typeof(Function));
+        }
+
+        [TestMethod]
         public void SetIndexedValuesInArrays()
         {
             int[] array = new int[2];

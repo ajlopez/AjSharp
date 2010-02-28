@@ -219,6 +219,38 @@
         }
 
         [TestMethod]
+        public void DefineObjectAndGetFunctionValue()
+        {
+            this.ExecuteCommand("object Foo { function Increment(n) { return n+1; } }");
+
+            object f = this.EvaluateExpression("Foo.Increment");
+            Assert.IsNotNull(f);
+            Assert.IsInstanceOfType(f, typeof(Function));
+        }
+
+        [TestMethod]
+        public void DefineObjectAndGetValuesUsingArrayNotation()
+        {
+            this.ExecuteCommand("object Foo { var Age = 800; function Increment(n) { return n+1; } }");
+
+            object f = this.EvaluateExpression("Foo[\"Increment\"]");
+            Assert.IsNotNull(f);
+            Assert.IsInstanceOfType(f, typeof(Function));
+
+            Assert.AreEqual(800, this.EvaluateExpression("Foo[\"Age\"]"));
+        }
+
+        [TestMethod]
+        public void DefineObjectAndInvokeSubUsingArrayNotation()
+        {
+            this.ExecuteCommand("object Foo { var Age = 700; sub AddYears(n) { this.Age = this.Age + n; } }");
+
+            Assert.AreEqual(700, this.EvaluateExpression("Foo[\"Age\"]"));
+            this.EvaluateExpression("Foo[\"AddYears\"](100)");
+            Assert.AreEqual(800, this.EvaluateExpression("Foo[\"Age\"]"));
+        }
+
+        [TestMethod]
         [DeploymentItem("Examples\\Factorial.ajs")]
         public void EvaluateFactorialUsingInclude()
         {
@@ -333,6 +365,16 @@
 
             Assert.AreEqual("Adam", dynobj.GetValue("Name"));
             Assert.AreEqual(800, dynobj.GetValue("Age"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\ObjectArrayAccess.ajs")]
+        public void DefineObjectAnsUseArrayAccess()
+        {
+            IncludeFile("ObjectArrayAccess.ajs");
+
+            Assert.AreEqual(700, this.machine.Environment.GetValue("result1"));
+            Assert.AreEqual(800, this.machine.Environment.GetValue("result2"));
         }
 
         [TestMethod]
