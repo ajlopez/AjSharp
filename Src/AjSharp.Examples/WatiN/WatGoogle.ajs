@@ -1,0 +1,21 @@
+
+PrintLine("Initializing program");
+
+System.Reflection.Assembly.Load("WatiN.Core");
+
+PrintLine("WatiN loaded");
+
+Include("Wat.ajs");
+
+PrintLine("Wat class defined");
+
+wat = new Wat("http://www.google.com/");
+
+if (!wat.Browser)
+	PrintLine("No browser");
+
+wat.GetTextField("q").TypeText("Angel Java Lopez");
+wat.GetButton("Google Search").Click();
+
+wat.Close();
+

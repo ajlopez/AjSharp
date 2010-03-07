@@ -1,0 +1,56 @@
+
+class Wat
+{
+	var Browser;
+	
+	function Wat(url)
+	{
+		this.Browser = new WatiN.Core.IE(url);
+	}
+	
+	function GetButton(name)
+	{
+		button = this.Browser.Button(name);
+		
+		if (button.Exists)
+			return button;
+			
+		button = this.Browser.Button(WatiN.Core.Find.ByName(name));
+		
+		if (button.Exists)
+			return button;
+			
+		button = this.Browser.Button(WatiN.Core.Find.ByValue(name));
+
+		if (button.Exists)
+			return button;
+			
+		return null;
+	}
+	
+	function GetTextField(name)
+	{
+		textfield = this.Browser.TextField(name);
+		
+		if (textfield.Exists)
+			return button;
+			
+		textfield = this.Browser.TextField(WatiN.Core.Find.ByName(name));
+		
+		if (textfield.Exists)
+			return textfield;
+			
+		textfield = this.Browser.TextField(WatiN.Core.Find.ByValue(name));
+
+		if (textfield.Exists)
+			return textfield;
+			
+		return null;
+	}
+	
+	sub Close()
+	{
+		this.Browser.Close();
+	}
+}
+
