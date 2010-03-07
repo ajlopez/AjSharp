@@ -123,6 +123,12 @@
                 return this.ParseVarCommand();
             }
 
+            if (this.TryParse(TokenType.Name, "exit"))
+            {
+                this.lexer.NextToken();
+                return new ExitCommand();
+            }
+
             IExpression expression = this.ParseExpression();
 
             if (expression == null)

@@ -1,21 +1,30 @@
 
-PrintLine("Initializing program");
+Include("Tests.ajs");
 
 System.Reflection.Assembly.Load("WatiN.Core");
 
-PrintLine("WatiN loaded");
-
 Include("Wat.ajs");
 
-PrintLine("Wat class defined");
+wat = new Wat();
 
-wat = new Wat("http://www.google.com/");
+wat.Browse("http://google.com");
 
-if (!wat.Browser)
-	PrintLine("No browser");
+Assert(wat.Link("http://www.ajlopez.com/").Exists, "No link");
+Assert(wat.Link("http://www.pepe.com/").Exists, "No link 2");
 
-wat.GetTextField("q").TypeText("Angel Java Lopez");
-wat.GetButton("Google Search").Click();
+wat.TextField("q").TypeText("Angel Java Lopez");
+wat.Button("Google Search").Click();
+
+Assert(wat.Contains("ajlopez.com"), "No content");
+
+wat.Browse("http://www.ajlopez.net/");
+
+Assert(wat.Contains("Java"), "No content");
+Assert(wat.Link("http://www.pepe.com/").Exists, "No link 3");
+Assert(wat.Link("http://ajlopez.zoomblog.com/").Exists, "No link 4");
+wat.Link("http://ajlopez.zoomblog.com/").Click();
+Assert(wat.Contains("Ciencia"), "No content 2");
 
 wat.Close();
 
+exit;

@@ -1,0 +1,6 @@
+
+sub Assert(condition, message)
+{
+	if (!condition)
+		System.Console.Error.WriteLine(message);
+}

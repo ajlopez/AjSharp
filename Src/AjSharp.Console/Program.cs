@@ -11,6 +11,7 @@
 
     using AjSharp.Compiler;
     using AjSharp.Primitives;
+    using AjLanguage.Language;
 
     public class Program
     {
@@ -30,11 +31,19 @@
                     while ((command = parser.ParseCommand()) != null)
                         command.Execute(machine.Environment);
                 }
+                catch (ExitException ex)
+                {
+                    return;
+                }
                 catch (Exception ex)
                 {
+                    if (ex.InnerException != null)
+                    {
+                        Console.Error.WriteLine(ex.InnerException.Message);
+                        Console.Error.WriteLine(ex.InnerException.StackTrace);
+                    }
                     Console.Error.WriteLine(ex.Message);
                     Console.Error.WriteLine(ex.StackTrace);
-                    Console.ReadLine();
                 }
             }
 
@@ -50,8 +59,17 @@
                     command = parser.ParseCommand();
                 }
             }
+            catch (ExitException ex)
+            {
+                return;
+            }
             catch (Exception ex)
             {
+                if (ex.InnerException != null)
+                {
+                    Console.Error.WriteLine(ex.InnerException.Message);
+                    Console.Error.WriteLine(ex.InnerException.StackTrace);
+                }
                 Console.Error.WriteLine(ex.Message);
                 Console.Error.WriteLine(ex.StackTrace);
                 Console.ReadLine();

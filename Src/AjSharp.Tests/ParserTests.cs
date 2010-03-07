@@ -1014,6 +1014,14 @@
             Assert.AreEqual("pars", ((VariableVariableExpression)expression).VariableName);
         }
 
+        [TestMethod]
+        public void ParseExit()
+        {
+            ICommand command = ParseCommand("exit;");
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExitCommand));
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);

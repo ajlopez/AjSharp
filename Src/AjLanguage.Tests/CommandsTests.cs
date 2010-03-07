@@ -356,5 +356,13 @@
             Assert.IsTrue(machine.Environment.ContainsName("global"));
             Assert.AreEqual(100, machine.Environment.GetValue("global"));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExitException))]
+        public void ExecuteExitCommand()
+        {
+            ExitCommand cmd = new ExitCommand();
+            cmd.Execute(null);
+        }
     }
 }

@@ -3,12 +3,17 @@ class Wat
 {
 	var Browser;
 	
-	function Wat(url)
+	function Wat()
 	{
-		this.Browser = new WatiN.Core.IE(url);
+		this.Browser = new WatiN.Core.IE();
 	}
 	
-	function GetButton(name)
+	sub Browse(url)
+	{
+		this.Browser.GoTo(url);
+	}
+	
+	function Button(name)
 	{
 		button = this.Browser.Button(name);
 		
@@ -28,7 +33,7 @@ class Wat
 		return null;
 	}
 	
-	function GetTextField(name)
+	function TextField(name)
 	{
 		textfield = this.Browser.TextField(name);
 		
@@ -46,6 +51,28 @@ class Wat
 			return textfield;
 			
 		return null;
+	}
+	
+	function Link(name)
+	{
+		link = this.Browser.Link(name);
+		
+		if (link.Exists)
+			return link;
+			
+		link = this.Browser.Link(WatiN.Core.Find.ByUrl(name));
+		
+		return link;
+		
+		if (link.Exists)
+			return link;
+			
+		return null;
+	}
+	
+	function Contains(text)
+	{
+		return this.Browser.ContainsText(text);
 	}
 	
 	sub Close()
