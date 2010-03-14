@@ -5,12 +5,14 @@ class Wat
 	
 	function Wat()
 	{
+		WatiN.Core.Settings.WaitForCompleteTimeOut = 480;
 		this.Browser = new WatiN.Core.IE();
 	}
 	
 	sub Browse(url)
 	{
-		this.Browser.GoTo(url);
+		this.Browser.GoToNoWait(url);
+		this.Browser.WaitForComplete(480);
 	}
 	
 	function Button(name)
@@ -38,15 +40,10 @@ class Wat
 		textfield = this.Browser.TextField(name);
 		
 		if (textfield.Exists)
-			return button;
+			return textfield;
 			
 		textfield = this.Browser.TextField(WatiN.Core.Find.ByName(name));
 		
-		if (textfield.Exists)
-			return textfield;
-			
-		textfield = this.Browser.TextField(WatiN.Core.Find.ByValue(name));
-
 		if (textfield.Exists)
 			return textfield;
 			

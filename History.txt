@@ -246,3 +246,6 @@ ObjectArrayAccess.ajs test example
 2010-03-07
 [STAThread] Added to main in AjSharp.Console
 WatiN Google example in AjSharp.Examples
+
+2010-03-14
+Updated Wat.ajs example

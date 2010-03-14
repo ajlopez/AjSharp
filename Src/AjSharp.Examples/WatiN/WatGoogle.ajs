@@ -9,9 +9,6 @@ wat = new Wat();
 
 wat.Browse("http://google.com");
 
-Assert(wat.Link("http://www.ajlopez.com/").Exists, "No link");
-Assert(wat.Link("http://www.pepe.com/").Exists, "No link 2");
-
 wat.TextField("q").TypeText("Angel Java Lopez");
 wat.Button("Google Search").Click();
 
@@ -20,7 +17,6 @@ Assert(wat.Contains("ajlopez.com"), "No content");
 wat.Browse("http://www.ajlopez.net/");
 
 Assert(wat.Contains("Java"), "No content");
-Assert(wat.Link("http://www.pepe.com/").Exists, "No link 3");
 Assert(wat.Link("http://ajlopez.zoomblog.com/").Exists, "No link 4");
 wat.Link("http://ajlopez.zoomblog.com/").Click();
 Assert(wat.Contains("Ciencia"), "No content 2");
