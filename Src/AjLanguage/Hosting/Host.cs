@@ -7,17 +7,25 @@
 
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
+    using AjLanguage.Language;
 
     public class Host : IHost
     {
         private Guid id = Guid.NewGuid();
         private Machine machine;
         private Dictionary<object, Guid> objectids = new Dictionary<object, Guid>();
-        private Dictionary<Guid, object> objects = new Dictionary<Guid, object>();
+        private Dictionary<Guid, ObjectProxy> proxies = new Dictionary<Guid, ObjectProxy>();
 
         public Host()
         {
             this.machine = new Machine(false);
+            this.machine.Host = this;
+        }
+
+        public Host(Machine machine)
+        {
+            this.machine = machine;
+            this.machine.Host = this;
         }
 
         public Machine Machine { get { return this.machine; } }
@@ -38,7 +46,7 @@
             }
         }
 
-        public Guid Evaluate(IExpression expression)
+        public object Evaluate(IExpression expression)
         {
             Machine current = Machine.Current;
             
@@ -54,37 +62,55 @@
                 Machine.SetCurrent(current);
             }
 
-            return this.ObjectoToGuid(result);
+            return this.ResultToObject(result);
         }
 
-        public Guid Invoke(Guid objid, string name, params object[] arguments)
+        public object Invoke(Guid objid, string name, params object[] arguments)
         {
             object receiver = this.objectids[objid];
 
             object result = ObjectUtilities.GetValue(receiver, name, arguments);
 
-            return this.ObjectoToGuid(result);
+            return this.ResultToObject(result);
+        }
+
+        public object Invoke(IObject obj, string name, params object[] arguments)
+        {
+            if (obj is ObjectProxy)
+            {
+                ObjectProxy proxy = (ObjectProxy) obj;
+
+                if (proxy.HostId != this.Id)
+                    throw new NotSupportedException();
+
+                return this.Invoke(proxy.ObjectId, name, arguments);
+            }
+
+            return obj.Invoke(name, arguments);
         }
 
         public object GetObject(Guid objid)
         {
-            return this.objects[objid];
+            return this.proxies[objid].Object;
         }
 
-        private Guid ObjectoToGuid(object result)
+        private object ResultToObject(object result)
         {
             if (result == null)
                 return Guid.Empty;
 
+            if (!(result is IObject))
+                return result;
+
             if (this.objectids.ContainsKey(result))
                 return this.objectids[result];
 
-            Guid guid = Guid.NewGuid();
+            ObjectProxy proxy = new ObjectProxy(result, this);
 
-            this.objectids[result] = guid;
-            this.objects[guid] = result;
+            this.objectids[result] = proxy.ObjectId;
+            this.proxies[proxy.ObjectId] = proxy;
 
-            return guid;
+            return proxy;
         }
     }
 }

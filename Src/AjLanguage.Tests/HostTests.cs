@@ -24,16 +24,10 @@ namespace AjLanguage.Tests
         public void EvaluateConstantExpression()
         {
             ConstantExpression expression = new ConstantExpression("foo");
-            Guid id = host.Evaluate(expression);
-
-            object result = host.GetObject(id);
+            object result = host.Evaluate(expression);
 
             Assert.IsNotNull(result);
             Assert.AreEqual("foo", result);
-
-            Guid id2 = host.Evaluate(expression);
-
-            Assert.AreEqual(id, id2);
         }
 
         [TestMethod]

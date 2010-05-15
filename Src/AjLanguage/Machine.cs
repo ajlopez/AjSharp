@@ -7,6 +7,7 @@
     using System.Text;
 
     using AjLanguage.Commands;
+    using AjLanguage.Hosting;
 
     public class Machine
     {
@@ -17,6 +18,8 @@
         private static Machine current;
 
         private BindingEnvironment environment = new BindingEnvironment();
+
+        private Dictionary<Guid, IHost> hosts = new Dictionary<Guid, IHost>();
 
         private TextReader inreader = System.Console.In;
         private TextWriter outwriter = System.Console.Out;
@@ -50,6 +53,8 @@
 
         public static Machine Current { get { return current; } }
 
+        public IHost Host { get; set; }
+
         public BindingEnvironment Environment { get { return this.environment; } }
 
         public TextReader In
@@ -76,6 +81,16 @@
             {
                 this.outwriter = value;
             }
+        }
+
+        public void RegisterHost(IHost host)
+        {
+            this.hosts[host.Id] = host;
+        }
+
+        public IHost GetHost(Guid id)
+        {
+            return this.hosts[id];
         }
 
         public void SetCurrent()

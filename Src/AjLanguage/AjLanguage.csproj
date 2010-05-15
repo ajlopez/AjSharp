@@ -76,6 +76,7 @@
     <Compile Include="ExpressionUtilities.cs" />
     <Compile Include="Hosting\Host.cs" />
     <Compile Include="Hosting\IHost.cs" />
+    <Compile Include="Hosting\ObjectProxy.cs" />
     <Compile Include="IBindingEnvironment.cs" />
     <Compile Include="Language\AgentClass.cs" />
     <Compile Include="Language\AgentObject.cs" />

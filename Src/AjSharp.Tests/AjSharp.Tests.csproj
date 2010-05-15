@@ -43,6 +43,7 @@
     <Compile Include="AjSharpMachineTests.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="EvaluationTests.cs" />
+    <Compile Include="HostEvaluationTest.cs" />
     <Compile Include="LexerTests.cs" />
     <Compile Include="ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
