@@ -254,3 +254,5 @@ Updated Wat.ajs example
 Hosting initial work
 IHost
 Host with tests
+ObjectProxy
+HostEvaluationTests
