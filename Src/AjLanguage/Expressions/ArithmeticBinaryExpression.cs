@@ -9,6 +9,7 @@
 
     using Microsoft.VisualBasic.CompilerServices;
 
+    [Serializable]
     public class ArithmeticBinaryExpression : BinaryExpression
     {
         private Func<object, object, object> function;

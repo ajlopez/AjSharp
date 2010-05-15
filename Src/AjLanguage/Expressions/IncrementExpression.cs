@@ -9,6 +9,7 @@
 
     using Microsoft.VisualBasic.CompilerServices;
 
+    [Serializable]
     public class IncrementExpression : UnaryExpression
     {
         private IncrementOperator oper;

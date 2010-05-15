@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
 
+    [Serializable]
     public class VariableExpression : IExpression
     {
         private string name;

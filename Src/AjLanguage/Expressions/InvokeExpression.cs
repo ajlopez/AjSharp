@@ -9,6 +9,7 @@
     using AjLanguage.Language;
     using System.Collections;
 
+    [Serializable]
     public class InvokeExpression : IExpression
     {
         private string name;

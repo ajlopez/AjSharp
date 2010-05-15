@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
 
+    [Serializable]
     public abstract class BinaryExpression : IExpression
     {
         private IExpression leftExpression;

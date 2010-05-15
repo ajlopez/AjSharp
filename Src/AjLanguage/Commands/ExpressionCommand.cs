@@ -7,6 +7,7 @@
 
     using AjLanguage.Expressions;
 
+    [Serializable]
     public class ExpressionCommand : ICommand
     {
         private IExpression expression;

@@ -7,6 +7,7 @@
 
     using AjLanguage.Language;
 
+    [Serializable]
     public class NewExpression : IExpression
     {
         private string name;

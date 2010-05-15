@@ -256,3 +256,6 @@ IHost
 Host with tests
 ObjectProxy
 HostEvaluationTests
+RunServer
+SerializationTests in AjLanguage, AjSharp
+Serializable attribute in some Expressions, Commands

@@ -7,6 +7,7 @@
 
     using AjLanguage.Commands;
 
+    [Serializable]
     public class Function : ICallable
     {
         private string[] parameterNames;
