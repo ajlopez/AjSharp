@@ -249,3 +249,8 @@ WatiN Google example in AjSharp.Examples
 
 2010-03-14
 Updated Wat.ajs example
+
+2010-05-15
+Hosting initial work
+IHost
+Host with tests

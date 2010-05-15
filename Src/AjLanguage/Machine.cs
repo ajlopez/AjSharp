@@ -82,5 +82,10 @@
         {
             current = this;
         }
+
+        public static void SetCurrent(Machine machine)
+        {
+            current = machine;
+        }
     }
 }
