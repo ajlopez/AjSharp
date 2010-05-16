@@ -17,5 +17,6 @@
         object Evaluate(IExpression expression);
         object Invoke(IObject receiver, string name, params object[] arguments);
         object Invoke(Guid receiver, string name, params object[] arguments);
+        object ResultToObject(object result);
     }
 }

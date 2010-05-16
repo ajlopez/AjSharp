@@ -106,10 +106,10 @@
             return this.proxies[objid].Object;
         }
 
-        private object ResultToObject(object result)
+        public object ResultToObject(object result)
         {
             if (result == null)
-                return Guid.Empty;
+                return null;
 
             if (!(result is IObject))
                 return result;

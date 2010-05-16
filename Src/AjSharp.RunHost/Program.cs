@@ -8,6 +8,7 @@ using AjLanguage.Language;
 using System.ServiceModel;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using AjLanguage.Expressions;
 
 namespace AjSharp.RunHost
 {
@@ -42,13 +43,29 @@ namespace AjSharp.RunHost
 
             try
             {
-                Parser parser = new Parser(System.Console.In);
+                Parser parser = new Parser("new DynamicObject()");
+
+                IExpression expression = parser.ParseExpression();
+                MemoryStream stream = new MemoryStream();
+                formatter.Serialize(stream, expression);
+                stream.Close();
+
+                if (channels.Count > 0)
+                {
+                    byte[] bytes;
+
+                    bytes = channels[0].Evaluate(stream.ToArray());
+
+                    object result = formatter.Deserialize(new MemoryStream(bytes));
+                }
+
+                parser = new Parser(System.Console.In);
 
                 ICommand command = parser.ParseCommand();
 
                 while (command != null)
                 {
-                    MemoryStream stream = new MemoryStream();
+                    stream = new MemoryStream();
                     formatter.Serialize(stream, command);
                     stream.Close();
                     channels[0].Execute(stream.ToArray());

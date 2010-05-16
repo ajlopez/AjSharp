@@ -8,19 +8,22 @@ using AjLanguage.Commands;
 using AjLanguage.Expressions;
 using AjLanguage;
 using System.IO;
+using AjLanguage.Hosting;
 
 namespace AjSharp.RunHost
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults=true)]
     public class RunServer : IRunServer
     {
+        private Host host;
         private Machine machine;
         private ServiceHost service;
         private BinaryFormatter formatter;
 
         public RunServer(string address)
         {
-            this.machine = new AjSharpMachine();
+            this.machine = new AjSharpMachine(false);
+            this.host = new Host(this.machine);
             this.service = new ServiceHost(this);
             BasicHttpBinding binding = new BasicHttpBinding();
             this.service.AddServiceEndpoint(typeof(IRunServer), binding, address);
@@ -46,7 +49,12 @@ namespace AjSharp.RunHost
         public object Evaluate(IExpression expression)
         {
             this.machine.SetCurrent();
-            return expression.Evaluate(this.machine.Environment);
+            object result = expression.Evaluate(this.machine.Environment);
+
+            if (!(result is MarshalByRefObject))
+                return result;
+            
+            return this.host.ResultToObject(result);
         }
 
         public void Execute(byte[] serializedcmd)

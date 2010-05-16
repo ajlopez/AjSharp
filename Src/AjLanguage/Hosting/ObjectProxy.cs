@@ -7,10 +7,11 @@
 
     using AjLanguage.Language;
 
+    [Serializable]
     public class ObjectProxy : IObject
     {
-        private IHost host;
-        private object obj;
+        [NonSerialized] private IHost host;
+        [NonSerialized] private object obj;
 
         public ObjectProxy(object obj, IHost host)
         {
