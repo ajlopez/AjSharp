@@ -10,6 +10,7 @@ using AjLanguage.Commands;
 using AjLanguage.Language;
 using System.Runtime.Remoting.Channels;
 using System.Collections;
+using AjLanguage.Hosting.Remoting;
 
 namespace AjSharp.RemotingHost
 {
@@ -56,32 +57,37 @@ namespace AjSharp.RemotingHost
             int port = Convert.ToInt32(parts[0]);
             string name = parts[1];
 
-            // According to http://www.thinktecture.com/resourcearchive/net-remoting-faq/changes2003
-            // in order to have ObjRef accessible from client code
-            BinaryServerFormatterSinkProvider serverProv = new BinaryServerFormatterSinkProvider();
-            serverProv.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+            localhosts.Add(new RemotingHostServer(new AjSharpMachine(), port, name));
 
-            BinaryClientFormatterSinkProvider clientProv = new BinaryClientFormatterSinkProvider();
+            //// According to http://www.thinktecture.com/resourcearchive/net-remoting-faq/changes2003
+            //// in order to have ObjRef accessible from client code
+            //BinaryServerFormatterSinkProvider serverProv = new BinaryServerFormatterSinkProvider();
+            //serverProv.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
 
-            IDictionary props = new Hashtable();
-            props["port"] = port;
+            //BinaryClientFormatterSinkProvider clientProv = new BinaryClientFormatterSinkProvider();
 
-            TcpChannel channel = new TcpChannel(props, clientProv, serverProv);
-            // end of "according"
+            //IDictionary props = new Hashtable();
+            //props["port"] = port;
 
-            Host host = new Host(new AjSharpMachine());
-            RemotingServices.Marshal(host, name);
+            //TcpChannel channel = new TcpChannel(props, clientProv, serverProv);
+            //// end of "according"
 
-            //ChannelServices.RegisterChannel(channel, false);
-            //RemotingConfiguration.RegisterActivatedServiceType(typeof(MyHost));
+            //Host host = new Host(new AjSharpMachine());
+            //RemotingServices.Marshal(host, name);
 
-            localhosts.Add(host);
+            ////ChannelServices.RegisterChannel(channel, false);
+            ////RemotingConfiguration.RegisterActivatedServiceType(typeof(MyHost));
+
+            //localhosts.Add(host);
         }
 
         static void ProcessRemoteAddress(string address)
         {
+            remotehosts.Add(new RemotingHostClient(address));
+            //remotehosts.Add((IHost)Activator.GetObject(typeof(IHost), address));
+
+            // Other attempts
             //remotehosts.Add((IHost)RemotingServices.Connect(typeof(Host), address));
-            remotehosts.Add((IHost)Activator.GetObject(typeof(IHost), address));
             //RemotingConfiguration.RegisterActivatedClientType(typeof(MyHost), address);
             //remotehosts.Add(new MyHost());
         }

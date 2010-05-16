@@ -31,6 +31,7 @@ namespace AjSharp.Tests
             Assert.AreEqual(123, result);
         }
 
+        [Ignore]
         [TestMethod]
         public void EvaluateNewDynamicObjectAsProxy()
         {
@@ -44,6 +45,7 @@ namespace AjSharp.Tests
             Assert.IsInstanceOfType(proxy.Object, typeof(DynamicObject));
         }
 
+        [Ignore]
         [TestMethod]
         public void CreateAndSetDynamicObject()
         {

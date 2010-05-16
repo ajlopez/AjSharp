@@ -263,4 +263,7 @@ Serializable attribute in some Expressions, Commands
 2010-05-16
 Adding MarshalByRef object to DynamicClass, DynamicObject
 AjSharp.RemotingHost using remoting to access remote host and machines
+RunHost returns ObjectProxy for IObject in Evaluate method
+Hosting.Remoting: RemotingHostServer, RemotingHostClient
+Hosting.Wcf: WcfHostServer, WcfHostClient, IHostServer
 

@@ -37,6 +37,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -77,6 +81,11 @@
     <Compile Include="Hosting\Host.cs" />
     <Compile Include="Hosting\IHost.cs" />
     <Compile Include="Hosting\ObjectProxy.cs" />
+    <Compile Include="Hosting\Remoting\RemotingHostClient.cs" />
+    <Compile Include="Hosting\Remoting\RemotingHostServer.cs" />
+    <Compile Include="Hosting\Wcf\IHostServer.cs" />
+    <Compile Include="Hosting\Wcf\WcfHostClient.cs" />
+    <Compile Include="Hosting\Wcf\WcfHostServer.cs" />
     <Compile Include="IBindingEnvironment.cs" />
     <Compile Include="Language\AgentClass.cs" />
     <Compile Include="Language\AgentObject.cs" />
