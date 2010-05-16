@@ -33,7 +33,7 @@ namespace AjLanguage.Hosting.Remoting
             // end of "according"
 
             // TODO review other options to publish an object
-            RemotingServices.Marshal(this, name);            
+            RemotingServices.Marshal(this, name);
         }
     }
 }

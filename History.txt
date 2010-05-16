@@ -266,4 +266,12 @@ AjSharp.RemotingHost using remoting to access remote host and machines
 RunHost returns ObjectProxy for IObject in Evaluate method
 Hosting.Remoting: RemotingHostServer, RemotingHostClient
 Hosting.Wcf: WcfHostServer, WcfHostClient, IHostServer
+AjSharp.Hosting.RemotingHostServer
+Host, RemotingHostServer, RemotingHostClient at AjSharp.AjSharpMachine
+at host expression, at host command: support in Parser
+HostedCommand with test
+HostedExpression with test
+ClientObject
+RemotingHost.ajs, WcfHost.ajs examples
+Host, WcfHostServer at AjSharpMachine
 

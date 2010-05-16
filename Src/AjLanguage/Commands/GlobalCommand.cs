@@ -7,6 +7,7 @@
 
     using AjLanguage.Expressions;
 
+    [Serializable]
     public class GlobalCommand : ICommand
     {
         private string name;

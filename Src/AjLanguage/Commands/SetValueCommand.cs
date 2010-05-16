@@ -8,6 +8,7 @@
     using AjLanguage.Expressions;
     using AjLanguage.Language;
 
+    [Serializable]
     public class SetValueCommand : ICommand
     {
         private IExpression leftValue;

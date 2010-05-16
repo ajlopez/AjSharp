@@ -12,12 +12,18 @@
     using AjSharp.Compiler;
     using AjSharp.Primitives;
     using AjLanguage.Language;
+    using System.Runtime.Remoting.Lifetime;
 
     public class Program
     {
         [STAThread]
         public static void Main(string[] args)
         {
+            // According http://msdn.microsoft.com/en-us/magazine/cc300474.aspx
+            LifetimeServices.LeaseTime = TimeSpan.FromMinutes(10);
+            LifetimeServices.RenewOnCallTime = TimeSpan.FromMinutes(15);
+            LifetimeServices.SponsorshipTimeout = TimeSpan.FromMinutes(1);
+
             AjSharpMachine machine = new AjSharpMachine();
             Parser parser;
             ICommand command;

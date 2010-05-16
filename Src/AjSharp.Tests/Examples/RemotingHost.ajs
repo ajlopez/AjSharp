@@ -1,0 +1,8 @@
+﻿server = new RemotingHostServer(Machine, 10000, "RemoteHost");
+remote = new RemotingHostClient("localhost", 10000, "RemoteHost");
+
+at remote { adam = new DynamicObject(); adam.Name = "Adam"; adam.Age = 800; }
+myadam = at remote adam;
+
+result = at remote adam.Name;
+result2 = myadam.Name;

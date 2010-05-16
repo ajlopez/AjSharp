@@ -8,6 +8,7 @@
 
     using AjLanguage.Expressions;
 
+    [Serializable]
     public class GoCommand : ICommand
     {
         private ICommand command;

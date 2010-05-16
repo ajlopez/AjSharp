@@ -13,9 +13,11 @@
 
         public BindingEnvironment()
         {
+            this.SetLocalValue("Environment", this);
         }
 
         public BindingEnvironment(IBindingEnvironment parent)
+            : this()
         {
             this.parent = parent;
         }

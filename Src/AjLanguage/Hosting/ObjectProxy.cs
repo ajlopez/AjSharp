@@ -27,12 +27,12 @@
 
         public object GetValue(string name)
         {
-            throw new NotImplementedException();
+            return this.Invoke("GetValue", new object[] { name });
         }
 
         public void SetValue(string name, object value)
         {
-            throw new NotImplementedException();
+            this.Invoke("SetValue", new object[] { name, value });
         }
 
         public ICollection<string> GetNames()
@@ -45,12 +45,15 @@
             if (this.host == null)
                 this.host = Machine.Current.GetHost(this.HostId);
 
-            return this.host.Invoke(this.ObjectId, name, parameters);
+            return this.host.Invoke(this, name, parameters);
         }
 
         public object Invoke(ICallable method, object[] parameters)
         {
-            throw new NotImplementedException();
+            if (this.host == null)
+                this.host = Machine.Current.GetHost(this.HostId);
+
+            return this.host.Invoke(this, method, parameters);
         }
     }
 }

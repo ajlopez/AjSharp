@@ -8,6 +8,7 @@
     using AjLanguage.Expressions;
     using AjLanguage.Language;
 
+    [Serializable]
     public class DefineClassCommand : ICommand
     {
         private string name;

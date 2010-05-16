@@ -46,8 +46,25 @@
             }
         }
 
+        public object Invoke(ICallable function, params object[] arguments)
+        {
+            Machine current = Machine.Current;
+            try
+            {
+                this.machine.SetCurrent();
+                return function.Invoke(arguments);
+            }
+            finally
+            {
+                Machine.SetCurrent(current);
+            }
+        }
+
         public object Evaluate(IExpression expression)
         {
+            if (expression == null)
+                return null;
+
             Machine current = Machine.Current;
             
             object result = null;
@@ -68,11 +85,20 @@
 
         public object Invoke(Guid objid, string name, params object[] arguments)
         {
-            object receiver = this.objectids[objid];
+            object receiver = this.GetObject(objid);
 
             object result = ObjectUtilities.GetValue(receiver, name, arguments);
 
-            return this.ResultToObject(result);
+            return result;
+            //return this.ResultToObject(result);
+        }
+
+        public object Invoke(Guid objid, ICallable method, params object[] arguments)
+        {
+            IObject receiver = (IObject) this.GetObject(objid);
+
+            return receiver.Invoke(method, arguments);
+            //return this.ResultToObject(receiver.Invoke(method, arguments));
         }
 
         public object Invoke(IObject obj, string name, params object[] arguments)
@@ -94,6 +120,32 @@
                 }
 
                 return obj.Invoke(name, arguments);
+            }
+            finally
+            {
+                Machine.SetCurrent(current);
+            }
+        }
+
+        public object Invoke(IObject obj, ICallable method, params object[] arguments)
+        {
+            Machine current = Machine.Current;
+
+            try
+            {
+                this.machine.SetCurrent();
+
+                if (obj is ObjectProxy)
+                {
+                    ObjectProxy proxy = (ObjectProxy)obj;
+
+                    if (proxy.HostId != this.Id)
+                        throw new NotSupportedException();
+
+                    return this.Invoke(proxy.ObjectId, method, arguments);
+                }
+
+                return obj.Invoke(method, arguments);
             }
             finally
             {

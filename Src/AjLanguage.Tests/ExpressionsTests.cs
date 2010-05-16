@@ -11,6 +11,7 @@
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
     using AjLanguage.Language;
+    using AjLanguage.Hosting;
 
     [TestClass]
     public class ExpressionsTests
@@ -499,6 +500,22 @@
             IExpression expression = new ConcatenateExpression(new ConstantExpression(12), new ConstantExpression(34));
 
             Assert.AreEqual("1234", expression.Evaluate(null));
+        }
+
+        [TestMethod]
+        public void EvaluateHostedExpression()
+        {
+            Host host = new Host(new Machine());
+            Host host2 = new Host(new Machine(false));
+            host.Machine.Environment.SetValue("host", host2);
+            host2.Machine.Environment.SetValue("foo", "bar");
+            HostedExpression expression = new HostedExpression(new VariableExpression("foo"),new VariableExpression("host"));
+
+            object result = expression.Evaluate(host.Machine.Environment);
+
+            Assert.AreSame(Machine.Current, host.Machine);
+            Assert.AreEqual("bar", result);
+            Assert.IsNull(host.Machine.Environment.GetValue("foo"));
         }
 
         private static object EvaluateArithmeticBinaryOperator(ArithmeticOperator operation, object left, object right)

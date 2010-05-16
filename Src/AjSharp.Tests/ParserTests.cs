@@ -348,6 +348,32 @@
         }
 
         [TestMethod]
+        public void ParseCommandExpression()
+        {
+            IExpression expression= ParseExpression("command { x=1; y=2; }");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+
+            ConstantExpression expr = (ConstantExpression) expression;
+
+            Assert.IsInstanceOfType(expr.Evaluate(null), typeof(ICommand));
+        }
+
+        [TestMethod]
+        public void ParseExpressionExpression()
+        {
+            IExpression expression = ParseExpression("expression 1+2");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
+
+            ConstantExpression expr = (ConstantExpression)expression;
+
+            Assert.IsInstanceOfType(expr.Evaluate(null), typeof(IExpression));
+        }
+
+        [TestMethod]
         public void ParseFunctionDefinition()
         {
             ICommand command = ParseCommand("function Abs(x) { if (x<0) return -x; else return x * factorial(x-1); }");
@@ -1020,6 +1046,33 @@
             ICommand command = ParseCommand("exit;");
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(ExitCommand));
+        }
+
+        [TestMethod]
+        public void ParseAnonymousSubInvocation()
+        {
+            IExpression expression = ParseExpression("sub() { PrintLine(\"Hello, world\"); }()");
+            Assert.IsNotNull(expression);
+        }
+
+        [TestMethod]
+        public void ParseHostedExpression()
+        {
+            IExpression expression = ParseExpression("at host x+y");
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(HostedExpression));
+            HostedExpression hexpr = (HostedExpression)expression;
+            Assert.IsInstanceOfType(hexpr.HostExpression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
+        public void ParseHostedCommand()
+        {
+            ICommand command = ParseCommand("at host PrintLine(x+y);");
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(HostedCommand));
+            HostedCommand hcmd = (HostedCommand)command;
+            Assert.IsInstanceOfType(hcmd.HostExpression, typeof(VariableExpression));
         }
 
         private static IExpression ParseExpression(string text)

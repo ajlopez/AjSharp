@@ -13,7 +13,7 @@
         private string[] parameterNames;
         private ICommand body;
         private int arity;
-        private IBindingEnvironment environment;
+        [NonSerialized] private IBindingEnvironment environment;
         private bool isdefault;
         private bool hasvariableparameters;
 

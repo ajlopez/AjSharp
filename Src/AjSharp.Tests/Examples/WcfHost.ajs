@@ -1,0 +1,13 @@
+﻿server = new WcfHostServer(Machine, "http://localhost:20000/RemoteHost");
+
+server.Open();
+
+remote = new WcfHostClient("http://localhost:20000/RemoteHost");
+
+at remote { adam = new DynamicObject(); adam.Name = "Adam"; adam.Age = 800; }
+
+myadam = at remote adam;
+result = at remote adam.Name;
+result2 = myadam.Name;
+
+server.Close();

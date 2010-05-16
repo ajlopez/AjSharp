@@ -34,6 +34,8 @@
         {
             if (iscurrent)
                 this.SetCurrent();
+
+            this.Environment.SetValue("Machine", this);
         }
 
         public static FunctionStatus CurrentFunctionStatus
@@ -90,6 +92,9 @@
 
         public IHost GetHost(Guid id)
         {
+            if (this.Host != null && this.Host.Id == id)
+                return this.Host;
+
             return this.hosts[id];
         }
 

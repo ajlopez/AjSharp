@@ -48,6 +48,13 @@
                 if (token.Value == "while")
                     return this.ParseWhileCommand();
 
+                if (token.Value == "at")
+                {
+                    IExpression hostexpression = this.ParseExpression();
+                    ICommand cmd = this.ParseCommand();
+                    return new HostedCommand(cmd, hostexpression);
+                }
+
                 if (token.Value == "foreach")
                     return this.ParseForEachCommand();
 
@@ -105,6 +112,26 @@
         {
             if (this.TryParse(TokenType.Name, "new"))
                 return this.ParseNewExpression();
+
+            if (this.TryParse(TokenType.Name, "expression"))
+            {
+                this.lexer.NextToken();
+                return new ConstantExpression(this.ParseExpression());
+            }
+
+            if (this.TryParse(TokenType.Name, "at"))
+            {
+                this.lexer.NextToken();
+                IExpression hostexpr = this.ParseExpression();
+                IExpression expr = this.ParseExpression();
+                return new HostedExpression(expr, hostexpr);
+            }
+
+            if (this.TryParse(TokenType.Name, "command"))
+            {
+                this.lexer.NextToken();
+                return new ConstantExpression(this.ParseCommand());
+            }
 
             return this.ParseBinaryLogicalExpressionLevelOne();
         }

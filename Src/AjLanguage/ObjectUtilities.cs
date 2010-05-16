@@ -12,9 +12,9 @@
     {
         public static void SetValue(object obj, string name, object value)
         {
-            if (obj is DynamicObject)
+            if (obj is IObject)
             {
-                ((DynamicObject)obj).SetValue(name, value);
+                ((IObject)obj).SetValue(name, value);
 
                 return;
             }
@@ -26,8 +26,8 @@
 
         public static object GetValue(object obj, string name)
         {
-            if (obj is DynamicObject)
-                return ((DynamicObject)obj).GetValue(name);
+            if (obj is IObject)
+                return ((IObject)obj).GetValue(name);
 
             Type type = obj.GetType();
 
@@ -36,12 +36,12 @@
 
         public static object GetValue(object obj, string name, object[] parameters)
         {
-            if (obj is DynamicObject)
+            if (obj is IObject)
             {
                 if (parameters == null)
-                    return ((DynamicObject)obj).GetValue(name);
+                    return ((IObject)obj).GetValue(name);
 
-                return ((DynamicObject)obj).Invoke(name, parameters);
+                return ((IObject)obj).Invoke(name, parameters);
             }
 
             return GetNativeValue(obj, name, parameters);

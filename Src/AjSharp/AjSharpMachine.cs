@@ -52,6 +52,12 @@
             this.Environment.SetValue("Channel", typeof(Channel));
             this.Environment.SetValue("QueueChannel", typeof(QueueChannel));
             this.Environment.SetValue("Future", typeof(Future));
+
+            this.Environment.SetValue("Host", typeof(Hosting.Host));
+            this.Environment.SetValue("RemotingHostServer", typeof(Hosting.RemotingHostServer));
+            this.Environment.SetValue("RemotingHostClient", typeof(AjLanguage.Hosting.Remoting.RemotingHostClient));
+            this.Environment.SetValue("WcfHostServer", typeof(Hosting.WcfHostServer));
+            this.Environment.SetValue("WcfHostClient", typeof(AjLanguage.Hosting.Wcf.WcfHostClient));
         }
     }
 }

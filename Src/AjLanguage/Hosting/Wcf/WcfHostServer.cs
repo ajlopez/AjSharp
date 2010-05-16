@@ -10,6 +10,7 @@ using AjLanguage.Expressions;
 
 namespace AjLanguage.Hosting.Wcf
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class WcfHostServer : Host, IHostServer
     {
         private BinaryFormatter formatter;
@@ -25,7 +26,7 @@ namespace AjLanguage.Hosting.Wcf
         {
             this.service = new ServiceHost(this);
             BasicHttpBinding binding = new BasicHttpBinding();
-            this.service.AddServiceEndpoint(typeof(IHost), binding, address);
+            this.service.AddServiceEndpoint(typeof(IHostServer), binding, address);
             this.formatter = new BinaryFormatter();
         }
 
@@ -57,6 +58,11 @@ namespace AjLanguage.Hosting.Wcf
         {
             ICommand command = (ICommand)this.formatter.Deserialize(new MemoryStream(serializedcmd));
             this.Execute(command);
+        }
+
+        public Guid GetId()
+        {
+            return this.Id;
         }
     }
 }

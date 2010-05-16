@@ -14,18 +14,21 @@ namespace AjLanguage.Hosting.Wcf
     public class WcfHostClient : IHost
     {
         private IHostServer server;
-        private BinaryFormatter formatter;
+        private BinaryFormatter formatter = new BinaryFormatter();
 
         public WcfHostClient(string address)
         {
             BasicHttpBinding binding = new BasicHttpBinding();
-            ChannelFactory<IHostServer> factory = new ChannelFactory<IHostServer>(binding, new EndpointAddress(address.Substring(1)));
+            ChannelFactory<IHostServer> factory = new ChannelFactory<IHostServer>(binding, new EndpointAddress(address));
             this.server = factory.CreateChannel();
+
+            if (Machine.Current != null)
+                Machine.Current.RegisterHost(this);
         }
 
         public Guid Id
         {
-            get { throw new NotImplementedException(); }
+            get { return this.server.GetId(); }
         }
 
         public void Execute(ICommand command)
@@ -45,12 +48,38 @@ namespace AjLanguage.Hosting.Wcf
             return this.formatter.Deserialize(new MemoryStream(data));
         }
 
-        public object Invoke(IObject receiver, string name, params object[] arguments)
+        public object Invoke(ICallable function, params object[] arguments)
         {
             throw new NotImplementedException();
         }
 
+        public object Invoke(IObject receiver, ICallable method, params object[] arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        // TODO Refactor
+        public object Invoke(IObject receiver, string name, params object[] arguments)
+        {
+            ICollection<IExpression> args = null;
+
+            if (arguments != null)
+            {
+                args = new List<IExpression>();
+
+                foreach (object argument in arguments)
+                    args.Add(new ConstantExpression(argument));
+            }
+           
+            return this.Evaluate(new DotExpression(new ConstantExpression(receiver), name, args));
+        }
+
         public object Invoke(Guid receiver, string name, params object[] arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Invoke(Guid receiver, ICallable method, params object[] arguments)
         {
             throw new NotImplementedException();
         }

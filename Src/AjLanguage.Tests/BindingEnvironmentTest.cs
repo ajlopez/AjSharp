@@ -15,6 +15,7 @@
             BindingEnvironment environment = new BindingEnvironment();
 
             Assert.IsNotNull(environment);
+            Assert.AreSame(environment, environment.GetValue("Environment"));
         }
 
         [TestMethod]

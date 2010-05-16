@@ -161,6 +161,21 @@
         }
 
         [TestMethod]
+        public void EvaluateAnonymousFunction()
+        {
+            object result = this.EvaluateExpression("function(x) { return x+1; }(1)");
+
+            Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+        public void ExecuteAnonymousSubroutine()
+        {
+            this.EvaluateExpression("sub(x) { global GlobalValue; GlobalValue = x+1; } (1)");
+            Assert.AreEqual(2, this.machine.Environment.GetValue("GlobalValue"));
+        }
+
+        [TestMethod]
         public void EvaluateEnumValue()
         {
             Assert.AreEqual(System.UriKind.Relative, this.EvaluateExpression("System.UriKind.Relative"));
@@ -1228,6 +1243,26 @@
             Assert.AreEqual(1, this.EvaluateExpression("result"));
             Assert.AreEqual(2, this.EvaluateExpression("result2"));
             Assert.IsNull(this.EvaluateExpression("result3"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\RemotingHost.ajs")]
+        public void EvaluateRemotingHost()
+        {
+            IncludeFile("RemotingHost.ajs");
+
+            Assert.AreEqual("Adam", this.EvaluateExpression("result"));
+            Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\WcfHost.ajs")]
+        public void EvaluateWcfHost()
+        {
+            IncludeFile("WcfHost.ajs");
+
+            Assert.AreEqual("Adam", this.EvaluateExpression("result"));
+            Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
         }
 
         private object EvaluateExpression(string text)

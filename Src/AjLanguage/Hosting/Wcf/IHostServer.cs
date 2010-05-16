@@ -15,5 +15,8 @@ namespace AjLanguage.Hosting.Wcf
 
         [OperationContract]
         void Execute(byte[] serializedcmd);
+
+        [OperationContract]
+        Guid GetId();
     }
 }

@@ -58,6 +58,9 @@
     <Compile Include="Compiler\UnexpectedEndOfInputException.cs" />
     <Compile Include="Compiler\UnexpectedTokenException.cs" />
     <Compile Include="AjSharpMachine.cs" />
+    <Compile Include="Hosting\WcfHostServer.cs" />
+    <Compile Include="Hosting\Host.cs" />
+    <Compile Include="Hosting\RemotingHostServer.cs" />
     <Compile Include="Primitives\ExecuteSubroutine.cs" />
     <Compile Include="Primitives\EvaluateFunction.cs" />
     <Compile Include="Primitives\IncludeSubroutine.cs" />

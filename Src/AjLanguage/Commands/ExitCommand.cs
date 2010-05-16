@@ -9,6 +9,7 @@
     using AjLanguage.Expressions;
     using AjLanguage.Language;
 
+    [Serializable]
     public class ExitCommand : ICommand
     {
         public void Execute(IBindingEnvironment environment)

@@ -7,6 +7,7 @@
 
     using AjLanguage.Expressions;
 
+    [Serializable]
     public class ForEachCommand : ICommand
     {
         private string name;

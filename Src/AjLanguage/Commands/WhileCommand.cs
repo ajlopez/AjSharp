@@ -7,6 +7,7 @@
 
     using AjLanguage.Expressions;
 
+    [Serializable]
     public class WhileCommand : ICommand
     {
         private IExpression condition;
