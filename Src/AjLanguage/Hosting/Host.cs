@@ -9,7 +9,7 @@
     using AjLanguage.Expressions;
     using AjLanguage.Language;
 
-    public class Host : IHost
+    public class Host : MarshalByRefObject, IHost
     {
         private Guid id = Guid.NewGuid();
         private Machine machine;
@@ -62,7 +62,8 @@
                 Machine.SetCurrent(current);
             }
 
-            return this.ResultToObject(result);
+            return result;
+            //return this.ResultToObject(result);
         }
 
         public object Invoke(Guid objid, string name, params object[] arguments)
@@ -76,17 +77,28 @@
 
         public object Invoke(IObject obj, string name, params object[] arguments)
         {
-            if (obj is ObjectProxy)
+            Machine current = Machine.Current;
+
+            try
             {
-                ObjectProxy proxy = (ObjectProxy) obj;
+                this.machine.SetCurrent();
 
-                if (proxy.HostId != this.Id)
-                    throw new NotSupportedException();
+                if (obj is ObjectProxy)
+                {
+                    ObjectProxy proxy = (ObjectProxy)obj;
 
-                return this.Invoke(proxy.ObjectId, name, arguments);
+                    if (proxy.HostId != this.Id)
+                        throw new NotSupportedException();
+
+                    return this.Invoke(proxy.ObjectId, name, arguments);
+                }
+
+                return obj.Invoke(name, arguments);
             }
-
-            return obj.Invoke(name, arguments);
+            finally
+            {
+                Machine.SetCurrent(current);
+            }
         }
 
         public object GetObject(Guid objid)

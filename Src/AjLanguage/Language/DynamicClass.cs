@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DynamicClass : IClass
+    public class DynamicClass : MarshalByRefObject, IClass
     {
         private string name;
         private Dictionary<string, object> members = new Dictionary<string, object>();

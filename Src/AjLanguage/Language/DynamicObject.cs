@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class DynamicObject : IObject
+    public class DynamicObject :MarshalByRefObject, IObject
     {
         private Dictionary<string, object> values = new Dictionary<string, object>();
         private static string[] nativeMethods = new string[] { "SetValue", "GetValue", "ToString", "GetNames", "Invoke", "GetHashCode", "Equals" };
