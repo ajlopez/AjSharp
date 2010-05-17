@@ -9,14 +9,14 @@ using System.ServiceModel;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using AjLanguage.Expressions;
+using AjLanguage.Hosting.Wcf;
 
 namespace AjSharp.RunHost
 {
     class Program
     {
-        private static IList<RunServer> servers = new List<RunServer>();
-        private static IList<IRunServer> channels = new List<IRunServer>();
-        private static BinaryFormatter formatter = new BinaryFormatter();
+        private static IList<WcfHostServer> servers = new List<WcfHostServer>();
+        private static IList<WcfHostClient> channels = new List<WcfHostClient>();
 
         static void Main(string[] args)
         {
@@ -25,10 +25,10 @@ namespace AjSharp.RunHost
                 if (address[0] == '-')
                     continue;
                 
-                servers.Add(new RunServer(address));
+                servers.Add(new WcfHostServer(address));
             }
 
-            foreach (RunServer server in servers)
+            foreach (WcfHostServer server in servers)
                 server.Open();
 
             foreach (string address in args)
@@ -36,9 +36,7 @@ namespace AjSharp.RunHost
                 if (address[0] != '-')
                     continue;
 
-                BasicHttpBinding binding = new BasicHttpBinding();
-                ChannelFactory<IRunServer> factory = new ChannelFactory<IRunServer>(binding, new EndpointAddress(address.Substring(1)));
-                channels.Add(factory.CreateChannel());
+                channels.Add(new WcfHostClient(address.Substring(1)));
             }
 
             try
@@ -46,17 +44,10 @@ namespace AjSharp.RunHost
                 Parser parser = new Parser("new DynamicObject()");
 
                 IExpression expression = parser.ParseExpression();
-                MemoryStream stream = new MemoryStream();
-                formatter.Serialize(stream, expression);
-                stream.Close();
 
                 if (channels.Count > 0)
                 {
-                    byte[] bytes;
-
-                    bytes = channels[0].Evaluate(stream.ToArray());
-
-                    object result = formatter.Deserialize(new MemoryStream(bytes));
+                    object result = channels[0].Evaluate(expression);
                 }
 
                 parser = new Parser(System.Console.In);
@@ -65,10 +56,7 @@ namespace AjSharp.RunHost
 
                 while (command != null)
                 {
-                    stream = new MemoryStream();
-                    formatter.Serialize(stream, command);
-                    stream.Close();
-                    channels[0].Execute(stream.ToArray());
+                    channels[0].Execute(command);
                     command = parser.ParseCommand();
                 }
             }
@@ -87,7 +75,7 @@ namespace AjSharp.RunHost
                 Console.ReadLine();
             }
 
-            foreach (RunServer server in servers)
+            foreach (WcfHostServer server in servers)
                 server.Close();
         }
     }

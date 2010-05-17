@@ -274,4 +274,4 @@ HostedExpression with test
 ClientObject
 RemotingHost.ajs, WcfHost.ajs examples
 Host, WcfHostServer at AjSharpMachine
-
+AjSharp.RunHost using WcfHostServer WcfHostClient instead RunServer
