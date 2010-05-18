@@ -11,6 +11,7 @@
     using AjLanguage.Primitives;
 
     using AjSharp.Primitives;
+    using AjSharp.Hosting;
 
     public class AjSharpMachine : Machine
     {

@@ -17,6 +17,7 @@
     using AjSharp.Tests.Classes;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using AjSharp.Hosting;
 
     [TestClass]
     public class EvaluationTests
@@ -26,7 +27,8 @@
         [TestInitialize]
         public void SetupMachine()
         {
-            machine = new AjSharpMachine();
+            this.machine = new AjSharpMachine();
+            new Host(this.machine);
         }
 
         [TestMethod]
@@ -1263,6 +1265,12 @@
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+        }
+
+        [TestMethod]
+        public void EvaluateHostedInvocation()
+        {
+            Assert.AreEqual(3, this.EvaluateExpression("at Machine.Host function(x,y) { return x+y; } with (1,2)"));
         }
 
         private object EvaluateExpression(string text)

@@ -124,6 +124,14 @@
                 this.lexer.NextToken();
                 IExpression hostexpr = this.ParseExpression();
                 IExpression expr = this.ParseExpression();
+
+                if (this.TryParse(TokenType.Name, "with"))
+                {
+                    this.lexer.NextToken();
+                    IList<IExpression> arguments = this.ParseArgumentList();
+                    return new HostedInvocationExpression(expr, arguments, hostexpr);
+                }
+
                 return new HostedExpression(expr, hostexpr);
             }
 

@@ -275,3 +275,7 @@ ClientObject
 RemotingHost.ajs, WcfHost.ajs examples
 Host, WcfHostServer at AjSharpMachine
 AjSharp.RunHost using WcfHostServer WcfHostClient instead RunServer
+
+2010-05-18
+HostedInvocationExpression
+Support of at <host> <callable> with <args> in Parser, with tests

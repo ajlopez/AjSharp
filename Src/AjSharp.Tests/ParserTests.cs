@@ -1075,6 +1075,17 @@
             Assert.IsInstanceOfType(hcmd.HostExpression, typeof(VariableExpression));
         }
 
+        [TestMethod]
+        public void ParseHostedInvocation()
+        {
+            IExpression expression = ParseExpression("at host function(x,y) {return x+y;} with (1,2)");
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(HostedInvocationExpression));
+            HostedInvocationExpression hexpr = (HostedInvocationExpression)expression;
+            Assert.IsInstanceOfType(hexpr.HostExpression, typeof(VariableExpression));
+            Assert.AreEqual(2, hexpr.Arguments.Count);
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);
