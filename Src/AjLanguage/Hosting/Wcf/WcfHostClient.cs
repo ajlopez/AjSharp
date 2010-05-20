@@ -20,6 +20,7 @@ namespace AjLanguage.Hosting.Wcf
 
         public WcfHostClient(string address)
         {
+            this.address = address;
             BasicHttpBinding binding = new BasicHttpBinding();
             ChannelFactory<IHostServer> factory = new ChannelFactory<IHostServer>(binding, new EndpointAddress(address));
             this.server = factory.CreateChannel();
@@ -51,6 +52,16 @@ namespace AjLanguage.Hosting.Wcf
         public void OnRegisterHost(ICallable callback)
         {
             throw new NotSupportedException();
+        }
+
+        public void Include(string localfilename)
+        {
+            this.Execute(System.IO.File.ReadAllText(localfilename));
+        }
+
+        public void Execute(string commandtext)
+        {
+            this.server.ExecuteCommand(commandtext);
         }
 
         public void Execute(ICommand command)

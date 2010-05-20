@@ -1,0 +1,11 @@
+﻿server = new RemotingHostServer(Machine, 10001, "RemoteHost3");
+remote = new RemotingHostClient("localhost", 10001, "RemoteHost3");
+
+remote.Execute("adam = new DynamicObject();adam.Name = \"Adam\"; adam.Age = 800; ");
+
+myadam = at remote adam.Marshal();
+
+result = at remote adam.Name;
+result2 = myadam.Name;
+
+server.Stop();

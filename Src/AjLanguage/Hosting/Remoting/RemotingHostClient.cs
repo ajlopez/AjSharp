@@ -46,6 +46,16 @@ namespace AjLanguage.Hosting.Remoting
             throw new NotSupportedException();
         }
 
+        public void Include(string localfilename)
+        {
+            this.Execute(System.IO.File.ReadAllText(localfilename));
+        }
+
+        public void Execute(string commandtext)
+        {
+            this.host.Execute(commandtext);
+        }
+
         public void Execute(ICommand command)
         {
             this.host.Execute(command);

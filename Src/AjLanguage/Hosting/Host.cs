@@ -80,6 +80,17 @@
             this.regcallbacks.Add(callback);
         }
 
+        // It should be redefined by a language with parser (i.e. AjSharp)
+        public virtual void Execute(string commandtext)
+        {
+            throw new NotSupportedException();
+        }
+
+        public virtual void Include(string localfilename)
+        {
+            this.Execute(System.IO.File.ReadAllText(localfilename));
+        }
+
         public object Invoke(ICallable function, params object[] arguments)
         {
             Machine current = Machine.Current;

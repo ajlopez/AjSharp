@@ -1259,6 +1259,9 @@
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+            Assert.AreEqual("New Adam", this.EvaluateExpression("result3"));
+            Assert.AreEqual("New Adam", this.EvaluateExpression("result4"));
+            Assert.AreEqual("Adam", this.EvaluateExpression("result5"));
 
             Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
@@ -1267,6 +1270,38 @@
             Assert.IsNotNull(server);
             Assert.IsInstanceOfType(server, typeof(RemotingHostServer));
             Assert.AreEqual("tcp://localhost:10000/RemoteHost", server.Address);
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\RemotingHostExecuteCommand.ajs")]
+        public void EvaluateRemotingHostExecuteCommand()
+        {
+            Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
+
+            IncludeFile("RemotingHostExecuteCommand.ajs");
+
+            Assert.AreEqual("Adam", this.EvaluateExpression("result"));
+            Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+
+            Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\RemotingHostInclude.ajs")]
+        [DeploymentItem("Examples\\AgentCall.ajs")]
+        public void EvaluateRemotingHostInclude()
+        {
+            Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
+
+            IncludeFile("RemotingHostInclude.ajs");
+
+            Assert.AreEqual(2, this.EvaluateExpression("result"));
+
+            Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
         }
 
         [TestMethod]

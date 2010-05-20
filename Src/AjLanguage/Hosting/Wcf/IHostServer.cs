@@ -21,5 +21,8 @@ namespace AjLanguage.Hosting.Wcf
 
         [OperationContract]
         void RegisterHost(string address);
+
+        [OperationContract]
+        void ExecuteCommand(string commandtext);
     }
 }

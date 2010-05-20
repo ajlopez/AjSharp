@@ -292,3 +292,12 @@ IHost.OnRegisterHost with tests
 Machine.GetLocalHosts, Machine.GetRemoteHosts with tests
 IHost.Address with tests
 RegisterRemotingHost.ajs new example
+ProxyServerObject with test (inherits MarshalByRefObject)
+DynamicObject.Marshal with test
+Remove inherits MarshalByRefObject in DynamicObject
+Add [Serializable] to DynamicObject, DynamicClassicObject
+Save class name in DynamicClassicObject
+IHost.Include, IHost.Execute(string commandtext)
+Implements IHost.Include, IHost.Execute in Host, remoting Hosts and wcf hosts
+RemotingHostExecuteCommand.ajs example with test
+RemotingHostInclude.ajs example with test

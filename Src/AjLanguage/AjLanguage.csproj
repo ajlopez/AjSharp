@@ -95,6 +95,7 @@
     <Compile Include="Language\AgentObject.cs" />
     <Compile Include="Language\Channel.cs" />
     <Compile Include="Language\AgentFunction.cs" />
+    <Compile Include="Language\ProxyServerObject.cs" />
     <Compile Include="Language\ExitException.cs" />
     <Compile Include="Language\Function.cs" />
     <Compile Include="Language\QueueChannel.cs" />

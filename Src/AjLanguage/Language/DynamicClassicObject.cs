@@ -5,13 +5,16 @@
     using System.Linq;
     using System.Text;
 
+    [Serializable]
     public class DynamicClassicObject : DynamicObject, IClassicObject
     {
-        private IClass objclass;
+        [NonSerialized] private IClass objclass;
+        private string classname;
 
         public DynamicClassicObject(IClass objclass) 
         {
             this.objclass = objclass;
+            this.classname = objclass.Name;
         }
 
         public IClass GetClass()

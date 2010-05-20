@@ -5,10 +5,11 @@
     using System.Linq;
     using System.Text;
 
-    public class DynamicObject :MarshalByRefObject, IObject
+    [Serializable]
+    public class DynamicObject : IObject
     {
         private Dictionary<string, object> values = new Dictionary<string, object>();
-        private static string[] nativeMethods = new string[] { "SetValue", "GetValue", "ToString", "GetNames", "Invoke", "GetHashCode", "Equals" };
+        private static string[] nativeMethods = new string[] { "SetValue", "GetValue", "ToString", "GetNames", "Invoke", "GetHashCode", "Equals", "Marshal" };
 
         public virtual void SetValue(string name, object value)
         {
@@ -31,6 +32,11 @@
         public virtual bool IsNativeMethod(string name)
         {
             return nativeMethods.Contains(name);
+        }
+
+        public virtual IObject Marshal()
+        {
+            return new ProxyServerObject(this);
         }
 
         public virtual object Invoke(string name, object[] parameters)

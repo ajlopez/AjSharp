@@ -44,6 +44,11 @@ namespace AjLanguage.Hosting.Wcf
             this.service.Close();
         }
 
+        public void ExecuteCommand(string commandtext)
+        {
+            this.Execute(commandtext);
+        }
+
         public byte[] Evaluate(byte[] serializedexpr)
         {
             IExpression expression = (IExpression)this.formatter.Deserialize(new MemoryStream(serializedexpr));

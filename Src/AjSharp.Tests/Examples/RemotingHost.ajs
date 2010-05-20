@@ -2,9 +2,17 @@
 remote = new RemotingHostClient("localhost", 10000, "RemoteHost");
 
 at remote { adam = new DynamicObject(); adam.Name = "Adam"; adam.Age = 800; }
-myadam = at remote adam;
+myadam = at remote adam.Marshal();	// A reference to remote object
+mycopy = at remote adam;		// A local copy
 
 result = at remote adam.Name;
 result2 = myadam.Name;
+
+at remote adam.Name = "New Adam";
+
+result3 = at remote adam.Name;	// "New Adam"
+result4 = myadam.Name;			// "New Adam"
+
+result5 = mycopy.Name;			// "Adam" copy
 
 server.Stop();

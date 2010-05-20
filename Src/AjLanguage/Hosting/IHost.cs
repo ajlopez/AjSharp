@@ -23,6 +23,9 @@
         object Evaluate(IExpression expression);
         object Invoke(ICallable function, params object[] arguments);
 
+        void Execute(string commandtext);
+        void Include(string localfilename);
+
         // Host Registration
         void RegisterHost(string address);
         void OnRegisterHost(ICallable callback);

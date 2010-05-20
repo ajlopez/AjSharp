@@ -117,8 +117,23 @@
             Assert.IsTrue(this.dynobj.IsNativeMethod("SetValue"));
             Assert.IsTrue(this.dynobj.IsNativeMethod("GetNames"));
             Assert.IsTrue(this.dynobj.IsNativeMethod("Invoke"));
+            Assert.IsTrue(this.dynobj.IsNativeMethod("Marshal"));
 
             Assert.IsFalse(this.dynobj.IsNativeMethod("Foo"));
+        }
+
+        [TestMethod]
+        public void MarshalDynamicObject()
+        {
+            this.dynobj.SetValue("Name", "Adam");
+            this.dynobj.SetValue("Age", 800);
+
+            IObject proxy = this.dynobj.Marshal();
+
+            Assert.IsInstanceOfType(proxy, typeof(MarshalByRefObject));
+
+            Assert.AreEqual("Adam", proxy.GetValue("Name"));
+            Assert.AreEqual(800, proxy.GetValue("Age"));
         }
     }
 }
