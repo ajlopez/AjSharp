@@ -16,6 +16,7 @@
         private Machine machine;
         private Dictionary<object, Guid> objectids = new Dictionary<object, Guid>();
         private Dictionary<Guid, ObjectProxy> proxies = new Dictionary<Guid, ObjectProxy>();
+        private IList<ICallable> regcallbacks = new List<ICallable>();
 
         public Host()
         {
@@ -37,17 +38,19 @@
 
         public Guid Id { get { return this.id; } }
 
+        public virtual string Address { get { return ""; } } // TODO review
+
         public bool IsLocal { get { return true; } }
 
         public void Execute(ICommand command)
         {
             Machine current = Machine.Current;
-            try 
+            try
             {
                 this.machine.SetCurrent();
-                command.Execute(this.machine.Environment);            
+                command.Execute(this.machine.Environment);
             }
-            finally 
+            finally
             {
                 Machine.SetCurrent(current);
             }
@@ -57,6 +60,24 @@
         {
             IHost client = new RemotingHostClient(address);
             this.machine.RegisterHost(client);
+
+            Machine current = Machine.Current;
+            try
+            {
+                this.machine.SetCurrent();
+
+                foreach (ICallable callback in this.regcallbacks)
+                    callback.Invoke(this.machine.Environment, new object[] { client });
+            }
+            finally
+            {
+                Machine.SetCurrent(current);
+            }
+        }
+
+        public virtual void OnRegisterHost(ICallable callback)
+        {
+            this.regcallbacks.Add(callback);
         }
 
         public object Invoke(ICallable function, params object[] arguments)
@@ -79,9 +100,9 @@
                 return null;
 
             Machine current = Machine.Current;
-            
+
             object result = null;
-            
+
             try
             {
                 this.machine.SetCurrent();
@@ -108,7 +129,7 @@
 
         public object Invoke(Guid objid, ICallable method, params object[] arguments)
         {
-            IObject receiver = (IObject) this.GetObject(objid);
+            IObject receiver = (IObject)this.GetObject(objid);
 
             return receiver.Invoke(method, arguments);
             //return this.ResultToObject(receiver.Invoke(method, arguments));

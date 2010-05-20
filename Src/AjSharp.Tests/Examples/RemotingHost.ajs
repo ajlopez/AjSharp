@@ -6,3 +6,5 @@ myadam = at remote adam;
 
 result = at remote adam.Name;
 result2 = myadam.Name;
+
+server.Stop();

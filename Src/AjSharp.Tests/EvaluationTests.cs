@@ -18,6 +18,7 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using AjSharp.Hosting;
+    using AjLanguage.Hosting;
 
     [TestClass]
     public class EvaluationTests
@@ -28,7 +29,7 @@
         public void SetupMachine()
         {
             this.machine = new AjSharpMachine();
-            new Host(this.machine);
+            new AjSharp.Hosting.Host(this.machine);
         }
 
         [TestMethod]
@@ -1251,20 +1252,67 @@
         [DeploymentItem("Examples\\RemotingHost.ajs")]
         public void EvaluateRemotingHost()
         {
+            Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
+
             IncludeFile("RemotingHost.ajs");
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+
+            Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
+
+            IHost server = (IHost) this.machine.Environment.GetValue("server");
+            Assert.IsNotNull(server);
+            Assert.IsInstanceOfType(server, typeof(RemotingHostServer));
+            Assert.AreEqual("tcp://localhost:10000/RemoteHost", server.Address);
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\RegisterRemotingHost.ajs")]
+        public void EvaluateRegisterRemotingHost()
+        {
+            Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
+
+            IncludeFile("RegisterRemotingHost.ajs");
+
+            Assert.AreEqual(3, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(2, this.machine.GetRemoteHosts().Count);
+
+            IHost server = (IHost)this.machine.Environment.GetValue("server");
+            Assert.IsNotNull(server);
+            Assert.IsInstanceOfType(server, typeof(RemotingHostServer));
+            Assert.AreEqual("tcp://localhost:12000/RemoteHost0", server.Address);
+
+            IHost server2 = (IHost)this.machine.Environment.GetValue("server2");
+            Assert.IsNotNull(server2);
+            Assert.IsInstanceOfType(server2, typeof(RemotingHostServer));
+            Assert.AreEqual("tcp://localhost:30000/RemoteHost2", server2.Address);
+
+            Assert.AreEqual("tcp://localhost:30000/RemoteHost2", this.machine.Environment.GetValue("result"));
         }
 
         [TestMethod]
         [DeploymentItem("Examples\\WcfHost.ajs")]
         public void EvaluateWcfHost()
         {
+            Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
+
             IncludeFile("WcfHost.ajs");
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
+
+            Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
+            Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
+
+            IHost server = (IHost)this.machine.Environment.GetValue("server");
+            Assert.IsNotNull(server);
+            Assert.IsInstanceOfType(server, typeof(WcfHostServer));
+            Assert.AreEqual("http://localhost:20000/RemoteHost", server.Address);
         }
 
         [TestMethod]

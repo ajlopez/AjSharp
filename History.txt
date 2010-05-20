@@ -286,3 +286,9 @@ IsLocal in IHost
 Host.IsLocal is true, XxxHostClient.IsLocal is false
 Separate dictionaries for local and remote hosts in Machine
 IHost.RegisterHost, work in progress
+
+2010-05-20
+IHost.OnRegisterHost with tests
+Machine.GetLocalHosts, Machine.GetRemoteHosts with tests
+IHost.Address with tests
+RegisterRemotingHost.ajs new example

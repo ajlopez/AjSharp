@@ -105,6 +105,16 @@
             return this.remotehosts[id];
         }
 
+        public ICollection<IHost> GetLocalHosts()
+        {
+            return this.localhosts.Values;
+        }
+
+        public ICollection<IHost> GetRemoteHosts()
+        {
+            return this.remotehosts.Values;
+        }
+
         public void SetCurrent()
         {
             current = this;

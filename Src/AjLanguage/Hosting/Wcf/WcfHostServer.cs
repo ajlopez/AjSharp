@@ -15,6 +15,7 @@ namespace AjLanguage.Hosting.Wcf
     {
         private BinaryFormatter formatter;
         private ServiceHost service;
+        private string address;
 
         public WcfHostServer(string address)
             : this(new Machine(false), address)
@@ -25,10 +26,13 @@ namespace AjLanguage.Hosting.Wcf
             : base(machine)
         {
             this.service = new ServiceHost(this);
+            this.address = address;
             BasicHttpBinding binding = new BasicHttpBinding();
             this.service.AddServiceEndpoint(typeof(IHostServer), binding, address);
             this.formatter = new BinaryFormatter();
         }
+
+        public override string Address { get { return this.address; } }
 
         public void Open()
         {

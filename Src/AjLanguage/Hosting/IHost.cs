@@ -16,6 +16,8 @@
 
         bool IsLocal { get; }
 
+        string Address { get; }
+
         // Host Invocation
         void Execute(ICommand command);
         object Evaluate(IExpression expression);
@@ -23,6 +25,7 @@
 
         // Host Registration
         void RegisterHost(string address);
+        void OnRegisterHost(ICallable callback);
 
         // Host Invoke Object (To Review)
         object Invoke(IObject receiver, string name, params object[] arguments);

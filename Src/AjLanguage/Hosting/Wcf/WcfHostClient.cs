@@ -16,6 +16,7 @@ namespace AjLanguage.Hosting.Wcf
         private Guid id;
         private IHostServer server;
         private BinaryFormatter formatter = new BinaryFormatter();
+        private string address;
 
         public WcfHostClient(string address)
         {
@@ -38,11 +39,18 @@ namespace AjLanguage.Hosting.Wcf
             }
         }
 
+        public string Address { get { return this.address; } }
+
         public bool IsLocal { get { return false; } }
 
         public void RegisterHost(string address)
         {
             this.server.RegisterHost(address);
+        }
+
+        public void OnRegisterHost(ICallable callback)
+        {
+            throw new NotSupportedException();
         }
 
         public void Execute(ICommand command)

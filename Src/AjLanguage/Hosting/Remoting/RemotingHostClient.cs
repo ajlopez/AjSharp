@@ -11,9 +11,11 @@ namespace AjLanguage.Hosting.Remoting
     public class RemotingHostClient : IHost
     {
         private IHost host;
+        private string address;
 
         public RemotingHostClient(string address)
         {
+            this.address = address;
             this.host = (IHost)Activator.GetObject(typeof(IHost), address);
 
             if (Machine.Current != null)
@@ -30,11 +32,18 @@ namespace AjLanguage.Hosting.Remoting
             get { return this.host.Id; }
         }
 
+        public string Address { get { return this.address; } }
+
         public bool IsLocal { get { return false; } }
 
         public void RegisterHost(string address)
         {
             this.host.RegisterHost(address);
+        }
+
+        public void OnRegisterHost(ICallable callback)
+        {
+            throw new NotSupportedException();
         }
 
         public void Execute(ICommand command)
@@ -94,7 +103,7 @@ namespace AjLanguage.Hosting.Remoting
             return new ClientObject(this.host, (IObject)result);
         }
 
-        private static string MakeAddress(string hostname, int port, string name)
+        internal static string MakeAddress(string hostname, int port, string name)
         {
             return string.Format("tcp://{0}:{1}/{2}", hostname, port, name);
         }

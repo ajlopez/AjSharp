@@ -1,0 +1,11 @@
+﻿server = new RemotingHostServer(Machine, 12000, "RemoteHost0");
+remote = new RemotingHostClient("localhost", 12000, "RemoteHost0");
+
+server.OnRegisterHost(sub(host) { global result; result = host.Address; });
+
+server2 = new RemotingHostServer(30000, "RemoteHost2");
+
+remote.RegisterHost(server2.Address);
+
+server.Stop();
+server2.Stop();
