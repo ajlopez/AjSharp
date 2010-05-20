@@ -8,6 +8,7 @@
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
     using AjLanguage.Language;
+    using AjLanguage.Hosting.Remoting;
 
     public class Host : MarshalByRefObject, IHost
     {
@@ -20,17 +21,23 @@
         {
             this.machine = new Machine(false);
             this.machine.Host = this;
+            if (Machine.Current != null)
+                Machine.Current.RegisterHost(this);
         }
 
         public Host(Machine machine)
         {
             this.machine = machine;
             this.machine.Host = this;
+            if (Machine.Current != null)
+                Machine.Current.RegisterHost(this);
         }
 
         public Machine Machine { get { return this.machine; } }
 
         public Guid Id { get { return this.id; } }
+
+        public bool IsLocal { get { return true; } }
 
         public void Execute(ICommand command)
         {
@@ -44,6 +51,12 @@
             {
                 Machine.SetCurrent(current);
             }
+        }
+
+        public virtual void RegisterHost(string address)
+        {
+            IHost client = new RemotingHostClient(address);
+            this.machine.RegisterHost(client);
         }
 
         public object Invoke(ICallable function, params object[] arguments)

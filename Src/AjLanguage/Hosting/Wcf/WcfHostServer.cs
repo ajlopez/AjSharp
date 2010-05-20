@@ -64,5 +64,11 @@ namespace AjLanguage.Hosting.Wcf
         {
             return this.Id;
         }
+
+        public override void RegisterHost(string address)
+        {
+            IHost client = new WcfHostClient(address);
+            this.Machine.RegisterHost(client);
+        }
     }
 }

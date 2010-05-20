@@ -19,7 +19,8 @@
 
         private BindingEnvironment environment = new BindingEnvironment();
 
-        private Dictionary<Guid, IHost> hosts = new Dictionary<Guid, IHost>();
+        private Dictionary<Guid, IHost> localhosts = new Dictionary<Guid, IHost>();
+        private Dictionary<Guid, IHost> remotehosts = new Dictionary<Guid, IHost>();
 
         private TextReader inreader = System.Console.In;
         private TextWriter outwriter = System.Console.Out;
@@ -87,15 +88,21 @@
 
         public void RegisterHost(IHost host)
         {
-            this.hosts[host.Id] = host;
+            if (host.IsLocal)
+                this.localhosts[host.Id] = host;
+            else
+                this.remotehosts[host.Id] = host;
         }
 
         public IHost GetHost(Guid id)
         {
-            if (this.Host != null && this.Host.Id == id)
-                return this.Host;
+            //if (this.Host != null && this.Host.Id == id)
+            //    return this.Host;
 
-            return this.hosts[id];
+            if (this.localhosts.ContainsKey(id))
+                return this.localhosts[id];
+
+            return this.remotehosts[id];
         }
 
         public void SetCurrent()

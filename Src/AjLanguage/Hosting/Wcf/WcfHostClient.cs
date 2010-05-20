@@ -13,6 +13,7 @@ namespace AjLanguage.Hosting.Wcf
 {
     public class WcfHostClient : IHost
     {
+        private Guid id;
         private IHostServer server;
         private BinaryFormatter formatter = new BinaryFormatter();
 
@@ -28,7 +29,20 @@ namespace AjLanguage.Hosting.Wcf
 
         public Guid Id
         {
-            get { return this.server.GetId(); }
+            get
+            {
+                if (this.id.Equals(Guid.Empty))
+                    this.id = this.server.GetId();
+
+                return this.id;
+            }
+        }
+
+        public bool IsLocal { get { return false; } }
+
+        public void RegisterHost(string address)
+        {
+            this.server.RegisterHost(address);
         }
 
         public void Execute(ICommand command)

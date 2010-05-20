@@ -1086,6 +1086,19 @@
             Assert.AreEqual(2, hexpr.Arguments.Count);
         }
 
+        [TestMethod]
+        public void ParseHostedInvocationAsCommand()
+        {
+            ICommand command = ParseCommand("at host function(x,y) {return x+y;} with (1,2);");
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(ExpressionCommand));
+            ExpressionCommand expcmd = (ExpressionCommand)command;
+            Assert.IsInstanceOfType(expcmd.Expression, typeof(HostedInvocationExpression));
+            HostedInvocationExpression hexpr = (HostedInvocationExpression)expcmd.Expression;
+            Assert.IsInstanceOfType(hexpr.HostExpression, typeof(VariableExpression));
+            Assert.AreEqual(2, hexpr.Arguments.Count);
+        }
+
         private static IExpression ParseExpression(string text)
         {
             Parser parser = new Parser(text);
@@ -1103,7 +1116,7 @@
 
             ICommand command = parser.ParseCommand();
 
-            Assert.IsNull(parser.ParseExpression());
+            Assert.IsNull(parser.ParseCommand());
 
             return command;
         }

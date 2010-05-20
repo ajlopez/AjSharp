@@ -14,10 +14,15 @@
         // Host Id
         Guid Id { get; }
 
+        bool IsLocal { get; }
+
         // Host Invocation
         void Execute(ICommand command);
         object Evaluate(IExpression expression);
         object Invoke(ICallable function, params object[] arguments);
+
+        // Host Registration
+        void RegisterHost(string address);
 
         // Host Invoke Object (To Review)
         object Invoke(IObject receiver, string name, params object[] arguments);

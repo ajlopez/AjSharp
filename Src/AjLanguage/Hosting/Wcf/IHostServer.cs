@@ -18,5 +18,8 @@ namespace AjLanguage.Hosting.Wcf
 
         [OperationContract]
         Guid GetId();
+
+        [OperationContract]
+        void RegisterHost(string address);
     }
 }

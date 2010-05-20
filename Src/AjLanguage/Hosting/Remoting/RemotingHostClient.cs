@@ -30,6 +30,13 @@ namespace AjLanguage.Hosting.Remoting
             get { return this.host.Id; }
         }
 
+        public bool IsLocal { get { return false; } }
+
+        public void RegisterHost(string address)
+        {
+            this.host.RegisterHost(address);
+        }
+
         public void Execute(ICommand command)
         {
             this.host.Execute(command);

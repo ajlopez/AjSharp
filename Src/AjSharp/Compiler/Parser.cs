@@ -51,8 +51,7 @@
                 if (token.Value == "at")
                 {
                     IExpression hostexpression = this.ParseExpression();
-                    ICommand cmd = this.ParseCommand();
-                    return new HostedCommand(cmd, hostexpression);
+                    return this.ParseHostedCommand(hostexpression);
                 }
 
                 if (token.Value == "foreach")
@@ -106,6 +105,67 @@
             this.Parse(TokenType.Separator, ";");
 
             return command;
+        }
+
+        // TODO Refactor, is a partial copy of ParseCommand
+        private ICommand ParseHostedCommand(IExpression hostexpression)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null)
+                return null;
+
+            if (token.TokenType == TokenType.Name)
+            {
+                if (token.Value == "if")
+                    return this.ParseIfCommand();
+
+                if (token.Value == "while")
+                    return this.ParseWhileCommand();
+
+                if (token.Value == "foreach")
+                    return this.ParseForEachCommand();
+
+                if (token.Value == "for")
+                    return this.ParseForCommand();
+
+                if (token.Value == "class")
+                    return this.ParseClassAgentCommand(false);
+
+                if (token.Value == "agent")
+                    return this.ParseClassAgentCommand(true);
+
+                if (token.Value == "global")
+                    return this.ParseGlobalCommand();
+
+                if (token.Value == "object")
+                    return this.ParseObjectCommand();
+
+                if (token.Value == "go")
+                    return new GoCommand(this.ParseCommand());
+            }
+
+            if (token.TokenType == TokenType.Separator && token.Value == "{")
+                return this.ParseCompositeCommand();
+
+            this.lexer.PushToken(token);
+
+            ICommand command = this.ParseSimpleCommand();
+
+            if (command == null)
+                throw new UnexpectedTokenException(token);
+
+            if (command is ExpressionCommand && this.TryParse(TokenType.Name, "with"))
+            {
+                this.lexer.NextToken();
+                IList<IExpression> arguments = this.ParseArgumentList();
+                this.Parse(TokenType.Separator, ";");
+                return new ExpressionCommand(new HostedInvocationExpression(((ExpressionCommand)command).Expression, arguments, hostexpression));
+            }
+
+            this.Parse(TokenType.Separator, ";");
+
+            return new HostedCommand(command, hostexpression);
         }
 
         public IExpression ParseExpression()
