@@ -1,0 +1,34 @@
+
+remote = new RemotingHostClient("localhost", 10000, "Server");
+
+
+random = new System.Random();
+port = random.Next(1000)+20000;
+
+node = new RemotingHostServer(port, "Node"+port);
+
+PrintLine("Node started "+node.Id+ " at " + node.Address);
+
+StopHandle = new System.Threading.AutoResetEvent(false);
+
+sub StopNode()
+{
+	global StopHandle;
+	
+	StopHandle.Set();
+}
+
+node.OnRegisterHost(
+	sub(host) {
+		if (host.IsLocal)
+			return;
+			
+		PrintLine("New Node " + host.Id + " at " + host.Address);
+	}
+);
+
+remote.RegisterHost(node.Address);
+
+StopHandle.WaitOne();
+
+exit;

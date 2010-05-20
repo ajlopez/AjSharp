@@ -1,0 +1,46 @@
+
+
+server = new RemotingHostServer(Machine, 10000, "Server");
+
+PrintLine("Server started");
+
+sub BroadcastNewNode(node)
+{
+	global Machine;
+	
+	foreach (host in Machine.GetRemoteHosts())
+		if (node.Id != host.Id) 
+		{
+			host.RegisterHost(node.Address);
+			node.RegisterHost(host.Address);
+		}
+}
+
+StopHandle = new System.Threading.AutoResetEvent(false);
+
+sub StopServer()
+{
+	global Machine;
+	
+	foreach (host in Machine.GetRemoteHosts())
+		at host StopNode();
+		
+	global StopHandle;
+	
+	StopHandle.Set();
+}
+
+server.OnRegisterHost(
+	sub(host) {
+		if (host.IsLocal)
+			return;
+			
+		PrintLine("New Node " + host.Id + " at " + host.Address);
+		
+		BroadcastNewNode(host);
+	}
+);
+
+StopHandle.WaitOne();
+
+exit;

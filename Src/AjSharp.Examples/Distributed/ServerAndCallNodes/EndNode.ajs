@@ -1,0 +1,8 @@
+
+remote = new RemotingHostClient("localhost", 10000, "Server");
+
+at remote {
+	PrintLine("Bye");
+	server.Stop(); 
+}
+

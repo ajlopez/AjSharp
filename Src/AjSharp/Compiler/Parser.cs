@@ -145,15 +145,19 @@
                     return new GoCommand(this.ParseCommand());
             }
 
+            ICommand command = null;
+
             if (token.TokenType == TokenType.Separator && token.Value == "{")
-                return this.ParseCompositeCommand();
+                command = this.ParseCompositeCommand();
+            else
+            {
+                this.lexer.PushToken(token);
 
-            this.lexer.PushToken(token);
+                command = this.ParseSimpleCommand();
 
-            ICommand command = this.ParseSimpleCommand();
-
-            if (command == null)
-                throw new UnexpectedTokenException(token);
+                if (command == null)
+                    throw new UnexpectedTokenException(token);
+            }
 
             if (command is ExpressionCommand && this.TryParse(TokenType.Name, "with"))
             {
@@ -163,7 +167,8 @@
                 return new ExpressionCommand(new HostedInvocationExpression(((ExpressionCommand)command).Expression, arguments, hostexpression));
             }
 
-            this.Parse(TokenType.Separator, ";");
+            if (!(command is CompositeCommand))
+                this.Parse(TokenType.Separator, ";");
 
             return new HostedCommand(command, hostexpression);
         }

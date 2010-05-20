@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AjLanguage.Language
 {
+    [Serializable]
     public class ExitException : Exception
     {
     }

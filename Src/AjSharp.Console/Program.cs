@@ -32,7 +32,7 @@
             {
                 try
                 {
-                    parser = new Parser(System.IO.File.OpenText(filename));
+                    parser = new Parser(System.IO.File.ReadAllText(filename));
 
                     while ((command = parser.ParseCommand()) != null)
                         command.Execute(machine.Environment);

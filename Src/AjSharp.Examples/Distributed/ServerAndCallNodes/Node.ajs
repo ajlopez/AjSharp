@@ -1,0 +1,17 @@
+
+remote = new RemotingHostClient("localhost", 10000, "Server");
+
+nodeid = System.Guid.NewGuid().ToString();
+
+at remote PrintLine("New Node");
+
+// evaluate a subroutine at server
+at remote 
+	sub(id)
+	{
+		for (k=1; k<=10; k++)
+			PrintLine("Hello, server, from node " + id);
+	}
+	with (nodeid); // local parameter going to server
+	
+exit;

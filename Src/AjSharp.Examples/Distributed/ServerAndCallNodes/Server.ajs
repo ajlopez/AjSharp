@@ -1,0 +1,9 @@
+
+
+server = new RemotingHostServer(Machine, 10000, "Server");
+
+PrintLine("Server started");
+
+
+
+

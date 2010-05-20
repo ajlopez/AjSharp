@@ -1076,6 +1076,17 @@
         }
 
         [TestMethod]
+        public void ParseHostedCompositeCommand()
+        {
+            ICommand command = ParseCommand("at host { PrintLine(x+y); x=x+y; }");
+            Assert.IsNotNull(command);
+            Assert.IsInstanceOfType(command, typeof(HostedCommand));
+            HostedCommand hcmd = (HostedCommand)command;
+            Assert.IsInstanceOfType(hcmd.HostExpression, typeof(VariableExpression));
+            Assert.IsInstanceOfType(hcmd.Command, typeof(CompositeCommand));
+        }
+
+        [TestMethod]
         public void ParseHostedInvocation()
         {
             IExpression expression = ParseExpression("at host function(x,y) {return x+y;} with (1,2)");

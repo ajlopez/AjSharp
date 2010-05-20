@@ -301,3 +301,7 @@ IHost.Include, IHost.Execute(string commandtext)
 Implements IHost.Include, IHost.Execute in Host, remoting Hosts and wcf hosts
 RemotingHostExecuteCommand.ajs example with test
 RemotingHostInclude.ajs example with test
+New examples for AjSharp: Distributed/ServerAndCallNodes Distributed/ServerAndWorkerNodes
+Serializable ExitException
+Fix Parser for at host composite command
+
