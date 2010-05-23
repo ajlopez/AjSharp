@@ -305,3 +305,6 @@ New examples for AjSharp: Distributed/ServerAndCallNodes Distributed/ServerAndWo
 Serializable ExitException
 Fix Parser for at host composite command
 
+2010-05-23
+Machine.CurrentTransaction
+ITransactionalReference, TransactionalReference, Transaction: WIP

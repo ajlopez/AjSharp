@@ -95,6 +95,7 @@
     <Compile Include="Language\AgentObject.cs" />
     <Compile Include="Language\Channel.cs" />
     <Compile Include="Language\AgentFunction.cs" />
+    <Compile Include="Language\ITransactionalReference.cs" />
     <Compile Include="Language\ProxyServerObject.cs" />
     <Compile Include="Language\ExitException.cs" />
     <Compile Include="Language\Function.cs" />
@@ -133,6 +134,8 @@
     <Compile Include="Language\IClass.cs" />
     <Compile Include="Language\IClassicObject.cs" />
     <Compile Include="Language\IObject.cs" />
+    <Compile Include="Language\Transaction.cs" />
+    <Compile Include="Language\TransactionalReference.cs" />
     <Compile Include="LocalBindingEnvironment.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="ObjectEnvironment.cs" />

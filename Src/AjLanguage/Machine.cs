@@ -8,11 +8,15 @@
 
     using AjLanguage.Commands;
     using AjLanguage.Hosting;
+    using AjLanguage.Language;
 
     public class Machine
     {
         [ThreadStatic]
         private static FunctionStatus currentFunctionStatus;
+
+        [ThreadStatic]
+        private static Transaction currentTransaction;
 
         [ThreadStatic]
         private static Machine current;
@@ -52,6 +56,12 @@
             {
                 currentFunctionStatus = value;
             }
+        }
+
+        public static Transaction CurrentTransaction
+        {
+            get { return currentTransaction; }
+            set { currentTransaction = value; }
         }
 
         public static Machine Current { get { return current; } }
