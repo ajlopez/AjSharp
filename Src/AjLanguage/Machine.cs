@@ -9,6 +9,7 @@
     using AjLanguage.Commands;
     using AjLanguage.Hosting;
     using AjLanguage.Language;
+    using AjLanguage.Transactions;
 
     public class Machine
     {
@@ -25,6 +26,7 @@
 
         private Dictionary<Guid, IHost> localhosts = new Dictionary<Guid, IHost>();
         private Dictionary<Guid, IHost> remotehosts = new Dictionary<Guid, IHost>();
+        private HashSet<Transaction> transactions = new HashSet<Transaction>();
 
         private TextReader inreader = System.Console.In;
         private TextWriter outwriter = System.Console.Out;
@@ -133,6 +135,16 @@
         public static void SetCurrent(Machine machine)
         {
             current = machine;
+        }
+
+        internal void RegisterTransaction(Transaction transaction)
+        {
+            this.transactions.Add(transaction);
+        }
+
+        internal void UnregisterTransaction(Transaction transaction)
+        {
+            this.transactions.Remove(transaction);
         }
     }
 }

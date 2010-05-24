@@ -308,3 +308,9 @@ Fix Parser for at host composite command
 2010-05-23
 Machine.CurrentTransaction
 ITransactionalReference, TransactionalReference, Transaction: WIP
+
+2010-05-24
+new AjLanguage.Transactions namespace
+Refactor TransactionalReference, Transaction
+Machine.RegisterTransaction, Machine.UnregisterTransaction
+First TransactionTests
