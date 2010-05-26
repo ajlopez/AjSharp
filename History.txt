@@ -314,3 +314,6 @@ new AjLanguage.Transactions namespace
 Refactor TransactionalReference, Transaction
 Machine.RegisterTransaction, Machine.UnregisterTransaction
 First TransactionTests
+
+2010-05-26
+One more test in TransactionTests
