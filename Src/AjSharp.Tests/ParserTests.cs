@@ -940,6 +940,20 @@
         }
 
         [TestMethod]
+        public void ParseExpressionWithAtOperator()
+        {
+            IExpression expression = ParseExpression("@a");
+
+            Assert.IsNotNull(expression);
+            Assert.IsInstanceOfType(expression, typeof(GetValueExpression));
+
+            GetValueExpression getvalexp = (GetValueExpression)expression;
+
+            Assert.IsNotNull(getvalexp.Expression);
+            Assert.IsInstanceOfType(getvalexp.Expression, typeof(VariableExpression));
+        }
+
+        [TestMethod]
         public void ParseChannelSendUsingOperator()
         {
             ICommand command = ParseCommand("a <- 10;");

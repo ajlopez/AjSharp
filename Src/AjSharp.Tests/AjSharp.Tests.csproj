@@ -96,6 +96,12 @@
     <None Include="Examples\AgentCollatz.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\TransactionsTwoReferences.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\ReferenceSetAndGet.ajs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\RemotingHostInclude.ajs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

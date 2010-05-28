@@ -1356,6 +1356,32 @@
             Assert.AreEqual(3, this.EvaluateExpression("at Machine.Host function(x,y) { return x+y; } with (1,2)"));
         }
 
+        [TestMethod]
+        [DeploymentItem("Examples\\ReferenceSetAndGet.ajs")]
+        public void EvaluateReferenceSetAndGet()
+        {
+            IncludeFile("ReferenceSetAndGet.ajs");
+            Assert.AreEqual(1, this.machine.Environment.GetValue("result"));
+        }
+
+        [TestMethod]
+        public void ExecuteSimpleTransaction()
+        {
+            this.ExecuteCommand("transaction { result = 1; }");
+            Assert.AreEqual(1, this.machine.Environment.GetValue("result"));
+        }
+
+        [TestMethod]
+        [DeploymentItem("Examples\\TransactionsTwoReferences.ajs")]
+        public void EvaluateTransactionsTwoReferences()
+        {
+            IncludeFile("TransactionsTwoReferences.ajs");
+            Assert.AreEqual(2, this.machine.Environment.GetValue("result1"));
+            Assert.AreEqual(3, this.machine.Environment.GetValue("result2"));
+            Assert.AreEqual(1, this.machine.Environment.GetValue("result1original"));
+            Assert.AreEqual(2, this.machine.Environment.GetValue("result2original"));
+        }
+
         private object EvaluateExpression(string text)
         {
             Parser parser = new Parser(text);

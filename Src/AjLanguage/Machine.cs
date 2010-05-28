@@ -27,6 +27,7 @@
         private Dictionary<Guid, IHost> localhosts = new Dictionary<Guid, IHost>();
         private Dictionary<Guid, IHost> remotehosts = new Dictionary<Guid, IHost>();
         private HashSet<Transaction> transactions = new HashSet<Transaction>();
+        private HashSet<ITransactionalReference> snapshots = new HashSet<ITransactionalReference>();
 
         private TextReader inreader = System.Console.In;
         private TextWriter outwriter = System.Console.Out;
@@ -139,12 +140,55 @@
 
         internal void RegisterTransaction(Transaction transaction)
         {
-            this.transactions.Add(transaction);
+            lock (this.transactions)
+            {
+                this.transactions.Add(transaction);
+            }
         }
 
         internal void UnregisterTransaction(Transaction transaction)
         {
-            this.transactions.Remove(transaction);
+            Transaction oldest = null;
+
+            lock (this.transactions)
+            {
+                this.transactions.Remove(transaction);
+
+                foreach (Transaction t in this.transactions)
+                    if (oldest == null || Transaction.IsPrevious(t.Id, oldest.Id))
+                        oldest = t;
+
+                lock (this.snapshots)
+                {
+                    IList<ITransactionalReference> toremove = new List<ITransactionalReference>();
+
+                    foreach (ITransactionalReference snapshot in this.snapshots)
+                    {
+                        if (oldest == null)
+                            snapshot.ClearSnapshots();
+                        else
+                            snapshot.ClearSnapshots(oldest.Id);
+
+                        if (!snapshot.HasSnapshots)
+                            toremove.Add(snapshot);
+                    }
+
+                    foreach (ITransactionalReference reference in toremove)
+                        snapshots.Remove(reference);
+
+                    if (snapshots.Count == 0)
+                        snapshots.Clear();
+                }
+            }
+        }
+
+        internal void RegisterSnapshot(ITransactionalReference reference)
+        {
+            lock (this.snapshots)
+            {
+                if (!this.snapshots.Contains(reference))
+                    this.snapshots.Add(reference);
+            }
         }
     }
 }

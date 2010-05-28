@@ -317,3 +317,10 @@ First TransactionTests
 
 2010-05-26
 One more test in TransactionTests
+
+2010-05-28
+TransactionCommand
+transaction <cmd> in Parser, with tests
+Machine.RegisterSnapshot
+TransactionReference.HasSnapshots, .ClearSnapshot with tests
+New examples TransactionsTwoReferences.ajs, ReferenceSetAndGet.ajs

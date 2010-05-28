@@ -19,6 +19,8 @@ namespace AjLanguage.Transactions
         {
         }
 
+        public bool HasSnapshots { get { return this.snapshots.Count > 0; } }
+
         public void SetValue(object value, Transaction transaction)
         {
             lock (this)
@@ -64,6 +66,9 @@ namespace AjLanguage.Transactions
                 if (this.pending != transaction)
                     return;
 
+                if (this.snapshots.Count == 0)
+                    transaction.Machine.RegisterSnapshot(this);
+
                 this.snapshots[this.timestamp] = this.value;
 
                 this.value = this.pendingvalue;
@@ -108,6 +113,43 @@ namespace AjLanguage.Transactions
                     return this.GetValue(Machine.CurrentTransaction);
 
                 return this.value;
+            }
+        }
+
+        public void ClearSnapshots()
+        {
+            lock (this)
+            {
+                this.snapshots.Clear();
+            }
+        }
+
+        public void ClearSnapshots(long timestamp)
+        {
+            lock (this)
+            {
+                long? previous = null;
+                IList<long> toforgot = new List<long>();
+
+                foreach (long ts in this.snapshots.Keys)
+                    if (Transaction.IsPrevious(ts, timestamp))
+                        if (previous.HasValue)
+                        {
+                            if (Transaction.IsPrevious(previous.Value, ts))
+                            {
+                                toforgot.Add(previous.Value);
+                                previous = ts;
+                            }
+                            else
+                            {
+                                toforgot.Add(ts);
+                            }
+                        }
+                        else
+                            previous = ts;
+
+                foreach (long ts in toforgot)
+                    this.snapshots.Remove(ts);
             }
         }
     }

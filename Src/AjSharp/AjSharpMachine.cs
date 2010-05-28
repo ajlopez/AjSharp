@@ -12,6 +12,7 @@
 
     using AjSharp.Primitives;
     using AjSharp.Hosting;
+    using AjLanguage.Transactions;
 
     public class AjSharpMachine : Machine
     {
@@ -53,6 +54,7 @@
             this.Environment.SetValue("Channel", typeof(Channel));
             this.Environment.SetValue("QueueChannel", typeof(QueueChannel));
             this.Environment.SetValue("Future", typeof(Future));
+            this.Environment.SetValue("Reference", typeof(TransactionalReference));
 
             this.Environment.SetValue("Host", typeof(Hosting.Host));
             this.Environment.SetValue("RemotingHostServer", typeof(Hosting.RemotingHostServer));

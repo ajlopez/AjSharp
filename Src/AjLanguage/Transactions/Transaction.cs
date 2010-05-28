@@ -46,7 +46,7 @@
 
         public void Complete()
         {
-            lock (this.machine)
+            lock (this)
             {
                 long timestamp = NextId();
 
@@ -59,21 +59,24 @@
 
         public void Dispose()
         {
-            lock (this.machine)
+            lock (this)
             {
                 foreach (ITransactionalReference reference in this.references)
                     reference.Dispose(this);
 
                 references.Clear();
-
-                this.machine.UnregisterTransaction(this);
             }
+
+            this.machine.UnregisterTransaction(this);
         }
 
         public void RegisterTransactionalReference(IReference reference)
         {
-            if (!this.references.Contains(reference))
-                this.references.Add(reference);
+            lock (this)
+            {
+                if (!this.references.Contains(reference))
+                    this.references.Add(reference);
+            }
         }
 
         public static bool IsPrevious(long timestamp1, long timestamp2)

@@ -30,6 +30,7 @@ namespace AjLanguage.Tests
             Assert.IsNull(reference.GetValue());
             reference.SetValue("foo");
             Assert.AreEqual("foo", reference.GetValue());
+            Assert.IsFalse(reference.HasSnapshots);
         }
 
         [TestMethod]
@@ -46,6 +47,7 @@ namespace AjLanguage.Tests
             transaction.Dispose();
             Machine.CurrentTransaction = null;
             Assert.AreEqual("foo", reference.GetValue());
+            Assert.IsFalse(reference.HasSnapshots);
         }
 
         [TestMethod]
@@ -66,10 +68,63 @@ namespace AjLanguage.Tests
             transaction1.Complete();
             transaction1.Dispose();
 
+            Assert.IsTrue(reference.HasSnapshots);
+
             Assert.AreEqual("bar", reference.GetValue());
             Assert.AreEqual("foo", reference.GetValue(transaction2));
 
             transaction2.Dispose();
+
+            Assert.IsFalse(reference.HasSnapshots);
+        }
+
+        [TestMethod]
+        public void SetAndGetValueUsingTwoTransactionsAndTwoReference()
+        {
+            Machine machine = new Machine();
+            TransactionalReference reference1 = new TransactionalReference();
+            TransactionalReference reference2 = new TransactionalReference();
+
+            reference1.SetValue("foo");
+            Assert.AreEqual("foo", reference1.GetValue());
+            Assert.IsFalse(reference1.HasSnapshots);
+            reference2.SetValue("bar");
+            Assert.AreEqual("bar", reference2.GetValue());
+            Assert.IsFalse(reference2.HasSnapshots);
+
+            Transaction transaction1 = new Transaction(machine);
+            Transaction transaction2 = new Transaction(machine);
+
+            reference1.SetValue("newfoo", transaction1);
+            Assert.AreEqual("foo", reference1.GetValue(transaction2));
+            Assert.AreEqual("newfoo", reference1.GetValue(transaction1));
+            Assert.AreEqual("foo", reference1.GetValue());
+
+            reference2.SetValue("newbar", transaction2);
+            Assert.AreEqual("newbar", reference2.GetValue(transaction2));
+            Assert.AreEqual("bar", reference2.GetValue(transaction1));
+            Assert.AreEqual("bar", reference2.GetValue());
+
+            Assert.IsFalse(reference1.HasSnapshots);
+            Assert.IsFalse(reference2.HasSnapshots);
+
+            transaction1.Complete();
+            transaction1.Dispose();
+
+            Assert.IsTrue(reference1.HasSnapshots);
+            Assert.IsFalse(reference2.HasSnapshots);
+
+            Assert.AreEqual("foo", reference1.GetValue(transaction2));
+            Assert.AreEqual("newfoo", reference1.GetValue());
+
+            Assert.AreEqual("bar", reference2.GetValue());
+            Assert.AreEqual("newbar", reference2.GetValue(transaction2));
+
+            transaction2.Complete();
+            transaction2.Dispose();
+
+            Assert.IsFalse(reference1.HasSnapshots);
+            Assert.IsFalse(reference2.HasSnapshots);
         }
 
         [TestMethod]

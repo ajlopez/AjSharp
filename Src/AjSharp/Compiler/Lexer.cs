@@ -11,7 +11,7 @@
     {
         private const char StringChar = '"';
         private const char QuotedStringChar = '\'';
-        private const string Operators = "!~+-*/%&|^<>=.\\";
+        private const string Operators = "!~+-*/%&|^<>=.\\@";
         private const string Separators = "()[]{},:;";
 
         private static string[] otherOperators = new string[] { "++", "--", "<=", ">=", "==", "!=", "&&", "||", "*=", "/=", "%=", "+=", "-=", "<-", "..", "..."  };
@@ -79,7 +79,7 @@
                 return this.NextInteger(ch);
             }
 
-            if (char.IsLetter(ch) || ch == '_' || ch == '@' || ch == '$')
+            if (char.IsLetter(ch) || ch == '_')
             {
                 return this.NextName(ch);
             }
@@ -356,7 +356,7 @@
             {
                 ch = this.NextChar();
 
-                while (char.IsLetterOrDigit(ch) || ch == '_' || (ch == '@' && name == "@"))
+                while (char.IsLetterOrDigit(ch) || ch == '_')
                 {
                     name += ch;
                     ch = this.NextChar();

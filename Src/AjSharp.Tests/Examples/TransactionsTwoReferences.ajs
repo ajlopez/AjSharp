@@ -1,0 +1,28 @@
+﻿
+channel1 = new Channel();
+end1 = new Channel();
+end2 = new Channel();
+
+reference1 = new Reference();
+reference2 = new Reference();
+
+reference1 <- 1;
+reference2 <- 2;
+
+go transaction 
+{ 
+	reference1 <- @channel1; 
+	result2original = @reference2; 
+	end1 <- @reference1; 
+}
+
+go transaction 
+{ 
+	channel1 <- @reference2; 
+	reference2 <- @reference2 + 1; 
+	result1original = @reference1; 
+	end2 <- @reference2; 
+}
+
+result1 = @end1; // 2
+result2 = @end2; // 3

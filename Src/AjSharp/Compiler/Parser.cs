@@ -54,6 +54,11 @@
                     return this.ParseHostedCommand(hostexpression);
                 }
 
+                if (token.Value == "transaction")
+                {
+                    return new TransactionCommand(this.ParseCommand());
+                }
+
                 if (token.Value == "foreach")
                     return this.ParseForEachCommand();
 
@@ -544,7 +549,7 @@
                 return new IncrementExpression(expression, op);
             }
 
-            if (this.TryParse(TokenType.Operator, "<-"))
+            if (this.TryParse(TokenType.Operator, "<-", "@"))
             {
                 this.lexer.NextToken();
 
