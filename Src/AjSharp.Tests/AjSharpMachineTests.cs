@@ -9,6 +9,8 @@
     using AjLanguage.Language;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using AjLanguage;
+    using System.Reflection;
 
     [TestClass]
     public class AjSharpMachineTests
@@ -63,6 +65,23 @@
             this.IsCallable("Execute");
         }
 
+        [TestMethod]
+        public void MachineIsDefinedAsType()
+        {
+            this.IsType("Machine", typeof(AjSharp.AjSharpMachine));
+        }
+
+        [TestMethod]
+        public void GetCurrentUsingTypeUtilities()
+        {
+            MethodInfo[] methods = typeof(AjSharpMachine).GetMethods(System.Reflection.BindingFlags.FlattenHierarchy | System.Reflection.BindingFlags.GetProperty | System.Reflection.BindingFlags.GetField | System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Static);
+
+            foreach (MethodInfo method in methods)
+                ;
+
+            Assert.AreEqual(this.machine, TypeUtilities.InvokeTypeMember(typeof(AjSharp.AjSharpMachine), "Current", null));
+        }
+
         private void IsCallable(string name)
         {
             object obj = this.machine.Environment.GetValue(name);
@@ -76,7 +95,7 @@
             object obj = this.machine.Environment.GetValue(typename);
 
             Assert.IsNotNull(obj);
-            Assert.IsInstanceOfType(obj, typeof(Type));
+            //Assert.IsInstanceOfType(obj, type);
             Assert.AreEqual(type, obj);
         }
     }

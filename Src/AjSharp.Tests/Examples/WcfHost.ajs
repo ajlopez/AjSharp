@@ -1,4 +1,4 @@
-﻿server = new WcfHostServer(Machine, "http://localhost:20000/RemoteHost");
+﻿server = new WcfHostServer(Machine.Current, "http://localhost:20000/RemoteHost");
 
 server.Open();
 

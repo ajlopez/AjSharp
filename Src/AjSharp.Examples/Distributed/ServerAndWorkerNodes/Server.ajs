@@ -1,6 +1,6 @@
 
 
-server = new RemotingHostServer(Machine, 10000, "Server");
+server = new RemotingHostServer(Machine.Current, 10000, "Server");
 
 PrintLine("Server started");
 
@@ -8,7 +8,7 @@ sub BroadcastNewNode(node)
 {
 	global Machine;
 	
-	foreach (host in Machine.GetRemoteHosts())
+	foreach (host in Machine.Current.GetRemoteHosts())
 		if (node.Id != host.Id) 
 		{
 			host.RegisterHost(node.Address);

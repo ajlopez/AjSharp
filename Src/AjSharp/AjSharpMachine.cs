@@ -24,6 +24,8 @@
         public AjSharpMachine(bool iscurrent)
             : base(iscurrent)
         {
+            this.Environment.SetValue("Machine", typeof(AjSharpMachine));
+
             // Natite Types
             this.Environment.SetValue("byte", typeof(System.Byte));
             this.Environment.SetValue("char", typeof(System.Char));

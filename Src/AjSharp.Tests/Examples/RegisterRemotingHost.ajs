@@ -1,4 +1,4 @@
-﻿server = new RemotingHostServer(Machine, 12000, "RemoteHost0");
+﻿server = new RemotingHostServer(Machine.Current, 12000, "RemoteHost0");
 remote = new RemotingHostClient("localhost", 12000, "RemoteHost0");
 
 server.OnRegisterHost(sub(host) { global result; result = host.Address; });

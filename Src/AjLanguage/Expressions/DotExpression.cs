@@ -72,6 +72,9 @@
             if (this.type != null)
                 return TypeUtilities.InvokeTypeMember(this.type, this.name, parameters);
 
+            if (obj is Type)
+                return TypeUtilities.InvokeTypeMember((Type) obj, this.name, parameters);
+
             // TODO if undefined, do nothing
             if (obj == null)
                 return null;

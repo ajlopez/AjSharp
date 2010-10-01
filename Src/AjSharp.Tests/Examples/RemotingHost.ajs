@@ -1,4 +1,4 @@
-﻿server = new RemotingHostServer(Machine, 10000, "RemoteHost");
+﻿server = new RemotingHostServer(Machine.Current, 10000, "RemoteHost");
 remote = new RemotingHostClient("localhost", 10000, "RemoteHost");
 
 at remote { adam = new DynamicObject(); adam.Name = "Adam"; adam.Age = 800; }

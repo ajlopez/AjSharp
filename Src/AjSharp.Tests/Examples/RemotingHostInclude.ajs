@@ -1,4 +1,4 @@
-﻿server = new RemotingHostServer(Machine, 10002, "RemoteHost4");
+﻿server = new RemotingHostServer(Machine.Current, 10002, "RemoteHost4");
 remote = new RemotingHostClient("localhost", 10002, "RemoteHost4");
 
 remote.Include("AgentCall.ajs"); // it set result == 2

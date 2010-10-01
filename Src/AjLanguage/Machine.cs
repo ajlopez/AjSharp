@@ -43,7 +43,7 @@
             if (iscurrent)
                 this.SetCurrent();
 
-            this.Environment.SetValue("Machine", this);
+            this.Environment.SetValue("Machine", typeof(Machine));
         }
 
         public static FunctionStatus CurrentFunctionStatus

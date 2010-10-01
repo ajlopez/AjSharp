@@ -1,0 +1,1 @@
+..\..\AjSharp.Console.exe Server.ajs

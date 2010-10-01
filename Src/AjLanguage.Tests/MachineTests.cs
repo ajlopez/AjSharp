@@ -17,7 +17,6 @@
             Assert.IsTrue(machine == Machine.Current);
             Assert.IsNotNull(machine.Environment);
             Assert.AreSame(machine.Environment, machine.Environment.GetValue("Environment"));
-            Assert.AreSame(machine, machine.Environment.GetValue("Machine"));
         }
 
         [TestMethod]

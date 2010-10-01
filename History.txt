@@ -324,3 +324,8 @@ transaction <cmd> in Parser, with tests
 Machine.RegisterSnapshot
 TransactionReference.HasSnapshots, .ClearSnapshot with tests
 New examples TransactionsTwoReferences.ajs, ReferenceSetAndGet.ajs
+
+2010-10-01
+In the global environment, Machine is the type, not the current Machine
+In AjSharp, use Machine.Current instead of Machine
+Minor improvements en Distributed examples

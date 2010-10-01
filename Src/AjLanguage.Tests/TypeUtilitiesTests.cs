@@ -76,6 +76,13 @@
         }
 
         [TestMethod]
+        public void GetMachineCurrent()
+        {
+            Machine machine = new Machine();
+            Assert.IsNotNull(TypeUtilities.InvokeTypeMember(typeof(Machine), "Current", null));
+        }
+
+        [TestMethod]
         public void GetValueFromEnum()
         {
             Assert.AreEqual(System.UriKind.RelativeOrAbsolute, TypeUtilities.InvokeTypeMember(typeof(System.UriKind), "RelativeOrAbsolute", null));

@@ -1353,7 +1353,7 @@
         [TestMethod]
         public void EvaluateHostedInvocation()
         {
-            Assert.AreEqual(3, this.EvaluateExpression("at Machine.Host function(x,y) { return x+y; } with (1,2)"));
+            Assert.AreEqual(3, this.EvaluateExpression("at Machine.Current.Host function(x,y) { return x+y; } with (1,2)"));
         }
 
         [TestMethod]
@@ -1380,6 +1380,18 @@
             Assert.AreEqual(3, this.machine.Environment.GetValue("result2"));
             Assert.AreEqual(1, this.machine.Environment.GetValue("result1original"));
             Assert.AreEqual(2, this.machine.Environment.GetValue("result2original"));
+        }
+
+        [TestMethod]
+        public void EvaluateMachineCurrent()
+        {
+            Assert.AreEqual(this.machine, this.EvaluateExpression("Machine.Current"));
+        }
+
+        [TestMethod]
+        public void EvaluateStaticMethod()
+        {
+            Assert.IsFalse((bool) this.EvaluateExpression("System.IO.File.Exists(\"foo.txt\")"));
         }
 
         private object EvaluateExpression(string text)
