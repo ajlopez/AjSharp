@@ -44,10 +44,11 @@
     <Compile Include="Classes\Person.cs" />
     <Compile Include="EvaluationTests.cs" />
     <Compile Include="HostEvaluationTest.cs" />
-    <Compile Include="LexerTests.cs" />
-    <Compile Include="ParserTests.cs" />
+    <Compile Include="Compiler\LexerTests.cs" />
+    <Compile Include="Compiler\ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializationTests.cs" />
+    <Compile Include="Templates\PreprocessorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AjLanguage\AjLanguage.csproj">

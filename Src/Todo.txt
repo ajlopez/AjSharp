@@ -50,3 +50,28 @@ Integration with AjGenesis
 
 Load of Dynamic Object from XML, text files or other sources
 
+Implement template:
+Block statement
+   @{
+   ...
+   @}
+Include code:
+ ... <#....
+ ....
+ ... #> ....
+ 
+Line code
+@ .....
+
+Multi line code
+@ for .... {
+...
+..
+@ }
+or
+@)
+(there are line codes, no special @))
+
+Expression
+${....}
+

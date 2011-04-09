@@ -329,3 +329,7 @@ New examples TransactionsTwoReferences.ajs, ReferenceSetAndGet.ajs
 In the global environment, Machine is the type, not the current Machine
 In AjSharp, use Machine.Current instead of Machine
 Minor improvements en Distributed examples
+
+2011-04-09
+Template support, razor-like, WIP
+Preprocessor with tests
