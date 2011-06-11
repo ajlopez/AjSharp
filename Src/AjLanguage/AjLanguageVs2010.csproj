@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{20458D50-3D54-45DD-9E22-5B2289B6AB91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AjLanguage</RootNamespace>
+    <AssemblyName>AjLanguage</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="msmdvbanet, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BindingEnvironment.cs" />
+    <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\TransactionCommand.cs" />
+    <Compile Include="Commands\HostedCommand.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\DefineAgentCommand.cs" />
+    <Compile Include="Commands\SetValueCommand.cs" />
+    <Compile Include="Commands\GlobalCommand.cs" />
+    <Compile Include="Commands\VarCommand.cs" />
+    <Compile Include="Commands\GoCommand.cs" />
+    <Compile Include="Commands\DefineObjectCommand.cs" />
+    <Compile Include="Commands\SetArrayCommand.cs" />
+    <Compile Include="Commands\DefineClassCommand.cs" />
+    <Compile Include="Commands\DefineFunctionCommand.cs" />
+    <Compile Include="Commands\ForCommand.cs" />
+    <Compile Include="Commands\ForEachCommand.cs" />
+    <Compile Include="Commands\FunctionStatus.cs" />
+    <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Expressions\ArrayExpression.cs" />
+    <Compile Include="Expressions\ConcatenateExpression.cs" />
+    <Compile Include="Expressions\HostedInvocationExpression.cs" />
+    <Compile Include="Expressions\HostedExpression.cs" />
+    <Compile Include="Expressions\VariableVariableExpression.cs" />
+    <Compile Include="Expressions\GetValueExpression.cs" />
+    <Compile Include="Expressions\InvokeExpressionExpression.cs" />
+    <Compile Include="Expressions\InitializeNewArrayExpression.cs" />
+    <Compile Include="Expressions\NewArrayExpression.cs" />
+    <Compile Include="Expressions\IncrementExpression.cs" />
+    <Compile Include="Expressions\FunctionExpression.cs" />
+    <Compile Include="Expressions\MultipleSetExpression.cs" />
+    <Compile Include="ExpressionUtilities.cs" />
+    <Compile Include="Hosting\Host.cs" />
+    <Compile Include="Hosting\IHost.cs" />
+    <Compile Include="Hosting\ObjectProxy.cs" />
+    <Compile Include="Hosting\Remoting\ClientObject.cs" />
+    <Compile Include="Hosting\Remoting\RemotingHostClient.cs" />
+    <Compile Include="Hosting\Remoting\RemotingHostServer.cs" />
+    <Compile Include="Hosting\Wcf\IHostServer.cs" />
+    <Compile Include="Hosting\Wcf\WcfHostClient.cs" />
+    <Compile Include="Hosting\Wcf\WcfHostServer.cs" />
+    <Compile Include="IBindingEnvironment.cs" />
+    <Compile Include="Language\AgentClass.cs" />
+    <Compile Include="Language\AgentObject.cs" />
+    <Compile Include="Language\Channel.cs" />
+    <Compile Include="Language\AgentFunction.cs" />
+    <Compile Include="Transactions\ITransactionalReference.cs" />
+    <Compile Include="Language\ProxyServerObject.cs" />
+    <Compile Include="Language\ExitException.cs" />
+    <Compile Include="Language\Function.cs" />
+    <Compile Include="Language\QueueChannel.cs" />
+    <Compile Include="Language\Future.cs" />
+    <Compile Include="Language\IChannel.cs" />
+    <Compile Include="Language\IReference.cs" />
+    <Compile Include="Language\ILocalCallable.cs" />
+    <Compile Include="Language\IncrementOperator.cs" />
+    <Compile Include="Language\DynamicClass.cs" />
+    <Compile Include="Language\DynamicClassicObject.cs" />
+    <Compile Include="Language\ICallable.cs" />
+    <Compile Include="Commands\ExpressionCommand.cs" />
+    <Compile Include="Commands\ReturnCommand.cs" />
+    <Compile Include="Commands\WhileCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\IfCommand.cs" />
+    <Compile Include="Commands\SetVariableCommand.cs" />
+    <Compile Include="Expressions\ArithmeticBinaryExpression.cs" />
+    <Compile Include="Expressions\ArithmeticUnaryExpression.cs" />
+    <Compile Include="Expressions\BinaryExpression.cs" />
+    <Compile Include="Expressions\ConstantExpression.cs" />
+    <Compile Include="Expressions\AndExpression.cs" />
+    <Compile Include="Expressions\CompareExpression.cs" />
+    <Compile Include="Expressions\DotExpression.cs" />
+    <Compile Include="Expressions\InvokeExpression.cs" />
+    <Compile Include="Expressions\NewExpression.cs" />
+    <Compile Include="Expressions\OrExpression.cs" />
+    <Compile Include="Expressions\NotExpression.cs" />
+    <Compile Include="Expressions\IExpression.cs" />
+    <Compile Include="Expressions\UnaryExpression.cs" />
+    <Compile Include="Expressions\VariableExpression.cs" />
+    <Compile Include="Language\ArithmeticOperator.cs" />
+    <Compile Include="Language\DynamicObject.cs" />
+    <Compile Include="Language\ComparisonOperator.cs" />
+    <Compile Include="Language\IClass.cs" />
+    <Compile Include="Language\IClassicObject.cs" />
+    <Compile Include="Language\IObject.cs" />
+    <Compile Include="Transactions\Transaction.cs" />
+    <Compile Include="Transactions\TransactionalReference.cs" />
+    <Compile Include="LocalBindingEnvironment.cs" />
+    <Compile Include="Machine.cs" />
+    <Compile Include="ObjectEnvironment.cs" />
+    <Compile Include="ObjectUtilities.cs" />
+    <Compile Include="Predicates.cs" />
+    <Compile Include="Primitives\PrintLineSubroutine.cs" />
+    <Compile Include="Primitives\PrintSubroutine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringUtilities.cs" />
+    <Compile Include="TypeUtilities.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
