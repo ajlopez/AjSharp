@@ -387,7 +387,7 @@
 
             ch = this.NextChar();
 
-            while (char.IsWhiteSpace(ch) || ch=='/')
+            while (char.IsWhiteSpace(ch) || ch == '/' || ch == '\ufeff' || ch == '\ufffe')
             {
                 if (ch == '/')
                 {
