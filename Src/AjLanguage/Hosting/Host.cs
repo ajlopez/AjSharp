@@ -4,11 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
-    using AjLanguage.Language;
     using AjLanguage.Hosting.Remoting;
+    using AjLanguage.Language;
 
     public class Host : MarshalByRefObject, IHost
     {
@@ -38,7 +37,7 @@
 
         public Guid Id { get { return this.id; } }
 
-        public virtual string Address { get { return ""; } } // TODO review
+        public virtual string Address { get { return string.Empty; } } // TODO review
 
         public bool IsLocal { get { return true; } }
 
@@ -125,7 +124,6 @@
             }
 
             return result;
-            //return this.ResultToObject(result);
         }
 
         public object Invoke(Guid objid, string name, params object[] arguments)
@@ -135,7 +133,6 @@
             object result = ObjectUtilities.GetValue(receiver, name, arguments);
 
             return result;
-            //return this.ResultToObject(result);
         }
 
         public object Invoke(Guid objid, ICallable method, params object[] arguments)
@@ -143,7 +140,6 @@
             IObject receiver = (IObject)this.GetObject(objid);
 
             return receiver.Invoke(method, arguments);
-            //return this.ResultToObject(receiver.Invoke(method, arguments));
         }
 
         public object Invoke(IObject obj, string name, params object[] arguments)

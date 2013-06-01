@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AjLanguage.Commands;
-using AjLanguage.Expressions;
-using AjLanguage.Language;
-
-namespace AjLanguage.Hosting.Remoting
+﻿namespace AjLanguage.Hosting.Remoting
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Language;
+
     public class RemotingHostClient : IHost
     {
         private IHost host;
@@ -96,6 +96,11 @@ namespace AjLanguage.Hosting.Remoting
             throw new NotImplementedException();
         }
 
+        internal static string MakeAddress(string hostname, int port, string name)
+        {
+            return string.Format("tcp://{0}:{1}/{2}", hostname, port, name);
+        }
+
         private object ClientMarshalling(object result)
         {
             if (result == null)
@@ -111,11 +116,6 @@ namespace AjLanguage.Hosting.Remoting
                 return result;
 
             return new ClientObject(this.host, (IObject)result);
-        }
-
-        internal static string MakeAddress(string hostname, int port, string name)
-        {
-            return string.Format("tcp://{0}:{1}/{2}", hostname, port, name);
         }
     }
 }

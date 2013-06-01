@@ -1,14 +1,13 @@
 ﻿namespace AjLanguage.Expressions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage.Commands;
-    using AjLanguage.Language;
-    using System.Collections;
     using AjLanguage.Hosting;
+    using AjLanguage.Language;
 
     [Serializable]
     public class HostedExpression : IExpression

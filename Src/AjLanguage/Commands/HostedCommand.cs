@@ -26,7 +26,7 @@
 
         public void Execute(IBindingEnvironment environment)
         {
-            IHost host = (IHost) this.hostexpression.Evaluate(environment);
+            IHost host = (IHost)this.hostexpression.Evaluate(environment);
             host.Execute(this.command);
         }
     }

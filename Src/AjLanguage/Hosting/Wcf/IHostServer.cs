@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.ServiceModel;
-
-namespace AjLanguage.Hosting.Wcf
+﻿namespace AjLanguage.Hosting.Wcf
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.ServiceModel;
+    using System.Text;
+
     [ServiceContract]
     public interface IHostServer
     {

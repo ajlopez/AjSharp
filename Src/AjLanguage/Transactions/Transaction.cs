@@ -34,6 +34,11 @@
 
         public Machine Machine { get { return this.machine; } }
 
+        public static bool IsPrevious(long timestamp1, long timestamp2)
+        {
+            return (timestamp2 - timestamp1) > 0;
+        }
+
         public static long NextId()
         {
             return Interlocked.Increment(ref nextId);
@@ -53,7 +58,7 @@
                 foreach (ITransactionalReference reference in this.references)
                     reference.Complete(this, timestamp);
 
-                references.Clear();
+                this.references.Clear();
             }
         }
 
@@ -64,7 +69,7 @@
                 foreach (ITransactionalReference reference in this.references)
                     reference.Dispose(this);
 
-                references.Clear();
+                this.references.Clear();
             }
 
             this.machine.UnregisterTransaction(this);
@@ -77,11 +82,6 @@
                 if (!this.references.Contains(reference))
                     this.references.Add(reference);
             }
-        }
-
-        public static bool IsPrevious(long timestamp1, long timestamp2)
-        {
-            return (timestamp2 - timestamp1) > 0;
         }
     }
 }

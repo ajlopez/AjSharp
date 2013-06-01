@@ -1,13 +1,12 @@
 ﻿namespace AjLanguage.Expressions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage.Commands;
     using AjLanguage.Language;
-    using System.Collections;
 
     [Serializable]
     public class InvokeExpressionExpression : IExpression
@@ -44,7 +43,7 @@
                 if (expression is VariableVariableExpression)
                 {
                     if (parameter != null)
-                        foreach (object ob in (IEnumerable) parameter)
+                        foreach (object ob in (IEnumerable)parameter)
                             parameters.Add(ob);
                 }
                 else

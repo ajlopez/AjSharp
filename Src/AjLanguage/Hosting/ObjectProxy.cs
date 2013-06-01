@@ -23,6 +23,7 @@
         public object Object { get { return this.obj; } }
 
         public Guid HostId { get; set; }
+
         public Guid ObjectId { get; set; }
 
         public object GetValue(string name)

@@ -46,7 +46,7 @@
                 newenv.SetLocalValue(this.name, null);
             }
 
-            foreach (object result in (IEnumerable) this.expression.Evaluate(newenv))
+            foreach (object result in (IEnumerable)this.expression.Evaluate(newenv))
             {
                 newenv.SetValue(this.name, result);
                 this.command.Execute(newenv);

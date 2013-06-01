@@ -25,12 +25,12 @@
 
         public void SetValue(string name, object value)
         {
-            this.host.Invoke(this.obj, "SetValue", new object[] { name , value});
+            this.host.Invoke(this.obj, "SetValue", new object[] { name, value });
         }
 
         public ICollection<string> GetNames()
         {
-            return (ICollection<string>) this.host.Invoke(this.obj, "GetNames", new object[] { });
+            return (ICollection<string>)this.host.Invoke(this.obj, "GetNames", new object[] { });
         }
 
         public object Invoke(string name, object[] parameters)

@@ -7,7 +7,9 @@
 
     public interface IClass
     {
-        string Name { get; } 
+        string Name { get; }
+
+        object DefaultMember { get; }
 
         void SetMember(string name, object value);
 
@@ -16,7 +18,5 @@
         object NewInstance(object[] parameters);
 
         ICollection<string> GetMemberNames();
-
-        object DefaultMember { get; }
     }
 }

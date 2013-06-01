@@ -1,13 +1,12 @@
 ﻿namespace AjLanguage.Expressions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage.Commands;
     using AjLanguage.Language;
-    using System.Collections;
 
     [Serializable]
     public class InvokeExpression : IExpression
@@ -27,7 +26,7 @@
 
         public object Evaluate(IBindingEnvironment environment)
         {
-            ICallable callable = (ICallable) environment.GetValue(this.name);
+            ICallable callable = (ICallable)environment.GetValue(this.name);
 
             if (callable == null)
                 callable = (ICallable)Machine.Current.Environment.GetValue(this.name);

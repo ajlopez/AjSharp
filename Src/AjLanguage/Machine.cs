@@ -99,6 +99,11 @@
             }
         }
 
+        public static void SetCurrent(Machine machine)
+        {
+            current = machine;
+        }
+
         public void RegisterHost(IHost host)
         {
             if (host.IsLocal)
@@ -109,9 +114,6 @@
 
         public IHost GetHost(Guid id)
         {
-            //if (this.Host != null && this.Host.Id == id)
-            //    return this.Host;
-
             if (this.localhosts.ContainsKey(id))
                 return this.localhosts[id];
 
@@ -131,11 +133,6 @@
         public void SetCurrent()
         {
             current = this;
-        }
-
-        public static void SetCurrent(Machine machine)
-        {
-            current = machine;
         }
 
         internal void RegisterTransaction(Transaction transaction)
@@ -174,10 +171,10 @@
                     }
 
                     foreach (ITransactionalReference reference in toremove)
-                        snapshots.Remove(reference);
+                        this.snapshots.Remove(reference);
 
-                    if (snapshots.Count == 0)
-                        snapshots.Clear();
+                    if (this.snapshots.Count == 0)
+                        this.snapshots.Clear();
                 }
             }
         }

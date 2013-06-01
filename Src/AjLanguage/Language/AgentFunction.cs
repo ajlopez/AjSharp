@@ -34,8 +34,10 @@
         {
             AgentObject agent = (AgentObject)((ObjectEnvironment)environment).Object;
             agent.SendInvoke(this.function, environment, arguments);
+            
             // TODO if function, return a Future
             return null;
+            
             // Direct code
 //            return this.function.Invoke(environment, arguments);
         }

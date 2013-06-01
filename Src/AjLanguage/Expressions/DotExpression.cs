@@ -1,10 +1,10 @@
 ﻿namespace AjLanguage.Expressions
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Collections;
 
     [Serializable]
     public class DotExpression : IExpression
@@ -59,7 +59,7 @@
                     if (argument is VariableVariableExpression)
                     {
                         if (value != null)
-                            foreach (object val in (IEnumerable) value)
+                            foreach (object val in (IEnumerable)value)
                                 values.Add(val);
                     }
                     else
@@ -73,7 +73,7 @@
                 return TypeUtilities.InvokeTypeMember(this.type, this.name, parameters);
 
             if (obj is Type)
-                return TypeUtilities.InvokeTypeMember((Type) obj, this.name, parameters);
+                return TypeUtilities.InvokeTypeMember((Type)obj, this.name, parameters);
 
             // TODO if undefined, do nothing
             if (obj == null)

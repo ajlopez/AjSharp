@@ -44,7 +44,7 @@
                         value = expression.Evaluate(environment);
 
                     if (value is ICallable && !(value is AgentFunction))
-                        value = new AgentFunction((ICallable) value);
+                        value = new AgentFunction((ICallable)value);
 
                     dynclass.SetMember(name, value);
                 }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ServiceModel;
-using System.Runtime.Serialization.Formatters.Binary;
-using AjLanguage.Commands;
-using System.IO;
-using AjLanguage.Expressions;
-
-namespace AjLanguage.Hosting.Wcf
+﻿namespace AjLanguage.Hosting.Wcf
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.ServiceModel;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class WcfHostServer : Host, IHostServer
     {

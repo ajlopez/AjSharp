@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace AjLanguage.Transactions
+﻿namespace AjLanguage.Transactions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class TransactionalReference : ITransactionalReference
     {
         private object value;
@@ -43,7 +43,7 @@ namespace AjLanguage.Transactions
 
                 // TODO review snapshots
                 if (this.snapshots.Count == 0)
-                    return value;
+                    return this.value;
 
                 long? selected = null;
 
@@ -55,7 +55,7 @@ namespace AjLanguage.Transactions
                 if (selected.HasValue)
                     return this.snapshots[selected.Value];
 
-                return value;
+                return this.value;
             }
         }
 

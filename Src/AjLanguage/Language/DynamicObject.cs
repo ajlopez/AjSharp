@@ -8,8 +8,8 @@
     [Serializable]
     public class DynamicObject : IObject
     {
-        private Dictionary<string, object> values = new Dictionary<string, object>();
         private static string[] nativeMethods = new string[] { "SetValue", "GetValue", "ToString", "GetNames", "Invoke", "GetHashCode", "Equals", "Marshal" };
+        private Dictionary<string, object> values = new Dictionary<string, object>();
 
         public virtual void SetValue(string name, object value)
         {

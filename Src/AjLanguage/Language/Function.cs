@@ -74,7 +74,7 @@
 
             if (this.hasvariableparameters)
             {
-                for (int k = 0; k < this.arity-1; k++)
+                for (int k = 0; k < this.arity - 1; k++)
                     newenv.SetLocalValue(this.parameterNames[k], arguments[k]);
                 if (argcount == 0)
                     newenv.SetLocalValue(this.parameterNames[0], new object[] { });

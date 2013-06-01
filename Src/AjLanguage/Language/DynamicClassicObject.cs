@@ -36,7 +36,7 @@
 
                 if (this.objclass.DefaultMember != null)
                 {
-                    ICallable defmethod = (ICallable) this.objclass.DefaultMember;
+                    ICallable defmethod = (ICallable)this.objclass.DefaultMember;
                     IBindingEnvironment oenv = new ObjectEnvironment(this, defmethod.Environment);
                     object[] arguments = new object[] { name, parameters };
                     return defmethod.Invoke(oenv, arguments);

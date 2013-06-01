@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
 
-    public class ProxyServerObject :MarshalByRefObject, IObject
+    public class ProxyServerObject : MarshalByRefObject, IObject
     {
         private IObject obj;
 

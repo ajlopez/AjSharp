@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Collections;
-using System.Runtime.Remoting.Channels.Tcp;
-
-namespace AjLanguage.Hosting.Remoting
+﻿namespace AjLanguage.Hosting.Remoting
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Remoting;
+    using System.Runtime.Remoting.Channels;
+    using System.Runtime.Remoting.Channels.Tcp;
+    using System.Text;
+
     public class RemotingHostServer : Host
     {
         private int port;
@@ -26,8 +26,10 @@ namespace AjLanguage.Hosting.Remoting
         {
             this.port = port;
             this.name = name;
+
             // TODO review this name, get machine name
             this.hostname = "localhost";
+            
             // According to http://www.thinktecture.com/resourcearchive/net-remoting-faq/changes2003
             // in order to have ObjRef accessible from client code
             BinaryServerFormatterSinkProvider serverProv = new BinaryServerFormatterSinkProvider();
@@ -39,15 +41,11 @@ namespace AjLanguage.Hosting.Remoting
             props["port"] = port;
 
             TcpChannel channel = new TcpChannel(props, clientProv, serverProv);
+            
             // end of "according"
 
             // TODO review other options to publish an object
-            this.objref= RemotingServices.Marshal(this, name);
-        }
-
-        public void Stop()
-        {
-            RemotingServices.Unmarshal(this.objref);
+            this.objref = RemotingServices.Marshal(this, name);
         }
 
         public override string Address
@@ -56,6 +54,11 @@ namespace AjLanguage.Hosting.Remoting
             {
                 return string.Format("tcp://{0}:{1}/{2}", this.hostname, this.port, this.name);
             }
+        }
+
+        public void Stop()
+        {
+            RemotingServices.Unmarshal(this.objref);
         }
     }
 }

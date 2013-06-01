@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Text;
+    using System.Threading;
 
     public class AgentObject : DynamicClassicObject
     {
@@ -33,7 +33,7 @@
 
         private void Execute(object parameter)
         {
-            Machine machine = (Machine) parameter;
+            Machine machine = (Machine)parameter;
 
             machine.SetCurrent();
 
@@ -54,13 +54,15 @@
                 }
             }
         }
-    }
 
-    internal class AgentTask
-    {
-        internal ICallable Callable;
-        internal IBindingEnvironment Environment;
-        internal object[] Arguments;
+        private class AgentTask
+        {
+            public ICallable Callable { get; set; }
+
+            public IBindingEnvironment Environment { get; set; }
+
+            public object[] Arguments { get; set; }
+        }
     }
 }
 
