@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<TestRunConfiguration name="Local Test Run" id="e8708546-c5a5-4c5e-953d-6ca2d5cbaefe" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRunConfiguration name="Local Test Run" id="e8708546-c5a5-4c5e-953d-6ca2d5cbaefe" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>This is a default test run configuration for a local test run.</Description>
   <CodeCoverage enabled="true">
     <Regular>
