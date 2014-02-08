@@ -1,14 +1,12 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Text;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
     using AjLanguage.Language;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -71,7 +69,8 @@
             IExpression condition = new CompareExpression(ComparisonOperator.LessEqual, new VariableExpression("n"), new ConstantExpression(1));
 
             ICommand return1 = new ReturnCommand(new ConstantExpression(1));
-            ICommand return2 = new ReturnCommand(new ArithmeticBinaryExpression(ArithmeticOperator.Multiply,
+            ICommand return2 = new ReturnCommand(new ArithmeticBinaryExpression(
+                ArithmeticOperator.Multiply,
                 new VariableExpression("n"),
                 new InvokeExpression("Factorial", new IExpression[] { new ArithmeticBinaryExpression(ArithmeticOperator.Subtract, new VariableExpression("n"), new ConstantExpression(1)) })));
 

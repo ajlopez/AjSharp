@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.ServiceModel;
-
-namespace AjSharp.RunHost
+﻿namespace AjSharp.RunHost
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.ServiceModel;
+    using System.Text;
+
     [ServiceContract]
     public interface IRunServer
     {

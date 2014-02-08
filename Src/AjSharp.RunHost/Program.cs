@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AjSharp.Compiler;
-using AjLanguage.Commands;
-using AjLanguage.Language;
-using System.ServiceModel;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using AjLanguage.Expressions;
-using AjLanguage.Hosting.Wcf;
-
-namespace AjSharp.RunHost
+﻿namespace AjSharp.RunHost
 {
-    class Program
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.ServiceModel;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Hosting.Wcf;
+    using AjLanguage.Language;
+    using AjSharp.Compiler;
+
+    public class Program
     {
         private static IList<WcfHostServer> servers = new List<WcfHostServer>();
         private static IList<WcfHostClient> channels = new List<WcfHostClient>();
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             foreach (string address in args)
             {
@@ -70,6 +70,7 @@ namespace AjSharp.RunHost
                     Console.Error.WriteLine(ex.InnerException.Message);
                     Console.Error.WriteLine(ex.InnerException.StackTrace);
                 }
+
                 Console.Error.WriteLine(ex.Message);
                 Console.Error.WriteLine(ex.StackTrace);
                 Console.ReadLine();

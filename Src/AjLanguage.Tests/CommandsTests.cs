@@ -1,17 +1,16 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.IO;
-    using System.Text;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    using System.Text;
     using AjLanguage;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
     using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class CommandsTests
@@ -128,7 +127,7 @@
         {
             IExpression addToX = new ArithmeticBinaryExpression(ArithmeticOperator.Add, new VariableExpression("y"), new VariableExpression("x"));
             ICommand setX = new SetVariableCommand("x", addToX);
-            IExpression values = new ConstantExpression(new int [] { 1, 2, 3 } );
+            IExpression values = new ConstantExpression(new int[] { 1, 2, 3 });
 
             ForEachCommand foreachcmd = new ForEachCommand("y", values, setX);
 

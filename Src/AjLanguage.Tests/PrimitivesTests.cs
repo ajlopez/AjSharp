@@ -1,14 +1,12 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.IO;
-    using System.Text;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-
+    using System.Text;
     using AjLanguage;
     using AjLanguage.Primitives;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]

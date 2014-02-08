@@ -112,6 +112,67 @@
             return command;
         }
 
+        public IExpression ParseExpression()
+        {
+            if (this.TryParse(TokenType.Name, "new"))
+                return this.ParseNewExpression();
+
+            if (this.TryParse(TokenType.Name, "expression"))
+            {
+                this.lexer.NextToken();
+                return new ConstantExpression(this.ParseExpression());
+            }
+
+            if (this.TryParse(TokenType.Name, "at"))
+            {
+                this.lexer.NextToken();
+                IExpression hostexpr = this.ParseExpression();
+                IExpression expr = this.ParseExpression();
+
+                if (this.TryParse(TokenType.Name, "with"))
+                {
+                    this.lexer.NextToken();
+                    IList<IExpression> arguments = this.ParseArgumentList();
+                    return new HostedInvocationExpression(expr, arguments, hostexpr);
+                }
+
+                return new HostedExpression(expr, hostexpr);
+            }
+
+            if (this.TryParse(TokenType.Name, "command"))
+            {
+                this.lexer.NextToken();
+                return new ConstantExpression(this.ParseCommand());
+            }
+
+            return this.ParseBinaryLogicalExpressionLevelOne();
+        }
+
+        public void Dispose()
+        {
+            if (this.lexer != null)
+                this.lexer.Dispose();
+        }
+
+        private static bool IsName(Token token, string value)
+        {
+            return IsToken(token, value, TokenType.Name);
+        }
+
+        private static bool IsToken(Token token, string value, TokenType type)
+        {
+            if (token == null)
+                return false;
+
+            if (token.TokenType != type)
+                return false;
+
+            if (type == TokenType.Name)
+                return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+
+            return token.Value.Equals(value);
+        }
+
         // TODO Refactor, is a partial copy of ParseCommand
         private ICommand ParseHostedCommand(IExpression hostexpression)
         {
@@ -178,48 +239,6 @@
             return new HostedCommand(command, hostexpression);
         }
 
-        public IExpression ParseExpression()
-        {
-            if (this.TryParse(TokenType.Name, "new"))
-                return this.ParseNewExpression();
-
-            if (this.TryParse(TokenType.Name, "expression"))
-            {
-                this.lexer.NextToken();
-                return new ConstantExpression(this.ParseExpression());
-            }
-
-            if (this.TryParse(TokenType.Name, "at"))
-            {
-                this.lexer.NextToken();
-                IExpression hostexpr = this.ParseExpression();
-                IExpression expr = this.ParseExpression();
-
-                if (this.TryParse(TokenType.Name, "with"))
-                {
-                    this.lexer.NextToken();
-                    IList<IExpression> arguments = this.ParseArgumentList();
-                    return new HostedInvocationExpression(expr, arguments, hostexpr);
-                }
-
-                return new HostedExpression(expr, hostexpr);
-            }
-
-            if (this.TryParse(TokenType.Name, "command"))
-            {
-                this.lexer.NextToken();
-                return new ConstantExpression(this.ParseCommand());
-            }
-
-            return this.ParseBinaryLogicalExpressionLevelOne();
-        }
-
-        public void Dispose()
-        {
-            if (this.lexer != null)
-                this.lexer.Dispose();
-        }
-
         private ICommand ParseSimpleCommand()
         {
             if (this.TryParse(TokenType.Name, "var"))
@@ -263,25 +282,6 @@
             }
 
             return new ExpressionCommand(expression);
-        }
-
-        private static bool IsName(Token token, string value)
-        {
-            return IsToken(token, value, TokenType.Name);
-        }
-
-        private static bool IsToken(Token token, string value, TokenType type)
-        {
-            if (token == null)
-                return false;
-
-            if (token.TokenType != type)
-                return false;
-
-            if (type == TokenType.Name)
-                return token.Value.Equals(value, StringComparison.InvariantCultureIgnoreCase);
-
-            return token.Value.Equals(value);
         }
 
         private IExpression ParseFunctionExpression(bool isdefault)

@@ -1,18 +1,18 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using AjLanguage.Primitives;
-using AjSharp.Compiler;
-using AjLanguage.Commands;
-using AjLanguage.Expressions;
-using AjLanguage.Language;
-
-namespace AjSharp.Tests
+﻿namespace AjSharp.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Language;
+    using AjLanguage.Primitives;
+    using AjSharp.Compiler;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class SerializationTests
     {
@@ -72,7 +72,7 @@ namespace AjSharp.Tests
         public void SerializeDeserializeFunction()
         {
             IExpression expression = this.GetExpression("function(x) { return x+1; }");
-            Function result = (Function) this.SerializeDeserialize(expression.Evaluate(null));
+            Function result = (Function)this.SerializeDeserialize(expression.Evaluate(null));
             Assert.IsNotNull(result);
         }
 
@@ -80,7 +80,7 @@ namespace AjSharp.Tests
         {
             MemoryStream stream = new MemoryStream();
 
-            fmt.Serialize(stream, obj);
+            this.fmt.Serialize(stream, obj);
             stream.Close();
 
             return stream.ToArray();
@@ -90,7 +90,7 @@ namespace AjSharp.Tests
         {
             MemoryStream stream = new MemoryStream(data);
 
-            return fmt.Deserialize(stream);
+            return this.fmt.Deserialize(stream);
         }
 
         private object SerializeDeserialize(object obj)

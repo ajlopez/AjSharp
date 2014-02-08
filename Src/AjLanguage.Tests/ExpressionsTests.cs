@@ -1,17 +1,16 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.IO;
-    using System.Text;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    using System.Text;
     using AjLanguage;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
-    using AjLanguage.Language;
     using AjLanguage.Hosting;
+    using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class ExpressionsTests
@@ -307,7 +306,7 @@
         {
             DotExpression dot = new DotExpression(new DotExpression(new DotExpression(new VariableExpression("System"), "IO"), "File"), "Exists", new IExpression[] { new ConstantExpression("unknown.txt") });
 
-            Assert.IsFalse((bool) dot.Evaluate(new BindingEnvironment()));
+            Assert.IsFalse((bool)dot.Evaluate(new BindingEnvironment()));
         }
 
         [TestMethod]
@@ -442,7 +441,7 @@
         {
             BindingEnvironment environment = new BindingEnvironment();
 
-            environment.SetValue("array", new string[] { "one" , "two", "three" });
+            environment.SetValue("array", new string[] { "one", "two", "three" });
 
             IExpression expression = new ArrayExpression(new VariableExpression("array"), new IExpression[] { new ConstantExpression(1) });
 
@@ -509,7 +508,7 @@
             Host host2 = new Host(new Machine(false));
             host.Machine.Environment.SetValue("host", host2);
             host2.Machine.Environment.SetValue("foo", "bar");
-            HostedExpression expression = new HostedExpression(new VariableExpression("foo"),new VariableExpression("host"));
+            HostedExpression expression = new HostedExpression(new VariableExpression("foo"), new VariableExpression("host"));
 
             object result = expression.Evaluate(host.Machine.Environment);
 
@@ -536,7 +535,7 @@
         {
             IExpression expression = new NotExpression(new ConstantExpression(value));
 
-            return (bool) expression.Evaluate(null);
+            return (bool)expression.Evaluate(null);
         }
 
         private static bool EvaluateAndOperator(object left, object right)
@@ -557,7 +556,7 @@
         {
             IExpression expression = new CompareExpression(operation, new ConstantExpression(left), new ConstantExpression(right));
 
-            return (bool) expression.Evaluate(null);
+            return (bool)expression.Evaluate(null);
         }
 
         private static ICallable BuildFactorialFunction()
@@ -565,7 +564,8 @@
             IExpression condition = new CompareExpression(ComparisonOperator.LessEqual, new VariableExpression("n"), new ConstantExpression(1));
 
             ICommand return1 = new ReturnCommand(new ConstantExpression(1));
-            ICommand return2 = new ReturnCommand(new ArithmeticBinaryExpression(ArithmeticOperator.Multiply, 
+            ICommand return2 = new ReturnCommand(new ArithmeticBinaryExpression(
+                ArithmeticOperator.Multiply, 
                 new VariableExpression("n"),
                 new InvokeExpression("factorial", new IExpression[] { new ArithmeticBinaryExpression(ArithmeticOperator.Subtract, new VariableExpression("n"), new ConstantExpression(1)) })));
 

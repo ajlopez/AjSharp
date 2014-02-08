@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ServiceModel;
-using System.Runtime.Serialization.Formatters.Binary;
-using AjLanguage.Commands;
-using AjLanguage.Expressions;
-using AjLanguage;
-using System.IO;
-using AjLanguage.Hosting;
-
-namespace AjSharp.RunHost
+﻿namespace AjSharp.RunHost
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults=true)]
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.ServiceModel;
+    using System.Text;
+    using AjLanguage;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Hosting;
+
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, IncludeExceptionDetailInFaults = true)]
     public class RunServer : IRunServer
     {
         private Host host;
@@ -59,7 +59,7 @@ namespace AjSharp.RunHost
 
         public void Execute(byte[] serializedcmd)
         {
-            ICommand command = (ICommand) this.formatter.Deserialize(new MemoryStream(serializedcmd));
+            ICommand command = (ICommand)this.formatter.Deserialize(new MemoryStream(serializedcmd));
             this.Execute(command);
         }
 

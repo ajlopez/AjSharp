@@ -5,20 +5,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
+    using AjLanguage.Hosting;
     using AjLanguage.Language;
-
     using AjSharp;
     using AjSharp.Compiler;
+    using AjSharp.Hosting;
     using AjSharp.Primitives;
     using AjSharp.Tests.Classes;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using AjSharp.Hosting;
-    using AjLanguage.Hosting;
 
     [TestClass]
     public class EvaluationTests
@@ -272,7 +269,7 @@
         [DeploymentItem("Examples\\Factorial.ajs")]
         public void EvaluateFactorialUsingInclude()
         {
-            IncludeFile("Factorial.ajs");
+            this.IncludeFile("Factorial.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("Factorial(0)"));
             Assert.AreEqual(1, this.EvaluateExpression("Factorial(1)"));
@@ -286,7 +283,7 @@
         [DeploymentItem("Examples\\TwoFactorials.ajs")]
         public void EvaluateFactorialUsingTwoFunctions()
         {
-            IncludeFile("TwoFactorials.ajs");
+            this.IncludeFile("TwoFactorials.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("FactorialOne(0)"));
             Assert.AreEqual(1, this.EvaluateExpression("FactorialTwo(1)"));
@@ -300,7 +297,7 @@
         [DeploymentItem("Examples\\SetNumbers.ajs")]
         public void SetNumbersUsingInclude()
         {
-            IncludeFile("SetNumbers.ajs");
+            this.IncludeFile("SetNumbers.ajs");
 
             Assert.AreEqual(1, this.machine.Environment.GetValue("one"));
             Assert.AreEqual(2, this.machine.Environment.GetValue("two"));
@@ -312,7 +309,7 @@
         [DeploymentItem("Examples\\SumArray.ajs")]
         public void SumArrayUsingInclude()
         {
-            IncludeFile("SumArray.ajs");
+            this.IncludeFile("SumArray.ajs");
 
             Assert.AreEqual(6, this.EvaluateExpression("sum"));
             Assert.AreEqual(1, this.EvaluateExpression("numbers[0]"));
@@ -324,7 +321,7 @@
         [DeploymentItem("Examples\\Apply.ajs")]
         public void ApplySquareToNumbersUsingInclude()
         {
-            IncludeFile("Apply.ajs");
+            this.IncludeFile("Apply.ajs");
 
             object result = this.machine.Environment.GetValue("squared");
 
@@ -355,7 +352,7 @@
         [DeploymentItem("Examples\\Class.ajs")]
         public void DefineClass()
         {
-            IncludeFile("Class.ajs");
+            this.IncludeFile("Class.ajs");
 
             object result = this.machine.Environment.GetValue("Person");
 
@@ -372,7 +369,7 @@
         [DeploymentItem("Examples\\Object.ajs")]
         public void DefineObject()
         {
-            IncludeFile("Object.ajs");
+            this.IncludeFile("Object.ajs");
 
             object result = this.machine.Environment.GetValue("Adam");
 
@@ -389,7 +386,7 @@
         [DeploymentItem("Examples\\ObjectArrayAccess.ajs")]
         public void DefineObjectAnsUseArrayAccess()
         {
-            IncludeFile("ObjectArrayAccess.ajs");
+            this.IncludeFile("ObjectArrayAccess.ajs");
 
             Assert.AreEqual(700, this.machine.Environment.GetValue("result1"));
             Assert.AreEqual(800, this.machine.Environment.GetValue("result2"));
@@ -399,7 +396,7 @@
         [DeploymentItem("Examples\\ClassObject.ajs")]
         public void DefineClassCreateObjectCallMethod()
         {
-            IncludeFile("ClassObject.ajs");
+            this.IncludeFile("ClassObject.ajs");
 
             object result = this.machine.Environment.GetValue("adam");
 
@@ -416,7 +413,7 @@
         [DeploymentItem("Examples\\ClassObjectNoThis.ajs")]
         public void DefineClassCreateObjectCallMethodWithoutUsingThis()
         {
-            IncludeFile("ClassObjectNoThis.ajs");
+            this.IncludeFile("ClassObjectNoThis.ajs");
 
             object result = this.machine.Environment.GetValue("adam");
 
@@ -435,7 +432,7 @@
         [DeploymentItem("Examples\\Constructor.ajs")]
         public void DefineClassCreateObjectUsingConstructor()
         {
-            IncludeFile("Constructor.ajs");
+            this.IncludeFile("Constructor.ajs");
 
             object result = this.machine.Environment.GetValue("adam");
 
@@ -452,7 +449,7 @@
         [DeploymentItem("Examples\\For.ajs")]
         public void ExecuteForCommand()
         {
-            IncludeFile("For.ajs");
+            this.IncludeFile("For.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
         }
@@ -461,7 +458,7 @@
         [DeploymentItem("Examples\\Go.ajs")]
         public void ExecuteGoCommand()
         {
-            IncludeFile("Go.ajs");
+            this.IncludeFile("Go.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("result"));
         }
@@ -470,7 +467,7 @@
         [DeploymentItem("Examples\\Channel.ajs")]
         public void UseChannelWithGoCommand()
         {
-            IncludeFile("Channel.ajs");
+            this.IncludeFile("Channel.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("result"));
         }
@@ -479,7 +476,7 @@
         [DeploymentItem("Examples\\ChannelOperator.ajs")]
         public void UseChannelWithGoCommandAndOperator()
         {
-            IncludeFile("ChannelOperator.ajs");
+            this.IncludeFile("ChannelOperator.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("result"));
         }
@@ -488,7 +485,7 @@
         [DeploymentItem("Examples\\ChannelManyTimes.ajs")]
         public void UseChannelManyTimesWithGoCommand()
         {
-            IncludeFile("ChannelManyTimes.ajs");
+            this.IncludeFile("ChannelManyTimes.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
         }
@@ -497,7 +494,7 @@
         [DeploymentItem("Examples\\ChannelManyTimesOperator.ajs")]
         public void UseChannelManyTimesWithGoCommandAndOperator()
         {
-            IncludeFile("ChannelManyTimesOperator.ajs");
+            this.IncludeFile("ChannelManyTimesOperator.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
         }
@@ -506,7 +503,7 @@
         [DeploymentItem("Examples\\Generate.ajs")]
         public void UseChannelToGenerateNumbers()
         {
-            IncludeFile("Generate.ajs");
+            this.IncludeFile("Generate.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
         }
@@ -515,7 +512,7 @@
         [DeploymentItem("Examples\\Filter.ajs")]
         public void UseChannelToSumOddNumbers()
         {
-            IncludeFile("Filter.ajs");
+            this.IncludeFile("Filter.ajs");
 
             Assert.AreEqual(16, this.EvaluateExpression("result"));
         }
@@ -524,7 +521,7 @@
         [DeploymentItem("Examples\\Global.ajs")]
         public void GlobalVariableInFunction()
         {
-            IncludeFile("Global.ajs");
+            this.IncludeFile("Global.ajs");
 
             Assert.AreEqual(12, this.EvaluateExpression("result"));
         }
@@ -533,7 +530,7 @@
         [DeploymentItem("Examples\\ScopeWhile.ajs")]
         public void ScopeInSimpleWhile()
         {
-            IncludeFile("ScopeWhile.ajs");
+            this.IncludeFile("ScopeWhile.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
             Assert.AreEqual(6, this.EvaluateExpression("k"));
@@ -543,7 +540,7 @@
         [DeploymentItem("Examples\\ScopeWhileComposite.ajs")]
         public void ScopeInCompositeWhile()
         {
-            IncludeFile("ScopeWhileComposite.ajs");
+            this.IncludeFile("ScopeWhileComposite.ajs");
 
             Assert.AreEqual(15, this.EvaluateExpression("result"));
             Assert.AreEqual(6, this.EvaluateExpression("k"));
@@ -553,7 +550,7 @@
         [DeploymentItem("Examples\\ScopeFunction.ajs")]
         public void ScopeInSimpleFunction()
         {
-            IncludeFile("ScopeFunction.ajs");
+            this.IncludeFile("ScopeFunction.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("value"));
             Assert.AreEqual(5, this.EvaluateExpression("k"));
@@ -564,7 +561,7 @@
         [DeploymentItem("Examples\\ScopeVar.ajs")]
         public void ScopeVar()
         {
-            IncludeFile("ScopeVar.ajs");
+            this.IncludeFile("ScopeVar.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("result"));
         }
@@ -573,7 +570,7 @@
         [DeploymentItem("Examples\\ScopeVarFor.ajs")]
         public void ScopeVarInForCommand()
         {
-            IncludeFile("ScopeVarFor.ajs");
+            this.IncludeFile("ScopeVarFor.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("k"));
             Assert.AreEqual(15, this.EvaluateExpression("result"));
@@ -583,7 +580,7 @@
         [DeploymentItem("Examples\\ScopeVarForEach.ajs")]
         public void ScopeVarInForEachCommand()
         {
-            IncludeFile("ScopeVarForEach.ajs");
+            this.IncludeFile("ScopeVarForEach.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("number"));
             Assert.AreEqual(3, this.EvaluateExpression("result"));
@@ -593,7 +590,7 @@
         [DeploymentItem("Examples\\ScopeFunctionReturn.ajs")]
         public void ScopeInFunctionWithReturn()
         {
-            IncludeFile("ScopeFunctionReturn.ajs");
+            this.IncludeFile("ScopeFunctionReturn.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("value"));
             Assert.IsNull(this.EvaluateExpression("result"));
@@ -603,7 +600,7 @@
         [DeploymentItem("Examples\\ScopeEvaluate.ajs")]
         public void ScopeInEvaluateAtTop()
         {
-            IncludeFile("ScopeEvaluate.ajs");
+            this.IncludeFile("ScopeEvaluate.ajs");
 
             Assert.AreEqual(22, this.EvaluateExpression("result"));
         }
@@ -612,7 +609,7 @@
         [DeploymentItem("Examples\\ScopeEvaluateInFunction.ajs")]
         public void ScopeInEvaluateInFunction()
         {
-            IncludeFile("ScopeEvaluateInFunction.ajs");
+            this.IncludeFile("ScopeEvaluateInFunction.ajs");
 
             Assert.AreEqual(3, this.EvaluateExpression("result"));
         }
@@ -621,7 +618,7 @@
         [DeploymentItem("Examples\\Function.ajs")]
         public void EvaluateIncrementFunction()
         {
-            IncludeFile("Function.ajs");
+            this.IncludeFile("Function.ajs");
 
             Assert.AreEqual(2, this.EvaluateExpression("result"));
         }
@@ -630,7 +627,7 @@
         [DeploymentItem("Examples\\FunctionIncrement.ajs")]
         public void CreateAndCallIncrementFunction()
         {
-            IncludeFile("FunctionIncrement.ajs");
+            this.IncludeFile("FunctionIncrement.ajs");
 
             Assert.AreEqual(3, this.EvaluateExpression("result"));
         }
@@ -639,7 +636,7 @@
         [DeploymentItem("Examples\\FunctionMakeIncrement.ajs")]
         public void MakeAndCallIncrementFunction()
         {
-            IncludeFile("FunctionMakeIncrement.ajs");
+            this.IncludeFile("FunctionMakeIncrement.ajs");
 
             Assert.AreEqual(4, this.EvaluateExpression("result"));
             Assert.AreEqual(5, this.EvaluateExpression("result2"));
@@ -651,7 +648,7 @@
         [DeploymentItem("Examples\\FunctionClass.ajs")]
         public void CallFunctionAssignedToClass()
         {
-            IncludeFile("FunctionClass.ajs");
+            this.IncludeFile("FunctionClass.ajs");
 
             Assert.AreEqual(800, this.EvaluateExpression("result"));
             Assert.AreEqual(100, this.EvaluateExpression("result2"));
@@ -960,7 +957,7 @@
             object server = this.EvaluateExpression("Project.Database.Server");
 
             Assert.IsNotNull(server);
-            Assert.IsInstanceOfType(server, typeof(String));
+            Assert.IsInstanceOfType(server, typeof(string));
             Assert.AreEqual("(local)", server);
         }
 
@@ -1145,7 +1142,7 @@
         [DeploymentItem("Examples\\Future.ajs")]
         public void UseFutureWithGoCommand()
         {
-            IncludeFile("Future.ajs");
+            this.IncludeFile("Future.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("result"));
             Assert.AreEqual(1, this.EvaluateExpression("result2"));
@@ -1155,7 +1152,7 @@
         [DeploymentItem("Examples\\FunctionalRunningSum.ajs")]
         public void EvaluateFunctionalRunningSum()
         {
-            IncludeFile("FunctionalRunningSum.ajs");
+            this.IncludeFile("FunctionalRunningSum.ajs");
 
             Assert.AreEqual(5, this.EvaluateExpression("result"));
             Assert.AreEqual(15, this.EvaluateExpression("result2"));
@@ -1165,7 +1162,7 @@
         [DeploymentItem("Examples\\FunctionalRunningSumParam.ajs")]
         public void EvaluateFunctionalRunningSumParam()
         {
-            IncludeFile("FunctionalRunningSumParam.ajs");
+            this.IncludeFile("FunctionalRunningSumParam.ajs");
 
             Assert.AreEqual(5, this.EvaluateExpression("result"));
             Assert.AreEqual(15, this.EvaluateExpression("result2"));
@@ -1175,7 +1172,7 @@
         [DeploymentItem("Examples\\FunctionalCall.ajs")]
         public void EvaluateFunctionalCall()
         {
-            IncludeFile("FunctionalCall.ajs");
+            this.IncludeFile("FunctionalCall.ajs");
 
             Assert.AreEqual(810, this.EvaluateExpression("result"));
         }
@@ -1184,7 +1181,7 @@
         [DeploymentItem("Examples\\AgentCall.ajs")]
         public void EvaluateAgentCall()
         {
-            IncludeFile("AgentCall.ajs");
+            this.IncludeFile("AgentCall.ajs");
 
             Assert.AreEqual(2, this.EvaluateExpression("result"));
         }
@@ -1193,7 +1190,7 @@
         [DeploymentItem("Examples\\AgentChain.ajs")]
         public void EvaluateAgentChain()
         {
-            IncludeFile("AgentChain.ajs");
+            this.IncludeFile("AgentChain.ajs");
 
             Assert.AreEqual(6, this.EvaluateExpression("result"));
         }
@@ -1202,7 +1199,7 @@
         [DeploymentItem("Examples\\AgentCollatz.ajs")]
         public void EvaluateAgentCollatz()
         {
-            IncludeFile("AgentCollatz.ajs");
+            this.IncludeFile("AgentCollatz.ajs");
 
             Assert.IsNotNull(this.EvaluateExpression("result"));
             Assert.AreEqual(16, this.EvaluateExpression("result.Count"));
@@ -1212,7 +1209,7 @@
         [DeploymentItem("Examples\\DefaultMethodProxy.ajs")]
         public void EvaluateDefaultMethodProxy()
         {
-            IncludeFile("DefaultMethodProxy.ajs");
+            this.IncludeFile("DefaultMethodProxy.ajs");
 
             Assert.AreEqual(4, this.EvaluateExpression("result"));
         }
@@ -1221,7 +1218,7 @@
         [DeploymentItem("Examples\\DefaultMethodLoadBalancer.ajs")]
         public void EvaluateDefaultMethodLoadBalancer()
         {
-            IncludeFile("DefaultMethodLoadBalancer.ajs");
+            this.IncludeFile("DefaultMethodLoadBalancer.ajs");
 
             Assert.AreEqual(10, this.EvaluateExpression("result"));
         }
@@ -1230,7 +1227,7 @@
         [DeploymentItem("Examples\\FunctionVarArgs.ajs")]
         public void EvaluateFunctionVarArgs()
         {
-            IncludeFile("FunctionVarArgs.ajs");
+            this.IncludeFile("FunctionVarArgs.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("result"));
             Assert.AreEqual(2, this.EvaluateExpression("result2"));
@@ -1241,7 +1238,7 @@
         [DeploymentItem("Examples\\FunctionVarArgsSplat.ajs")]
         public void EvaluateFunctionVarArgsSplat()
         {
-            IncludeFile("FunctionVarArgsSplat.ajs");
+            this.IncludeFile("FunctionVarArgsSplat.ajs");
 
             Assert.AreEqual(1, this.EvaluateExpression("result"));
             Assert.AreEqual(2, this.EvaluateExpression("result2"));
@@ -1255,7 +1252,7 @@
             Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
 
-            IncludeFile("RemotingHost.ajs");
+            this.IncludeFile("RemotingHost.ajs");
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
@@ -1266,7 +1263,7 @@
             Assert.AreEqual(2, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(1, this.machine.GetRemoteHosts().Count);
 
-            IHost server = (IHost) this.machine.Environment.GetValue("server");
+            IHost server = (IHost)this.machine.Environment.GetValue("server");
             Assert.IsNotNull(server);
             Assert.IsInstanceOfType(server, typeof(RemotingHostServer));
             Assert.AreEqual("tcp://localhost:10000/RemoteHost", server.Address);
@@ -1279,7 +1276,7 @@
             Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
 
-            IncludeFile("RemotingHostExecuteCommand.ajs");
+            this.IncludeFile("RemotingHostExecuteCommand.ajs");
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
@@ -1296,7 +1293,7 @@
             Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
 
-            IncludeFile("RemotingHostInclude.ajs");
+            this.IncludeFile("RemotingHostInclude.ajs");
 
             Assert.AreEqual(2, this.EvaluateExpression("result"));
 
@@ -1311,7 +1308,7 @@
             Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
 
-            IncludeFile("RegisterRemotingHost.ajs");
+            this.IncludeFile("RegisterRemotingHost.ajs");
 
             Assert.AreEqual(3, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(2, this.machine.GetRemoteHosts().Count);
@@ -1336,7 +1333,7 @@
             Assert.AreEqual(1, this.machine.GetLocalHosts().Count);
             Assert.AreEqual(0, this.machine.GetRemoteHosts().Count);
 
-            IncludeFile("WcfHost.ajs");
+            this.IncludeFile("WcfHost.ajs");
 
             Assert.AreEqual("Adam", this.EvaluateExpression("result"));
             Assert.AreEqual("Adam", this.EvaluateExpression("result2"));
@@ -1360,7 +1357,7 @@
         [DeploymentItem("Examples\\ReferenceSetAndGet.ajs")]
         public void EvaluateReferenceSetAndGet()
         {
-            IncludeFile("ReferenceSetAndGet.ajs");
+            this.IncludeFile("ReferenceSetAndGet.ajs");
             Assert.AreEqual(1, this.machine.Environment.GetValue("result"));
         }
 
@@ -1375,7 +1372,7 @@
         [DeploymentItem("Examples\\TransactionsTwoReferences.ajs")]
         public void EvaluateTransactionsTwoReferences()
         {
-            IncludeFile("TransactionsTwoReferences.ajs");
+            this.IncludeFile("TransactionsTwoReferences.ajs");
             Assert.AreEqual(2, this.machine.Environment.GetValue("result1"));
             Assert.AreEqual(3, this.machine.Environment.GetValue("result2"));
             Assert.AreEqual(1, this.machine.Environment.GetValue("result1original"));
@@ -1391,7 +1388,7 @@
         [TestMethod]
         public void EvaluateStaticMethod()
         {
-            Assert.IsFalse((bool) this.EvaluateExpression("System.IO.File.Exists(\"foo.txt\")"));
+            Assert.IsFalse((bool)this.EvaluateExpression("System.IO.File.Exists(\"foo.txt\")"));
         }
 
         private object EvaluateExpression(string text)

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AjLanguage.Language;
-using System.Threading;
-
-namespace AjLanguage.Tests
+﻿namespace AjLanguage.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class QueueChannelTests
     {
@@ -16,7 +16,7 @@ namespace AjLanguage.Tests
         {
             QueueChannel channel = new QueueChannel(1);
 
-            Thread thread = new Thread(new ThreadStart(delegate() { channel.Send(10); }));
+            Thread thread = new Thread(new ThreadStart(delegate { channel.Send(10); }));
             thread.Start();
 
             object result = channel.Receive();
@@ -27,10 +27,10 @@ namespace AjLanguage.Tests
         {
             QueueChannel channel = new QueueChannel(1);
 
-            Thread thread = new Thread(new ThreadStart(delegate() { for (int k=1; k<=10; k++) channel.Send(k); }));
+            Thread thread = new Thread(new ThreadStart(delegate { for (int k = 1; k <= 10; k++) channel.Send(k); }));
             thread.Start();
 
-            for (int j=1; j<=10; j++)
+            for (int j = 1; j <= 10; j++)
                 Assert.AreEqual(j, channel.Receive());
         }
 
@@ -51,7 +51,7 @@ namespace AjLanguage.Tests
         {
             QueueChannel channel = new QueueChannel(10);
 
-            Thread thread = new Thread(new ThreadStart(delegate()
+            Thread thread = new Thread(new ThreadStart(delegate
             {
                 for (int k = 1; k <= 20; k++)
                     channel.Send(k);

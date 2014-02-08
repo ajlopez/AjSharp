@@ -43,7 +43,7 @@
             Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
             Assert.AreEqual("foo", expression.Evaluate(null));
 
-            Assert.IsNull(ParseExpression(""));
+            Assert.IsNull(ParseExpression(string.Empty));
         }
 
         [TestMethod]
@@ -164,7 +164,7 @@
             Assert.IsNotNull(arithmeticExpression.RightExpression);
             Assert.IsInstanceOfType(arithmeticExpression.RightExpression, typeof(ArithmeticBinaryExpression));
 
-            ArithmeticBinaryExpression rigthExpression = (ArithmeticBinaryExpression) arithmeticExpression.RightExpression;
+            ArithmeticBinaryExpression rigthExpression = (ArithmeticBinaryExpression)arithmeticExpression.RightExpression;
 
             Assert.AreEqual(ArithmeticOperator.Multiply, rigthExpression.Operation);
             Assert.IsInstanceOfType(rigthExpression.LeftExpression, typeof(ConstantExpression));
@@ -268,7 +268,7 @@
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(ForEachCommand));
 
-            ForEachCommand foreachcmd = (ForEachCommand) command;
+            ForEachCommand foreachcmd = (ForEachCommand)command;
 
             Assert.AreEqual("x", foreachcmd.Name);
             Assert.IsNotNull(foreachcmd.Expression);
@@ -350,12 +350,12 @@
         [TestMethod]
         public void ParseCommandExpression()
         {
-            IExpression expression= ParseExpression("command { x=1; y=2; }");
+            IExpression expression = ParseExpression("command { x=1; y=2; }");
 
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ConstantExpression));
 
-            ConstantExpression expr = (ConstantExpression) expression;
+            ConstantExpression expr = (ConstantExpression)expression;
 
             Assert.IsInstanceOfType(expr.Evaluate(null), typeof(ICommand));
         }
@@ -381,7 +381,7 @@
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(DefineFunctionCommand));
 
-            DefineFunctionCommand defcmd = (DefineFunctionCommand) command;
+            DefineFunctionCommand defcmd = (DefineFunctionCommand)command;
 
             Assert.AreEqual("Abs", defcmd.FunctionName);
             Assert.AreEqual(1, defcmd.ParameterNames.Length);
@@ -791,11 +791,11 @@
             Assert.IsNotNull(expression);
             Assert.IsInstanceOfType(expression, typeof(ArrayExpression));
 
-            ArrayExpression arrexpr = (ArrayExpression) expression;
+            ArrayExpression arrexpr = (ArrayExpression)expression;
 
             Assert.IsInstanceOfType(arrexpr.Expression, typeof(VariableExpression));
 
-            VariableExpression varexpr = (VariableExpression) arrexpr.Expression;
+            VariableExpression varexpr = (VariableExpression)arrexpr.Expression;
 
             Assert.AreEqual("numbers", varexpr.VariableName);
 
@@ -811,7 +811,7 @@
             Assert.IsNotNull(command);
             Assert.IsInstanceOfType(command, typeof(SetArrayCommand));
 
-            SetArrayCommand setcmd = (SetArrayCommand) command;
+            SetArrayCommand setcmd = (SetArrayCommand)command;
 
             Assert.IsInstanceOfType(setcmd.LeftValue, typeof(VariableExpression));
             Assert.AreEqual(1, setcmd.Arguments.Count);

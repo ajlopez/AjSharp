@@ -1,14 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
-using AjLanguage.Language;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace AjLanguage.Tests
+﻿namespace AjLanguage.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class ObjectEnvironmentTests
     {
@@ -19,7 +17,7 @@ namespace AjLanguage.Tests
         public void SetUp()
         {
             this.dynobj = new DynamicObject();
-            this.environment = new ObjectEnvironment(dynobj);
+            this.environment = new ObjectEnvironment(this.dynobj);
         }
 
         [TestMethod]

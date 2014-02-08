@@ -1,13 +1,11 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Text;
     using AjLanguage;
     using AjLanguage.Language;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -37,12 +35,12 @@
         [TestMethod]
         public void IsNumber()
         {
-            Assert.IsTrue(ObjectUtilities.IsNumber((byte) 1));
-            Assert.IsTrue(ObjectUtilities.IsNumber((short) 2));
-            Assert.IsTrue(ObjectUtilities.IsNumber((int) 3));
-            Assert.IsTrue(ObjectUtilities.IsNumber((long) 4));
-            Assert.IsTrue(ObjectUtilities.IsNumber((float) 1.2));
-            Assert.IsTrue(ObjectUtilities.IsNumber((double) 2.3));
+            Assert.IsTrue(ObjectUtilities.IsNumber((byte)1));
+            Assert.IsTrue(ObjectUtilities.IsNumber((short)2));
+            Assert.IsTrue(ObjectUtilities.IsNumber((int)3));
+            Assert.IsTrue(ObjectUtilities.IsNumber((long)4));
+            Assert.IsTrue(ObjectUtilities.IsNumber((float)1.2));
+            Assert.IsTrue(ObjectUtilities.IsNumber((double)2.3));
 
             Assert.IsFalse(ObjectUtilities.IsNumber(null));
             Assert.IsFalse(ObjectUtilities.IsNumber("foo"));
@@ -54,7 +52,7 @@
         public void GetIndexedValuesFromArrays()
         {
             Assert.AreEqual(2, ObjectUtilities.GetIndexedValue(new int[] { 1, 2, 3 }, new object[] { 1 }));
-            Assert.AreEqual(3, ObjectUtilities.GetIndexedValue(new int[,] { {1,2}, {2,3} }, new object[] { 1, 1 }));
+            Assert.AreEqual(3, ObjectUtilities.GetIndexedValue(new int[,] { { 1, 2 }, { 2, 3 } }, new object[] { 1, 1 }));
         }
 
         [TestMethod]

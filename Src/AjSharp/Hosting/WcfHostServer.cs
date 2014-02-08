@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AjLanguage;
-
-namespace AjSharp.Hosting
+﻿namespace AjSharp.Hosting
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage;
+
     public class WcfHostServer : AjLanguage.Hosting.Wcf.WcfHostServer
     {
         public WcfHostServer(string address)

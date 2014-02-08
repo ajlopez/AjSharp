@@ -1,13 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using AjLanguage.Language;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading;
-
-namespace AjLanguage.Tests
+﻿namespace AjLanguage.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FutureTests
     {

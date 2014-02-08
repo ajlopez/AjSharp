@@ -1,17 +1,15 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Runtime.Serialization.Formatters.Binary;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using AjLanguage.Expressions;
-using AjLanguage.Language;
-
-namespace AjLanguage.Tests
+﻿namespace AjLanguage.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using AjLanguage.Expressions;
+    using AjLanguage.Language;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class SerializationTests
     {
@@ -45,8 +43,8 @@ namespace AjLanguage.Tests
             environment.SetValue("foo", "bar");
             environment.SetValue("one", 1);
 
-            VariableExpression varFoo = (VariableExpression) this.SerializeDeserialize(new VariableExpression("foo"));
-            VariableExpression varOne = (VariableExpression) this.SerializeDeserialize(new VariableExpression("one"));
+            VariableExpression varFoo = (VariableExpression)this.SerializeDeserialize(new VariableExpression("foo"));
+            VariableExpression varOne = (VariableExpression)this.SerializeDeserialize(new VariableExpression("one"));
 
             Assert.AreEqual("bar", varFoo.Evaluate(environment));
             Assert.AreEqual(1, varOne.Evaluate(environment));
@@ -57,7 +55,7 @@ namespace AjLanguage.Tests
         {
             IExpression leftExpression = new ConstantExpression(1);
             IExpression rightExpression = new ConstantExpression(2);
-            BinaryExpression expression = (BinaryExpression) this.SerializeDeserialize(new ArithmeticBinaryExpression(ArithmeticOperator.Add, leftExpression, rightExpression));
+            BinaryExpression expression = (BinaryExpression)this.SerializeDeserialize(new ArithmeticBinaryExpression(ArithmeticOperator.Add, leftExpression, rightExpression));
 
             Assert.AreEqual(1, expression.LeftExpression.Evaluate(null));
             Assert.AreEqual(2, expression.RightExpression.Evaluate(null));
@@ -67,7 +65,7 @@ namespace AjLanguage.Tests
         {
             MemoryStream stream = new MemoryStream();
 
-            fmt.Serialize(stream, obj);
+            this.fmt.Serialize(stream, obj);
             stream.Close();
 
             return stream.ToArray();
@@ -77,7 +75,7 @@ namespace AjLanguage.Tests
         {
             MemoryStream stream = new MemoryStream(data);
 
-            return fmt.Deserialize(stream);
+            return this.fmt.Deserialize(stream);
         }
 
         private object SerializeDeserialize(object obj)

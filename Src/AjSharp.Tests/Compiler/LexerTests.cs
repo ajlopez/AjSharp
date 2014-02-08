@@ -1,12 +1,10 @@
 ﻿namespace AjSharp.Tests.Compiler
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Text;
     using AjSharp.Compiler;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -106,7 +104,6 @@
         {
             using (Lexer lexer = new Lexer(text))
             {
-
                 Token token = lexer.NextToken();
 
                 Assert.IsNotNull(token);

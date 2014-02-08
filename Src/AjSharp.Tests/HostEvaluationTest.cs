@@ -1,20 +1,20 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AjLanguage.Hosting;
-using AjSharp.Compiler;
-using AjLanguage.Expressions;
-using AjLanguage.Commands;
-using AjLanguage.Language;
-
-namespace AjSharp.Tests
+﻿namespace AjSharp.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Hosting;
+    using AjLanguage.Language;
+    using AjSharp.Compiler;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class HostEvaluationTest
     {
-        Host host;
+        private Host host;
 
         [TestInitialize]
         public void Setup()

@@ -867,9 +867,6 @@
     <milliseconds>100</milliseconds>
     <violations />
   </sourcecode>
-  <project key="-2011244663">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
   <sourcecode name="TransactionalReference.cs" parser="Microsoft.StyleCop.CSharp.CsParser">
     <settings>
       <timestamp>05/05/2012 15:01:25</timestamp>
@@ -879,4 +876,7 @@
     <milliseconds>954</milliseconds>
     <violations />
   </sourcecode>
+  <project key="-2011244663">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
 </stylecopresultscache>

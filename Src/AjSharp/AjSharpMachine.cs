@@ -5,14 +5,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-
     using AjLanguage;
     using AjLanguage.Language;
     using AjLanguage.Primitives;
-
-    using AjSharp.Primitives;
-    using AjSharp.Hosting;
     using AjLanguage.Transactions;
+    using AjSharp.Hosting;
+    using AjSharp.Primitives;
 
     public class AjSharpMachine : Machine
     {
@@ -27,16 +25,16 @@
             this.Environment.SetValue("Machine", typeof(AjSharpMachine));
 
             // Natite Types
-            this.Environment.SetValue("byte", typeof(System.Byte));
-            this.Environment.SetValue("char", typeof(System.Char));
-            this.Environment.SetValue("short", typeof(System.Int16));
-            this.Environment.SetValue("int", typeof(System.Int32));
-            this.Environment.SetValue("long", typeof(System.Int64));
-            this.Environment.SetValue("float", typeof(System.Single));
-            this.Environment.SetValue("double", typeof(System.Double));
-            this.Environment.SetValue("decimal", typeof(System.Decimal));
-            this.Environment.SetValue("bool", typeof(System.Boolean));
-            this.Environment.SetValue("object", typeof(System.Object));
+            this.Environment.SetValue("byte", typeof(byte));
+            this.Environment.SetValue("char", typeof(char));
+            this.Environment.SetValue("short", typeof(short));
+            this.Environment.SetValue("int", typeof(int));
+            this.Environment.SetValue("long", typeof(long));
+            this.Environment.SetValue("float", typeof(float));
+            this.Environment.SetValue("double", typeof(double));
+            this.Environment.SetValue("decimal", typeof(decimal));
+            this.Environment.SetValue("bool", typeof(bool));
+            this.Environment.SetValue("object", typeof(object));
 
             // Alias to Dynamic Types
             this.Environment.SetValue("DynamicObject", typeof(DynamicObject));

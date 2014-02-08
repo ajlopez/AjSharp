@@ -1,14 +1,14 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AjLanguage.Hosting;
-using AjLanguage.Expressions;
-using AjLanguage.Commands;
-
-namespace AjLanguage.Tests
+﻿namespace AjLanguage.Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage.Commands;
+    using AjLanguage.Expressions;
+    using AjLanguage.Hosting;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class HostTests
     {
@@ -17,14 +17,14 @@ namespace AjLanguage.Tests
         [TestInitialize]
         public void Setup()
         {
-            host = new Host();
+            this.host = new Host();
         }
 
         [TestMethod]
         public void EvaluateConstantExpression()
         {
             ConstantExpression expression = new ConstantExpression("foo");
-            object result = host.Evaluate(expression);
+            object result = this.host.Evaluate(expression);
 
             Assert.IsNotNull(result);
             Assert.AreEqual("foo", result);

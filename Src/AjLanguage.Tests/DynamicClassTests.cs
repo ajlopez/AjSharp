@@ -1,14 +1,12 @@
 ﻿namespace AjLanguage.Tests
 {
     using System;
-    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Text;
     using AjLanguage.Commands;
     using AjLanguage.Expressions;
     using AjLanguage.Language;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
@@ -76,7 +74,7 @@
         public void CreateNewInstanceWithConstructor()
         {
             ICommand body = new SetCommand(new DotExpression(new VariableExpression("this"), "Name"), new VariableExpression("n"));
-            Function function = new Function(new string [] { "n" }, body);
+            Function function = new Function(new string[] { "n" }, body);
             this.dynclass.SetMember(this.dynclass.Name, function);
             this.dynclass.SetMember("Name", null);
             this.dynclass.SetMember("Age", 800);

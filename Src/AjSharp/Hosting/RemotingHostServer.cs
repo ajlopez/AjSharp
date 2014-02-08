@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AjLanguage;
-using AjSharp.Compiler;
-using AjLanguage.Commands;
-
-namespace AjSharp.Hosting
+﻿namespace AjSharp.Hosting
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using AjLanguage;
+    using AjLanguage.Commands;
+    using AjSharp.Compiler;
+
     public class RemotingHostServer : AjLanguage.Hosting.Remoting.RemotingHostServer
     {
         public RemotingHostServer(int port, string name)

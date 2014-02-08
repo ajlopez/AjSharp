@@ -3,16 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Remoting.Lifetime;
     using System.Text;
-
     using AjLanguage;
     using AjLanguage.Commands;
+    using AjLanguage.Language;
     using AjLanguage.Primitives;
-
     using AjSharp.Compiler;
     using AjSharp.Primitives;
-    using AjLanguage.Language;
-    using System.Runtime.Remoting.Lifetime;
 
     public class Program
     {
@@ -37,7 +35,7 @@
                     while ((command = parser.ParseCommand()) != null)
                         command.Execute(machine.Environment);
                 }
-                catch (ExitException ex)
+                catch (ExitException)
                 {
                     return;
                 }
@@ -48,6 +46,7 @@
                         Console.Error.WriteLine(ex.InnerException.Message);
                         Console.Error.WriteLine(ex.InnerException.StackTrace);
                     }
+
                     Console.Error.WriteLine(ex.Message);
                     Console.Error.WriteLine(ex.StackTrace);
                 }
@@ -65,7 +64,7 @@
                     command = parser.ParseCommand();
                 }
             }
-            catch (ExitException ex)
+            catch (ExitException)
             {
                 return;
             }
@@ -76,6 +75,7 @@
                     Console.Error.WriteLine(ex.InnerException.Message);
                     Console.Error.WriteLine(ex.InnerException.StackTrace);
                 }
+
                 Console.Error.WriteLine(ex.Message);
                 Console.Error.WriteLine(ex.StackTrace);
                 Console.ReadLine();

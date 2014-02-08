@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace AjSharp.Tests.Classes
+﻿namespace AjSharp.Tests.Classes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class Person
     {
-        public string Name { get; set; }
-
-        public int Age { get; set; }
-
         public Person()
         {
         }
@@ -20,5 +16,9 @@ namespace AjSharp.Tests.Classes
             this.Name = name;
             this.Age = age;
         }
+
+        public string Name { get; set; }
+
+        public int Age { get; set; }
     }
 }
